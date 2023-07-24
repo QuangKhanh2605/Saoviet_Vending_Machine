@@ -23,6 +23,7 @@ extern sEvent_struct       sEventAppElectric[];
 /*============= Function handle ==============*/
 
 uint8_t     AppElectric_Task(void);
+void        Send_Command_IVT (uint8_t SlaveID, uint8_t Func_Code, uint16_t Addr_Register, uint16_t Infor_Register, void (*pFuncResetRecvData) (void)) 
 
 #endif
 

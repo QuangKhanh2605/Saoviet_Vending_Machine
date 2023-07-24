@@ -40,7 +40,7 @@ static uint8_t fevent_control_motor_push(uint8_t event)
     {
         sControlMotor.Status = 0;
         HAL_GPIO_WritePin(LAYER_PORT[sControlMotor.Layer -1], LAYER_PIN[sControlMotor.Layer -1], GPIO_PIN_SET);
-        HAL_Delay(10);
+        HAL_Delay(1);
         HAL_GPIO_WritePin(SLOT_PORT[sControlMotor.Slot -1], SLOT_PIN[sControlMotor.Slot -1], GPIO_PIN_SET);
     }
     fevent_enable(sEventAppMotor, event);
