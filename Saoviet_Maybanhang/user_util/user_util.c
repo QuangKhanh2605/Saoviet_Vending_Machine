@@ -11,6 +11,14 @@ void UTIL_MEM_set( void *dst, uint8_t value, uint16_t size )
     }
 }
 
+void Reset_Buff(sData *str)
+{
+	uint16_t i;
+    
+	for (i = 0; i < str->Length_u16; i++)
+		*(str->Data_a8 +i ) = 0;
+	str->Length_u16 = 0;
+}
 
 
 /*=========== Function Crc =============*/

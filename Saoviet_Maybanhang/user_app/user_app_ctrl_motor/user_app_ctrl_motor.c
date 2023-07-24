@@ -49,45 +49,44 @@ static uint8_t fevent_control_motor_push(uint8_t event)
 
 static uint8_t fevent_input_motor_push(uint8_t event)
 {
-    static uint8_t count = 0;
-    static uint8_t status_before = 0;
+    static uint8_t count_status  = 0;
+    static uint8_t count_handle  = 0;
     static uint8_t status_current= 0;
+    static uint8_t status_before = INIT_STATUS_COUNT_INPUT;
+    static uint8_t temp_status   = INIT_STATUS_COUNT_INPUT;
     
-//    static uint8_t temp_status   = 0;
-//    static uint8_t count_handle=0;
-//    status_current = HAL_GPIO_ReadPin(Count_GPIO_Port, Count_Pin);
-//
-//    if(status_current == status_before)
-//    {
-//        count_handle++;
-//        if(count_handle >= 5)
-//        {
-//            count_handle = 5;
-//            if(status_current != temp_status)
-//            {
-//                count++;
-//            }
-//            temp_status = status_current;
-//        }
-//    }
-//    else
-//    {
-//        count_handle = 0;
-//    }
+    status_current = HAL_GPIO_ReadPin(Count_GPIO_Port, Count_Pin);
+    if(status_current == status_before)
+    {
+        count_handle++;
+        if(count_handle >= NUMBER_SPLG_COUNT_INPUT)
+        {
+            count_handle = NUMBER_SPLG_COUNT_INPUT;
+            if(status_current != temp_status)
+            {
+                count_status++;
+            }
+            temp_status = status_current;
+        }
+    }
+    else
+    {
+        count_handle = 0;
+    }
+    status_before = HAL_GPIO_ReadPin(Count_GPIO_Port, Count_Pin);
 
     
-    if(status_current != status_before)
-    {
-        count++;
-    }
+//    if(status_current != status_before)
+//    {
+//        count_status++;
+//    }
     
-    if(count == 2)
+    if(count_status == 2)
     {
-        count = 0;
+        count_status = 0;
         Off_Motor_Push();
     }
     
-    status_before = HAL_GPIO_ReadPin(Count_GPIO_Port, Count_Pin);
     fevent_enable(sEventAppMotor, event);
     return 1;
 }
@@ -122,7 +121,7 @@ uint8_t AppMotor_Task(void)
 					((HAL_GetTick() - sEventAppMotor[i].e_systick)  >=  sEventAppMotor[i].e_period))
 			{
                 sEventAppMotor[i].e_status = 0;  //Disable event
-				sEventAppMotor[i].e_systick = HAL_GetTick();
+				sEventAppMotor[i].e_systick= HAL_GetTick();
 				sEventAppMotor[i].e_function_handler(i);
 			}
 		}

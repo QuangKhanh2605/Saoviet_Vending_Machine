@@ -58,6 +58,7 @@ build user_app_temperature.pbi : index user_app_temperature.xcl
 build user_app_vib_sensor.pbi : index user_app_vib_sensor.xcl
 build user_uart.pbi : index user_uart.xcl
 build event_driver.pbi : index event_driver.xcl
+build user_modbus_rtu.pbi : index user_modbus_rtu.xcl
 build user_obis.pbi : index user_obis.xcl
 build user_util.pbi : index user_util.xcl
 build Saoviet_Maybanhang_part0.pbi : link adc.pbi dma.pbi gpio.pbi main.pbi stm32f4xx_hal_msp.pbi stm32f4xx_it.pbi
@@ -66,7 +67,7 @@ build Saoviet_Maybanhang_part2.pbi : link stm32f4xx_hal_dma.pbi stm32f4xx_hal_dm
 build Saoviet_Maybanhang_part3.pbi : link stm32f4xx_hal_gpio.pbi stm32f4xx_hal_pwr.pbi stm32f4xx_hal_pwr_ex.pbi stm32f4xx_hal_rcc.pbi stm32f4xx_hal_rcc_ex.pbi stm32f4xx_hal_tim.pbi
 build Saoviet_Maybanhang_part4.pbi : link stm32f4xx_hal_tim_ex.pbi stm32f4xx_hal_uart.pbi stm32f4xx_ll_adc.pbi user_app_comm.pbi user_app_ctrl_motor.pbi user_app_door_sensor.pbi
 build Saoviet_Maybanhang_part5.pbi : link user_app_electric.pbi user_app_ir_sensor.pbi user_app_pc_box.pbi user_app_relay.pbi user_app_temperature.pbi user_app_vib_sensor.pbi
-build Saoviet_Maybanhang_part6.pbi : link user_uart.pbi event_driver.pbi user_obis.pbi user_util.pbi
+build Saoviet_Maybanhang_part6.pbi : link user_uart.pbi event_driver.pbi user_modbus_rtu.pbi user_obis.pbi user_util.pbi
 build Saoviet_Maybanhang.pbd : link Saoviet_Maybanhang_part0.pbi Saoviet_Maybanhang_part1.pbi Saoviet_Maybanhang_part2.pbi Saoviet_Maybanhang_part3.pbi Saoviet_Maybanhang_part4.pbi Saoviet_Maybanhang_part5.pbi Saoviet_Maybanhang_part6.pbi
 build Saoviet_Maybanhang.pbw : browsedata Saoviet_Maybanhang.pbd
 

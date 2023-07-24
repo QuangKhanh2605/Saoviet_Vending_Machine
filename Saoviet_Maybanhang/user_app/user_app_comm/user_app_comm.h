@@ -5,8 +5,11 @@
 
 #include "user_define.h"
 
-
 /*=============Function=======================*/
 void        Main_Task(void);
+
+void        SysApp_Init (void);
+void        SysApp_Setting (void);
+void        AppComm_Init (void);
 #endif
 

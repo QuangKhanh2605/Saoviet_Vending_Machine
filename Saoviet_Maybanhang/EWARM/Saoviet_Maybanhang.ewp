@@ -1219,15 +1219,6 @@
             </file>
         </group>
         <group>
-            <name>user_app_relay</name>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.h</name>
-            </file>
-        </group>
-        <group>
             <name>user_app_ir_sensor</name>
             <file>
                 <name>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.c</name>
@@ -1243,6 +1234,15 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\user_app\user_app_pc_box\user_app_pc_box.h</name>
+            </file>
+        </group>
+        <group>
+            <name>user_app_relay</name>
+            <file>
+                <name>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.h</name>
             </file>
         </group>
         <group>
@@ -1293,6 +1293,12 @@
     </group>
     <group>
         <name>user_util</name>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_modbus_rtu.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_modbus_rtu.h</name>
+        </file>
         <file>
             <name>$PROJ_DIR$\..\user_util\user_obis.c</name>
         </file>

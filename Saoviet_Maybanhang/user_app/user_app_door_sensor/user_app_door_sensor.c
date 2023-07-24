@@ -12,15 +12,36 @@ sEvent_struct           sEventAppDoorSensor[]=
   {_EVENT_DOOR_SENSOR_2,            0, 0, 5,      fevent_door_sensor_2},
 };
 
+StructStatusDoor        sStatusDoor = {0};
 /*================== Function Handle =================*/
 
 static uint8_t fevent_door_sensor_1(uint8_t event)
 {
+    if(HAL_GPIO_ReadPin(Door_Sensor_1_GPIO_Port, Door_Sensor_1_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT)
+    {
+        sStatusDoor.Sensor1 = 1;
+    }
+    else
+    {
+        sStatusDoor.Sensor1 = 0;
+    }
+
+    fevent_enable(sEventAppDoorSensor, event);
     return 1;
 }
 
 static uint8_t fevent_door_sensor_2(uint8_t event)
 {
+    if(HAL_GPIO_ReadPin(Door_Sensor_2_GPIO_Port, Door_Sensor_2_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT)
+    {
+        sStatusDoor.Sensor2 = 1;
+    }
+    else
+    {
+        sStatusDoor.Sensor2 = 0;
+    }
+    
+    fevent_enable(sEventAppDoorSensor, event);
     return 1;
 }
 
@@ -39,7 +60,7 @@ uint8_t AppDoorSensor_Task(void)
                ((HAL_GetTick() - sEventAppDoorSensor[i].e_systick) >= sEventAppDoorSensor[i].e_period))
             {
                 sEventAppDoorSensor[i].e_status = 0; //Disable event
-                sEventAppDoorSensor[i].e_systick= 0;
+                sEventAppDoorSensor[i].e_systick= HAL_GetTick();
                 sEventAppDoorSensor[i].e_function_handler(i);
             }
         }

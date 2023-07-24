@@ -57,8 +57,20 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define ON_OFF_Fridge_Pin GPIO_PIN_2
+#define ON_OFF_Fridge_GPIO_Port GPIOE
+#define ON_OFF_IR_Pin GPIO_PIN_3
+#define ON_OFF_IR_GPIO_Port GPIOE
+#define IR_Sensor_IN_Pin GPIO_PIN_4
+#define IR_Sensor_IN_GPIO_Port GPIOE
+#define IR_Sensor_OUT_Pin GPIO_PIN_5
+#define IR_Sensor_OUT_GPIO_Port GPIOE
+#define Motor_Pin GPIO_PIN_6
+#define Motor_GPIO_Port GPIOE
 #define Vib_Sensor_IN_3_Pin GPIO_PIN_1
 #define Vib_Sensor_IN_3_GPIO_Port GPIOC
+#define NET485IO_Pin GPIO_PIN_6
+#define NET485IO_GPIO_Port GPIOA
 #define Signal_TEM_Pin GPIO_PIN_0
 #define Signal_TEM_GPIO_Port GPIOB
 #define ADC_Vcc_in_Pin GPIO_PIN_1
@@ -71,6 +83,10 @@ void Error_Handler(void);
 #define Led_1_GPIO_Port GPIOE
 #define Vib_Sensor_IN_1_Pin GPIO_PIN_12
 #define Vib_Sensor_IN_1_GPIO_Port GPIOE
+#define Door_Sensor_2_Pin GPIO_PIN_13
+#define Door_Sensor_2_GPIO_Port GPIOE
+#define Door_Sensor_1_Pin GPIO_PIN_14
+#define Door_Sensor_1_GPIO_Port GPIOE
 #define RESET_USB_Pin GPIO_PIN_8
 #define RESET_USB_GPIO_Port GPIOC
 #define Vib_Sensor_IN_2_Pin GPIO_PIN_9
@@ -113,6 +129,14 @@ void Error_Handler(void);
 #define Slot_9_GPIO_Port GPIOB
 #define Slot_10_Pin GPIO_PIN_7
 #define Slot_10_GPIO_Port GPIOB
+#define ON_OFF_Alarm_Pin GPIO_PIN_8
+#define ON_OFF_Alarm_GPIO_Port GPIOB
+#define ON_OFF_Relay_5_Pin GPIO_PIN_9
+#define ON_OFF_Relay_5_GPIO_Port GPIOB
+#define ON_OFF_PC_Pin GPIO_PIN_0
+#define ON_OFF_PC_GPIO_Port GPIOE
+#define ON_OFF_Screen_Pin GPIO_PIN_1
+#define ON_OFF_Screen_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
 

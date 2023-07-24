@@ -3,6 +3,8 @@
 #ifndef USER_APP_PC_BOX_H_
 #define USER_APP_PC_BOX_H_
 
+#define USING_APP_PC_BOX
+
 #include "event_driver.h"
 #include "user_util.h"
 #include "user_uart.h"

@@ -4,6 +4,8 @@
 #ifndef USER_APP_H_
 #define USER_APP_H_
 
+#define USING_APP_CTRL_MOTOR
+
 #include "event_driver.h"
 #include "user_util.h"
 #include "main.h"

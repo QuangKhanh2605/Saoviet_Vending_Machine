@@ -33,31 +33,105 @@ static uint8_t fevent_pcbox_receive_handle(uint8_t event)
 
 static uint8_t fevent_pcbox_complete_receive(uint8_t event)
 {
+    uint16_t pos = 0;
+    uint8_t  Obis_Recv = 0;
+    uint8_t Length_Data = 0;
+    
     uint16_t Crc_Check = 0;
     uint16_t Crc_Recv  = 0;
-    uint8_t  Obis_Recv = 0;
-    
-    Obis_Recv   = sUartPcBox.Data_a8[0];
     Crc_Recv = (sUartPcBox.Data_a8[sUartPcBox.Length_u16-2] << 8) |
                (sUartPcBox.Data_a8[sUartPcBox.Length_u16-1]);
-    
     Calculator_Crc_U16(&Crc_Check, sUartPcBox.Data_a8, sUartPcBox.Length_u16 - 2);
     
     if(Crc_Check == Crc_Recv)
     {
-        switch(Obis_Recv)
+        while((pos + 2) < sUartPcBox.Length_u16 - 2) //co 2 byte CRC cuoi cung
         {
-            case OBIS_PC_BOX_CTRL_MOTOR:
-              if(sUartPcBox.Data_a8[2] <= 0x07 && sUartPcBox.Data_a8[3] <=0x0A && sUartPcBox.Data_a8[1] == 0x02)
-              {
-                sControlMotor.Status = 1;
-                sControlMotor.Layer  = sUartPcBox.Data_a8[2];
-                sControlMotor.Slot   = sUartPcBox.Data_a8[3];
-              }
-              break;
-            
-            default:
-              break;
+            Obis_Recv   = sUartPcBox.Data_a8[pos++];
+            switch(Obis_Recv)
+            {
+                case OBIS_PC_BOX_CTRL_MOTOR:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x02 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] <= 0x07 && sUartPcBox.Data_a8[pos+1] <=0x0A)
+                      {
+                        sControlMotor.Status = 1;
+                        sControlMotor.Layer  = sUartPcBox.Data_a8[2];
+                        sControlMotor.Slot   = sUartPcBox.Data_a8[3];
+                        pos += 2;
+                      }
+                  }
+                  break;
+                  
+                case OBIS_ON_OFF_RELAY_PC:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] <= 0x01)
+                      {
+                        sRelay_PC.Status_Recv = 1;
+                        sRelay_PC.Status_Relay= sUartPcBox.Data_a8[pos];
+                        pos += 1;
+                      }
+                  }
+                  break;  
+                  
+                case OBIS_ON_OFF_RELAY_SCREEN:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] <= 0x01)
+                      {
+                        sRelay_Screen.Status_Recv = 1;
+                        sRelay_Screen.Status_Relay= sUartPcBox.Data_a8[pos];
+                        pos += 1;
+                      }
+                  }
+                  break;   
+                  
+                case OBIS_ON_OFF_RELAY_FRIDGE:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] <= 0x01)
+                      {
+                        sRelay_Fridge.Status_Recv = 1;
+                        sRelay_Fridge.Status_Relay= sUartPcBox.Data_a8[pos];
+                        pos += 1;
+                      }
+                  }
+                  break;   
+                  
+                case OBIS_ON_OFF_RELAY_ALARM:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] <= 0x01)
+                      {
+                        sRelay_Alarm.Status_Recv = 1;
+                        sRelay_Alarm.Status_Relay= sUartPcBox.Data_a8[pos];
+                        pos += 1;
+                      }
+                  }
+                  break;   
+                
+                case OBIS_ON_OFF_RELAY_5:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] <= 0x01)
+                      {
+                        sRelay_Relay5.Status_Recv = 1;
+                        sRelay_Relay5.Status_Relay= sUartPcBox.Data_a8[pos];
+                        pos += 1;
+                      }
+                  }
+                  break;   
+                  
+                default:
+                  break;
+            }
         }
     }
      
