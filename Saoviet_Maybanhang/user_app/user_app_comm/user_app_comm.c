@@ -1,5 +1,5 @@
 #include "user_app_comm.h"
-
+#include "user_inc_vending_machine.h"
 
 /*=========================== Func App Main ========================*/
 
@@ -21,7 +21,7 @@ void Main_Task (void)
 {
   SysApp_Init();
   SysApp_Setting();
-  
+  HAL_Delay(500);
   for(;;)
   {
     #ifdef USING_APP_PC_BOX
@@ -38,10 +38,6 @@ void Main_Task (void)
         
     #ifdef USING_APP_ELECTRIC
         TaskStatus_u8 |= AppElectric_Task();
-    #endif
-        
-    #ifdef USING_APP_IR_SENSOR
-        TaskStatus_u8 |= AppIrSensor_Task();
     #endif
         
     #ifdef USING_APP_RELAY

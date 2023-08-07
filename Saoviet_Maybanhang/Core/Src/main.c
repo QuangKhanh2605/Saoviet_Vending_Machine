@@ -20,12 +20,15 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
+#include "spi.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "user_app_comm.h"
+#include "onchipflash.h"
+#include "user_external_flash.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,6 +96,8 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART6_UART_Init();
   MX_UART4_Init();
+  MX_USART2_UART_Init();
+  MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
   Main_Task();
   /* USER CODE END 2 */

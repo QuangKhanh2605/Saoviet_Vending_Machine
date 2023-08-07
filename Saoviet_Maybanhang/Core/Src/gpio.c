@@ -57,14 +57,19 @@ void MX_GPIO_Init(void)
                           |ON_OFF_Screen_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, Toggle_Reset_Pin|RESET_USB_Pin|Layer_6_Pin|Layer_5_Pin
+                          |Layer_4_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, NET485IO_Pin|Layer_7_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, RESET_USB_Pin|Layer_6_Pin|Layer_5_Pin|Layer_4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(HOLD_RESET_GPIO_Port, HOLD_RESET_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, Layer_3_Pin|Layer_2_Pin|Layer_1_Pin|Slot_1_Pin
-                          |Slot_2_Pin|Slot_3_Pin|Slot_4_Pin|Slot_5_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, CS_Pin|Layer_3_Pin|Layer_2_Pin|Layer_1_Pin
+                          |Slot_1_Pin|Slot_2_Pin|Slot_3_Pin|Slot_4_Pin
+                          |Slot_5_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Slot_6_Pin|Slot_7_Pin|Slot_8_Pin|Slot_9_Pin
@@ -81,15 +86,24 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PEPin PEPin PEPin */
-  GPIO_InitStruct.Pin = IR_Sensor_IN_Pin|Vib_Sensor_IN_1_Pin|Door_Sensor_2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pins : PEPin PEPin */
+  GPIO_InitStruct.Pin = IR_Sensor_Irq_Pin|Vib_Sensor_Irq_1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PCPin PCPin PCPin PCPin
+                           PCPin */
+  GPIO_InitStruct.Pin = Toggle_Reset_Pin|RESET_USB_Pin|Layer_6_Pin|Layer_5_Pin
+                          |Layer_4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pins : PCPin PCPin */
-  GPIO_InitStruct.Pin = Vib_Sensor_IN_3_Pin|Vib_Sensor_IN_2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pin = Vib_Sensor_Irq_3_Pin|Vib_Sensor_Irq_2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
@@ -100,33 +114,41 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PEPin PEPin */
+  GPIO_InitStruct.Pin = Door_Sensor_2_Pin|Door_Sensor_1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = Door_Sensor_1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(Door_Sensor_1_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PCPin PCPin PCPin PCPin */
-  GPIO_InitStruct.Pin = RESET_USB_Pin|Layer_6_Pin|Layer_5_Pin|Layer_4_Pin;
+  GPIO_InitStruct.Pin = HOLD_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PAPin PAPin */
-  GPIO_InitStruct.Pin = PGOOD_Pin|Count_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(HOLD_RESET_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PDPin PDPin PDPin PDPin
-                           PDPin PDPin PDPin PDPin */
-  GPIO_InitStruct.Pin = Layer_3_Pin|Layer_2_Pin|Layer_1_Pin|Slot_1_Pin
-                          |Slot_2_Pin|Slot_3_Pin|Slot_4_Pin|Slot_5_Pin;
+                           PDPin PDPin PDPin PDPin
+                           PDPin */
+  GPIO_InitStruct.Pin = CS_Pin|Layer_3_Pin|Layer_2_Pin|Layer_1_Pin
+                          |Slot_1_Pin|Slot_2_Pin|Slot_3_Pin|Slot_4_Pin
+                          |Slot_5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = PGOOD_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(PGOOD_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = Count_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(Count_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PBPin PBPin PBPin PBPin
                            PBPin PBPin PBPin */
@@ -136,6 +158,19 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 

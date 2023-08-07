@@ -1211,6 +1211,9 @@
                     <name>$PROJ_DIR$\..\Core\Src\main.c</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\Core\Src\spi.c</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\Core\Src\stm32f4xx_hal_msp.c</name>
                 </file>
                 <file>
@@ -1278,6 +1281,9 @@
                 <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</name>
             </file>
             <file>
@@ -1294,7 +1300,7 @@
     <group>
         <name>user_app</name>
         <group>
-            <name>user_app_comm</name>
+            <name>user_app_common</name>
             <file>
                 <name>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.c</name>
             </file>
@@ -1303,118 +1309,166 @@
             </file>
         </group>
         <group>
-            <name>user_app_ctrl_motor</name>
+            <name>user_app_vending_machine</name>
+            <group>
+                <name>user_app_ctrl_motor</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_app_door_sensor</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_app_electric</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_app_pc_box</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_app_relay</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_app_temperature</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_app_vib_sensor</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_comm_vending_machine</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.h</name>
+                </file>
+            </group>
+            <group>
+                <name>user_irq_input</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.h</name>
+                </file>
+            </group>
             <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.h</name>
+                <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_inc_vending_machine.h</name>
             </file>
         </group>
         <group>
-            <name>user_app_door_sensor</name>
+            <name>user_uart</name>
             <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.c</name>
+                <name>$PROJ_DIR$\..\user_app\user_uart\user_uart.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.h</name>
-            </file>
-        </group>
-        <group>
-            <name>user_app_electric</name>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_electric\user_app_electric.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_electric\user_app_electric.h</name>
-            </file>
-        </group>
-        <group>
-            <name>user_app_ir_sensor</name>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.h</name>
-            </file>
-        </group>
-        <group>
-            <name>user_app_pc_box</name>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_pc_box\user_app_pc_box.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_pc_box\user_app_pc_box.h</name>
-            </file>
-        </group>
-        <group>
-            <name>user_app_relay</name>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.h</name>
-            </file>
-        </group>
-        <group>
-            <name>user_app_temperature</name>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.h</name>
-            </file>
-        </group>
-        <group>
-            <name>user_app_vib_sensor</name>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.h</name>
+                <name>$PROJ_DIR$\..\user_app\user_uart\user_uart.h</name>
             </file>
         </group>
     </group>
     <group>
         <name>user_component</name>
         <group>
-            <name>user_uart</name>
+            <name>user_external_flash</name>
+            <group>
+                <name>external_flash_S25FL216K</name>
+                <file>
+                    <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.h</name>
+                </file>
+            </group>
             <file>
-                <name>$PROJ_DIR$\..\user_component\user_uart\user_uart.c</name>
+                <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\user_component\user_uart\user_uart.h</name>
+                <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.h</name>
             </file>
         </group>
-    </group>
-    <group>
-        <name>user_define</name>
+        <group>
+            <name>user_internal_mem</name>
+            <file>
+                <name>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.h</name>
+            </file>
+        </group>
         <file>
-            <name>$PROJ_DIR$\..\user_define\user_define.h</name>
+            <name>$PROJ_DIR$\..\user_component\user_mem\user_mem_comm.h</name>
         </file>
     </group>
     <group>
-        <name>user_event_driven</name>
+        <name>user_eventdriven</name>
         <file>
-            <name>$PROJ_DIR$\..\user_event_driven\event_driver.c</name>
+            <name>$PROJ_DIR$\..\user_eventdriven\event_driven.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\user_event_driven\event_driver.h</name>
+            <name>$PROJ_DIR$\..\user_eventdriven\event_driven.h</name>
+        </file>
+    </group>
+    <group>
+        <name>user_queue</name>
+        <file>
+            <name>$PROJ_DIR$\..\user_queue\queue_p.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_queue\queue_p.h</name>
         </file>
     </group>
     <group>
         <name>user_util</name>
         <file>
+            <name>$PROJ_DIR$\..\user_util\onchipflash.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\onchipflash.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\user_util\user_modbus_rtu.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\user_util\user_modbus_rtu.h</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_util\user_obis.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_util\user_obis.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\user_util\user_util.c</name>
