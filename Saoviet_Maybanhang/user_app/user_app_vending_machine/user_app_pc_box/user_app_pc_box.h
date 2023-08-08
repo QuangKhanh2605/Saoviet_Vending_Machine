@@ -27,4 +27,5 @@ extern sEvent_struct  sEventAppPcBox[];
 
 uint8_t     AppPcBox_Task(void);
 uint8_t     Log_TSVH(uint8_t *aData);
+void        AppPcBox_Debug(void);
 #endif

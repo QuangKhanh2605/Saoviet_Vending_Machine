@@ -13,9 +13,9 @@ typedef enum
     _EVENT_RELAY_ENTRY,
     _EVENT_ON_OFF_RELAY_PC,
     _EVENT_ON_OFF_RELAY_SCREEN,
-    _EVENT_ON_OFF_RELAY_FRIDGE,
+    _EVENT_ON_OFF_RELAY_FRIDGE_COOL,
     _EVENT_ON_OFF_RELAY_ALARM,
-    _EVENT_ON_OFF_RELAY_5,
+    _EVENT_ON_OFF_RELAY_FRIDGE_HEAT,
     _EVENT_ON_OFF_RELAY_LAMP,
     _EVENT_ON_OFF_RELAY_WARM,
     
@@ -24,8 +24,8 @@ typedef enum
 
 typedef struct
 {
-    uint8_t Fridge;
-    uint8_t Relay_5;
+    uint8_t FridgeHeat;
+    uint8_t FridgeCool;
     uint8_t Alarm;
     uint8_t PC;
     uint8_t Screen;
@@ -37,9 +37,9 @@ typedef enum
 {
     RELAY_PC,
     RELAY_SCREEN,
-    RELAY_FRIDGE,
+    RELAY_FRIDGE_COOL,
     RELAY_ALARM,
-    RELAY_5,
+    RELAY_FRIDGE_HEAT,
     RELAY_LAMP,
     RELAY_WARM,
 }Relay_TypeDef;
@@ -52,6 +52,8 @@ uint8_t     AppRelay_Task(void);
 
 void        On_Relay(Relay_TypeDef Relay);
 void        Off_Relay(Relay_TypeDef Relay);
+
+void        AppRelay_Debug(uint8_t Status, uint8_t Relay);
 
 
 #endif

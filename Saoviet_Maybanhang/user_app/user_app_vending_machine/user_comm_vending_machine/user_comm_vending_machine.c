@@ -88,6 +88,89 @@ int16_t Calculator_Scale(int16_t Value, uint8_t Scale)
   return Stamp_Scale/(int)Scale_To_Int(Scale);
 }
 
+/*=============== Convert Int To String ==============*/
+
+uint8_t Convert_Int_To_String(char cData[], int var)
+{
+    uint8_t length = 0;
+    uint32_t stamp = 0;
+    uint32_t division = 10;
+    if(var < 0)
+    {
+        stamp = 0 - var;
+        cData[length++] = '-';
+    }
+    else
+    {
+        stamp = var;
+    }
+    
+    while( stamp/division>0 )
+    {
+        division *= 10;
+    }
+    division = division/10;
+    while(division > 0)
+    {
+        cData[length++] = stamp/division + 0x30;
+        stamp = stamp - (stamp/division) * division;
+        division = division/10;
+    }
+    
+    return length;
+}
+
+uint8_t Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale)
+{
+    uint8_t length = 0;
+    uint32_t division = 0;
+    uint32_t stamp = 0;
+    uint8_t size_cData = 0;
+    if(var < 0)
+    {
+        stamp = 0 - var;
+    }
+    else
+    {
+        stamp = var;
+    }
+    
+    length = Convert_Int_To_String(cData, var);
+    division = Scale_To_Int(Scale);
+    while(stamp < division)
+    {
+        stamp *=10;
+        size_cData++;
+    }
+    while(size_cData > 0)
+    {
+        for(uint8_t i = length; ; i--)
+        {
+            if(cData[i-1] == '-' ||i == 0)
+            {
+                cData[i] = '0';
+                break;
+            }
+            else
+            {
+                cData[i] = cData[i-1];
+            }
+        }
+        length++;
+        size_cData--;
+    }
+    division = division/10;
+    size_cData = length;
+    while(division > 0)
+    {
+        division = division/10;
+        cData[size_cData] = cData[size_cData-1];
+        size_cData--;
+    }
+    cData[size_cData]='.';
+    length++;
+    return length;
+}
 
 
 

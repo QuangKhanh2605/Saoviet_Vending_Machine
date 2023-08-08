@@ -41,5 +41,6 @@ extern uint8_t Response_Ir_Sensor;
 uint8_t     AppMotor_Task(void);
 void        Off_Motor_Push(void);
 void        On_Motor_Push(uint8_t Pos);
+void        AppMotor_Debug(void);
 
 #endif

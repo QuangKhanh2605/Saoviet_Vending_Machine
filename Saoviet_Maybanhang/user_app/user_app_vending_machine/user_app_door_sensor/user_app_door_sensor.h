@@ -11,12 +11,26 @@
 typedef enum
 {
     _EVENT_DOOR_ENTRY,
-    _EVENT_DOOR_SENSOR_1,
-    _EVENT_DOOR_SENSOR_2,
+    _EVENT_DOOR_SENSOR,
+    _EVENT_DOOR_CTRL_RESPOND,
     _EVENT_DOOR_RESPOND_PC_BOX,
     
     _EVENT_DOOR_SENSOR_END,
 }eKindEventDoorSensor;
+
+typedef enum
+{
+    DOOR_CLOSE,
+    DOOR_OPEN,
+}eNumStatusDoor;
+
+typedef enum
+{
+    DOOR1_CLOSE_DOOR2_CLOSE,
+    DOOR1_OPEN_DOOR2_CLOSE,
+    DOOR1_CLOSE_DOOR2_OPEN,
+    DOOR1_OPEN_DOOR2_OPEN,
+}eNumStatusTwoDoor;
 
 typedef struct 
 {
@@ -29,6 +43,7 @@ extern sEvent_struct    sEventAppDoorSensor[];
 /*=============== Function Hanlde ================*/
 uint8_t     AppDoorSensor_Task(void);
 uint8_t     Log_Data_Door(uint8_t *aData);
+void        AppDoorSensor_Debug(void);
 
 
 #endif

@@ -11,7 +11,6 @@
 #include "user_comm_vending_machine.h"
 #include "user_external_flash.h"
 #include "user_app_relay.h"
-#include "stdio.h"
 
 /*============== Function Static ================*/
 static uint8_t fevent_temp_get_adc(uint8_t event);
@@ -89,11 +88,11 @@ static uint8_t fevent_temp_calculator(uint8_t event)
     float Vs  = 0;
     float VinH = 0;
     //float VinL = 0;
- 
+    
     ADC_Avg[0] = ADC_Avg[0]/NUM_SAMPLING_ADC;
     ADC_Avg[1] = ADC_Avg[1]/NUM_SAMPLING_ADC;
     ADC_Avg[2] = ADC_Avg[2]/NUM_SAMPLING_ADC;
-   
+    
     Vpower = ((VDDA_VREFINT_CAL * (*VREFINT_CAL))/(float)ADC_Avg[2])/1000;
     
     float param1 = -247.29;
@@ -117,9 +116,7 @@ static uint8_t fevent_temp_calculator(uint8_t event)
     ADC_Avg[0] = 0;
     ADC_Avg[1] = 0;
     ADC_Avg[2] = 0;
-    char c[4]={0};
-    sprintf(c, "%d \r\n", sTemperature.Value);
-    HAL_UART_Transmit(&uart_debug, (uint8_t*)c, 4, 1000);
+    AppTemperature_Debug();
     
     fevent_active(sEventAppTemperature, _EVENT_TEMP_CTRL_FRIDGE);
     return 1;
@@ -156,18 +153,18 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
 {
     if(sTemperature.Value > Threshold_Ctrl + THRESHOLD_UPPER)
     {
-        sStatusRelay.Relay_5 = ON_RELAY;
-        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_5);
+        sStatusRelay.FridgeHeat = ON_RELAY;
+        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
         
-        sStatusRelay.Fridge = ON_RELAY;
-        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE);
+        sStatusRelay.FridgeHeat = ON_RELAY;
+        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
         
         fevent_disable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
     }
     else if(sTemperature.Value < Threshold_Ctrl - THRESHOLD_LOWER)
     {
-        sStatusRelay.Relay_5 = OFF_RELAY;
-        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_5);
+        sStatusRelay.FridgeHeat = OFF_RELAY;
+        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
         
         fevent_active(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
         sEventAppTemperature[_EVENT_TEMP_OFF_FRIGE_FROZEN].e_systick = HAL_GetTick();
@@ -186,12 +183,28 @@ static uint8_t fevent_temp_time_get(uint8_t event)
 
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 {
-    sStatusRelay.Fridge = OFF_RELAY;
-    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE);
+    sStatusRelay.FridgeCool = OFF_RELAY;
+    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
     return 1;
 }
 
 /*=============== Function Handle ============== */
+void AppTemperature_Debug(void)
+{
+#ifdef  USING_APP_TEMPERATURE_DEBUG
+    char cData[5]={0};
+    uint8_t length = 0;
+//    sprintf(c, "%d \r\n", sTemperature.Value);
+    length = Convert_Int_To_String_Scale(cData, (int)sTemperature.Value, 0xFF);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_temperature: ", sizeof("app_temperature: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Threshold: ", sizeof(" Threshold: "));
+    length = Convert_Int_To_String_Scale(cData, (int)Threshold_Ctrl, 0xFF);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+#endif
+}
+
 uint8_t AppTemperature_Task(void)
 {
     uint8_t i = 0;

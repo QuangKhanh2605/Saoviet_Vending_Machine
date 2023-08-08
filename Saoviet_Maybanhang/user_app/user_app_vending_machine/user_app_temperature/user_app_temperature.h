@@ -56,7 +56,7 @@ extern  int16_t                 Threshold_Ctrl;
 /*=============== Function ================*/
 uint8_t     AppTemperature_Task(void);
 void        ADC_Init(void);
-uint16_t HW_AdcReadChannel (uint32_t Channel);
+void        AppTemperature_Debug(void);
 
 #endif
 

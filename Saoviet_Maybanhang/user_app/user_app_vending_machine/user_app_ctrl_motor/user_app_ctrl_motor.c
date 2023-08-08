@@ -112,6 +112,8 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
     aData[length++] = TempCrc << 8;
     aData[length++] = TempCrc;
     Respond_PcBox(aData, length);
+
+    AppMotor_Debug();
     
     Response_Ir_Sensor = 0;
     return 1;
@@ -138,6 +140,31 @@ void Off_Motor_Push(void)
     {
         HAL_GPIO_WritePin(SLOT_PORT[i], SLOT_PIN[i], GPIO_PIN_RESET);
     }
+}
+
+void AppMotor_Debug(void)
+{
+#ifdef USING_APP_CTRL_MOTOR_DEBUG
+    char cData[2];
+    Convert_Int_To_String(cData, PosPushMotor);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_ctrl_motor: Pos: ", sizeof("app_ctrl_motor: Pos: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
+    if(ErrorPush == PUSH_SUCCESS)
+    {
+      UTIL_Printf(DBLEVEL_M, (uint8_t*)" |Push Success| Ir: ", sizeof(" |Push Success| Ir: "));
+    }
+    else if(ErrorPush == PUSH_EARLY)
+    {
+      UTIL_Printf(DBLEVEL_M, (uint8_t*)" |Push Early| Ir: ", sizeof(" |Push Early| Ir: "));
+    }
+    else if(ErrorPush == PUSH_LATE)
+    {
+      UTIL_Printf(DBLEVEL_M, (uint8_t*)" |Push Late| Ir: ", sizeof(" |Push Late| Ir: "));
+    }
+    Convert_Int_To_String(cData, Response_Ir_Sensor);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 1);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+#endif
 }
 
 uint8_t AppMotor_Task(void)

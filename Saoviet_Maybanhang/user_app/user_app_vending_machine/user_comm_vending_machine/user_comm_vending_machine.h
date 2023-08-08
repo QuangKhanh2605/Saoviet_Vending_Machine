@@ -26,6 +26,13 @@
 
 #define OBIS_TSVH_PC_BOX            0x0A
 #define OBIS_PING_PC_BOX            0x0B
+/*=============== Define Using Debug ==============*/
+#define USING_APP_CTRL_MOTOR_DEBUG
+#define USING_APP_DOOR_SENSOR_DEBUG
+#define USING_APP_PC_BOX_DEBUG
+#define USING_APP_RELAY_DEBUG
+#define USING_APP_TEMPERATURE_DEBUG
+#define USING_APP_VIB_SENSOR_DEBUG
 
 /*=============== Define Common ==============*/
 #define TIME_ENTRY                  15000
@@ -51,7 +58,6 @@
 
 /*============ Define App Door Sensor ===========*/
 #define INIT_STATUS_DOOR_SENSOR_INPUT   GPIO_PIN_RESET
-#define TIME_GET_DOOR_SENSOR            60000    
 
 /*=========== Define  App Electric ============*/
 #define NUMBER_SPLG_PGOOD_SENSOR_INPUT  10
@@ -71,5 +77,9 @@ uint8_t     Calculator_Crc_U8(uint8_t *crc, uint8_t* buf, uint16_t len);
 void        Respond_PcBox(uint8_t *pData, uint16_t Length);
 uint32_t    Scale_To_Int(uint8_t Scale);
 int16_t     Calculator_Scale(int16_t Value, uint8_t Scale);
+
+
+uint8_t     Convert_Int_To_String(char cData[], int var);
+uint8_t     Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale);
 #endif
 

@@ -45,6 +45,8 @@ static uint8_t fevent_vib_sensor(uint8_t event)
         length = Log_Data_Vib(aData);
         Respond_PcBox(aData, length);
         
+        AppVibSensor_Debug();
+        
         if(LevelWarningVib == 3)
         {
             fevent_active(sEventAppVibSensor, _EVENT_VIB_ON_ALARM);
@@ -92,6 +94,17 @@ uint8_t Log_Data_Vib(uint8_t *aData)
     aData[length++] = TempCrc;
       
     return length;
+}
+
+void AppVibSensor_Debug(void)
+{
+#ifdef USING_APP_VIB_SENSOR_DEBUG
+    char cData[1];
+    Convert_Int_To_String(cData, LevelWarningVib);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_vib_sensor: Level ", sizeof("app_vib_sensor: Level"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 1);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+#endif
 }
 
 uint8_t AppVibSensor_Task(void)

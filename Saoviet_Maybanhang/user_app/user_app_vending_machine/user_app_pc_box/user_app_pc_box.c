@@ -61,17 +61,17 @@ static uint8_t fevent_pcbox_receive_handle(uint8_t event)
     fevent_enable(sEventAppPcBox, event);
     return 1;
 }
-
+    
 static uint8_t fevent_pcbox_complete_receive(uint8_t event)
 {
     uint16_t pos = 0;
     uint8_t  Obis_Recv = 0;
     uint8_t Length_Data = 0;
-    
     uint16_t Crc_Check = 0;
     uint16_t Crc_Recv  = 0;
-    Crc_Recv = (sUartPcBox.Data_a8[sUartPcBox.Length_u16-2] << 8) |
-               (sUartPcBox.Data_a8[sUartPcBox.Length_u16-1]);
+
+    Crc_Recv = (sUartPcBox.Data_a8[sUartPcBox.Length_u16-1] << 8) |
+               (sUartPcBox.Data_a8[sUartPcBox.Length_u16-2]);
     Calculator_Crc_U16(&Crc_Check, sUartPcBox.Data_a8, sUartPcBox.Length_u16 - 2);
     
     if(Crc_Check != Crc_Recv)
@@ -190,9 +190,10 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
     else
     {
         Init_Uart_Module(); 
-        Respond_PcBox((uint8_t*)"ERROR",2);
+        Respond_PcBox((uint8_t*)"ERROR",5);
     }
-     
+    AppPcBox_Debug();
+        
     UTIL_MEM_set(sUartPcBox.Data_a8 , 0x00, sUartPcBox.Length_u16);
     sUartPcBox.Length_u16 = 0;
     
@@ -233,8 +234,8 @@ uint8_t Log_TSVH(uint8_t *aData)
     aData[length++] = sStatusRelay.Screen;
     aData[length++] = sStatusRelay.Lamp;
     aData[length++] = sStatusRelay.Warm;
-    aData[length++] = sStatusRelay.Relay_5;
-    aData[length++] = sStatusRelay.Fridge;
+    aData[length++] = sStatusRelay.FridgeHeat;
+    aData[length++] = sStatusRelay.FridgeCool;
     
     aData[length++] = Threshold_Ctrl << 8;
     aData[length++] = Threshold_Ctrl;
@@ -257,6 +258,22 @@ uint8_t Log_TSVH(uint8_t *aData)
 }
 
 /*================= Function Handle ================*/
+void AppPcBox_Debug(void)
+{
+#ifdef USING_APP_PC_BOX_DEBUG
+    uint8_t array[50];
+    sData sSource=
+    {
+        .Data_a8 = array,
+    };
+    Convert_Hex_To_String_Hex(&sSource, &sUartPcBox);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_pc_box: Recv: ", sizeof("app_pc_box: Recv: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)sSource.Data_a8, sSource.Length_u16);
+    
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+#endif
+}
+
 uint8_t AppPcBox_Task(void)
 {
     uint8_t i = 0;

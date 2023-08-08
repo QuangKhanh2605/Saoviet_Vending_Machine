@@ -3,103 +3,101 @@
 #include "user_comm_vending_machine.h"
 
 /*================= Function static ==============*/
-static uint8_t fevent_door_sensor_1(uint8_t event);
-static uint8_t fevent_door_sensor_2(uint8_t event);
-static uint8_t fevent_door_respond_pc_box(uint8_t event);
 static uint8_t fevent_door_entry(uint8_t event);
+static uint8_t fevent_door_sensor(uint8_t event);
+static uint8_t fevent_door_ctrl_respond(uint8_t event);
+static uint8_t fevent_door_respond_pc_box(uint8_t event);
+
 /*================= Struct ======================*/
 sEvent_struct           sEventAppDoorSensor[]=
 {
   {_EVENT_DOOR_ENTRY,               1, 5, TIME_ENTRY,                  fevent_door_entry},
-  {_EVENT_DOOR_SENSOR_1,            0, 0, TIME_GET_DOOR_SENSOR,        fevent_door_sensor_1},
-  {_EVENT_DOOR_SENSOR_2,            0, 0, 0,                           fevent_door_sensor_2},
-  {_EVENT_DOOR_RESPOND_PC_BOX,      0, 0, 0,                           fevent_door_respond_pc_box},
+  {_EVENT_DOOR_SENSOR,              0, 0, 2000,                        fevent_door_sensor},
+  {_EVENT_DOOR_CTRL_RESPOND,        0, 0, 0,                           fevent_door_ctrl_respond},
+  {_EVENT_DOOR_RESPOND_PC_BOX,      0, 0, 60000,                       fevent_door_respond_pc_box},
 };
 
 StructStatusDoor        sStatusDoor = {0};
+uint8_t                 Handle_Respond = 0;
 /*================== Function Handle =================*/
 static uint8_t fevent_door_entry(uint8_t event)
 {
-    fevent_active(sEventAppDoorSensor, _EVENT_DOOR_SENSOR_1);
+    fevent_active(sEventAppDoorSensor, _EVENT_DOOR_SENSOR);
     return 1;
 }
 
-static uint8_t fevent_door_sensor_1(uint8_t event)
+static uint8_t fevent_door_sensor(uint8_t event)
 { 
     if(HAL_GPIO_ReadPin(Door_Sensor_1_GPIO_Port, Door_Sensor_1_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT)
     {
-        sStatusDoor.Sensor1 = 1;
-        fevent_active(sEventAppDoorSensor, _EVENT_DOOR_RESPOND_PC_BOX);
+        sStatusDoor.Sensor1 = DOOR_OPEN;
     }
     else
     {
-        sStatusDoor.Sensor1 = 0;
+        sStatusDoor.Sensor1 = DOOR_CLOSE;
+    }
+    
+    if(HAL_GPIO_ReadPin(Door_Sensor_2_GPIO_Port, Door_Sensor_2_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT)
+    {
+        sStatusDoor.Sensor2 = DOOR_OPEN;
+    }
+    else
+    {
+        sStatusDoor.Sensor2 = DOOR_CLOSE;
     }
 
-    fevent_active(sEventAppDoorSensor, _EVENT_DOOR_SENSOR_2);
+    fevent_active(sEventAppDoorSensor, _EVENT_DOOR_CTRL_RESPOND);
+    fevent_enable(sEventAppDoorSensor, event);
+    
     return 1;
 }
 
-static uint8_t fevent_door_sensor_2(uint8_t event)
+static uint8_t fevent_door_ctrl_respond(uint8_t event)
 {
-      //    static uint8_t count_handle  = 0;
-//    static uint8_t status_current= 0;
-//    static uint8_t status_before = INIT_STATUS_IR_SENSOR_INPUT;
-//    static uint8_t temp_status   = INIT_STATUS_IR_SENSOR_INPUT;
-//    
-//    status_current = HAL_GPIO_ReadPin(IR_Sensor_IN_GPIO_Port, IR_Sensor_IN_Pin);
-//    if(status_current == status_before)
-//    {
-//        count_handle++;
-//        if(count_handle >= NUMBER_SPLG_IR_SENSOR_INPUT)
-//        {
-//            count_handle = NUMBER_SPLG_IR_SENSOR_INPUT;
-//            if(status_current != temp_status)
-//            {
-//                if(status_current == 0x01 ^ INIT_STATUS_IR_SENSOR_INPUT)
-//                {
-//                    Response_Ir_Sensor = 1;
-//                }
-//                else
-//                {
-//                    Response_Ir_Sensor = 0;
-//                }
-//            }
-//            temp_status = status_current;
-//        }
-//    }
-//    else
-//    {
-//        count_handle = 0;
-//    }
-//    status_before = HAL_GPIO_ReadPin(IR_Sensor_IN_GPIO_Port, IR_Sensor_IN_Pin);
-//   
-    if(HAL_GPIO_ReadPin(Door_Sensor_2_GPIO_Port, Door_Sensor_2_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT)
+    static uint8_t status_before = DOOR1_CLOSE_DOOR2_CLOSE;
+    static uint8_t status = DOOR1_CLOSE_DOOR2_CLOSE;
+    if(sStatusDoor.Sensor1 == DOOR_OPEN && sStatusDoor.Sensor2 == DOOR_OPEN)
     {
-        sStatusDoor.Sensor2 = 1;
-        fevent_active(sEventAppDoorSensor, _EVENT_DOOR_RESPOND_PC_BOX);
+        status = DOOR1_OPEN_DOOR2_OPEN;
+    }
+    else if(sStatusDoor.Sensor1 == DOOR_CLOSE && sStatusDoor.Sensor2 == DOOR_OPEN)
+    {
+        status = DOOR1_CLOSE_DOOR2_OPEN;
+    }
+    else if(sStatusDoor.Sensor1 == DOOR_OPEN && sStatusDoor.Sensor2 == DOOR_CLOSE)
+    {
+        status = DOOR1_OPEN_DOOR2_CLOSE;
     }
     else
     {
-        sStatusDoor.Sensor2 = 0;
+        status = DOOR1_CLOSE_DOOR2_CLOSE;
     }
     
-    fevent_active(sEventAppDoorSensor, _EVENT_DOOR_RESPOND_PC_BOX);
+    if(status != status_before)
+    {
+        Handle_Respond = 1;
+        fevent_active(sEventAppDoorSensor, _EVENT_DOOR_RESPOND_PC_BOX);
+    }
+    
+    status_before = status;
+       
     return 1;
 }
 
 static uint8_t fevent_door_respond_pc_box(uint8_t event)
 {
-    if(sStatusDoor.Sensor1 == 1 || sStatusDoor.Sensor2 == 1)
+    if(sStatusDoor.Sensor1 == DOOR_OPEN || sStatusDoor.Sensor2 == DOOR_OPEN || Handle_Respond == 1)
     {
+        Handle_Respond = 0;
         uint8_t aData[5];
         uint8_t length = 0;
         length = Log_Data_Door(aData);
         Respond_PcBox(aData, length);
+        
+        AppDoorSensor_Debug();
     }
     
-    fevent_active(sEventAppDoorSensor, _EVENT_DOOR_SENSOR_1);
-    sEventAppDoorSensor[_EVENT_DOOR_SENSOR_1].e_systick = HAL_GetTick();
+    fevent_enable(sEventAppDoorSensor, event);
     return 1;
 }
 
@@ -125,6 +123,31 @@ uint8_t Log_Data_Door(uint8_t *aData)
 }
 
 /*============== Function Handle ==============*/
+void AppDoorSensor_Debug(void)
+{
+#ifdef USING_APP_DOOR_SENSOR_DEBUG
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_door_sensor: Door1: ", sizeof("app_door_sensor: Door1: "));
+    if(sStatusDoor.Sensor1 == 1)
+    {
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"OPEN", sizeof("OPEN"));
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"CLOSE", sizeof("CLOSE"));
+    }
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Door2: ", sizeof(" Door2: "));
+    
+    if(sStatusDoor.Sensor2 == 1)
+    {
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"OPEN", sizeof("OPEN"));
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"CLOSE", sizeof("CLOSE"));
+    }
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+#endif
+}
 uint8_t AppDoorSensor_Task(void)
 {
     uint8_t i = 0;
@@ -148,5 +171,4 @@ uint8_t AppDoorSensor_Task(void)
     
     return Result;
 }
-
 
