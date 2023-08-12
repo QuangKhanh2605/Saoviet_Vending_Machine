@@ -24,6 +24,7 @@ typedef struct
     uint32_t Sensor1;
     uint32_t Sensor2;
     uint32_t Sensor3;
+    uint8_t  LevelWarning;       //level rung canh bao
 }StructStatusVib;
 
 extern sEvent_struct       sEventAppVibSensor[];

@@ -11,6 +11,7 @@
 
 typedef enum
 {
+    _EVENT_MOTOR_ENTRY,
     _EVENT_CONTROL_MOTOR_PUSH,
     _EVENT_INPUT_MOTOR_PUSH,
     _EVENT_MOTOR_PUSH_OFF_ERROR,
@@ -26,17 +27,38 @@ typedef enum
     PUSH_LATE,
 }eStatePushMotor;
 
+typedef enum 
+{
+    FIX_MOTOR,
+    PUSH_MOTOR,
+}eStateCtrlMotor;
+
 typedef struct
 {
-    uint8_t Status;
-    uint8_t Pos;
+    uint8_t State;              //Trang thai Push hoac Fix Motor
+    uint8_t Num;                //Tong so lan Push
+    uint8_t Pos;                //Vi tri Push
+    uint8_t NumHandle;          //So thu tu dang xu ly
+    uint8_t StatePush;          //Trang thai chua hoac da hoan thanh Push 
+    uint8_t PulseCount;         //Dem xung Motor
+    uint8_t IrSensor;           //Dem Ir sensor    
 }struct_ControlMotor;
 
-extern sEvent_struct sEventAppMotor[];
+typedef struct
+{
+    uint8_t NumEarly;           //So lan loi Push som
+    uint8_t NumLate;            //So lan loi Push muon
+    uint8_t IrSensor;           //Tong so lan dem Ir Sensor
+}struct_InforMotor;
 
-extern uint8_t PulseCount;
-extern uint8_t PosPushMotor;
-extern uint8_t Response_Ir_Sensor;
+typedef enum
+{
+    COMPLETE_PUSH=0,
+    ON_GOING_PUSH,
+}eNumStatePush;
+
+extern sEvent_struct            sEventAppMotor[];
+extern struct_ControlMotor      sPushMotor;
 /*============= Function =============*/
 uint8_t     AppMotor_Task(void);
 void        Off_Motor_Push(void);

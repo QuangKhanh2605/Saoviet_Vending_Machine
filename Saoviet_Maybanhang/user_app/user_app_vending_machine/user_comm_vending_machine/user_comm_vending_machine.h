@@ -11,21 +11,29 @@
 
 #include "user_util.h"
 
+#define DEVICE_ID                   "SVVDMC23000001" 
+#define MAX_DCU_ID_LENGTH	        20
 /*=============== Define Obis ===============*/
-#define OBIS_PC_BOX_FIX_MOTOR       0x19
+#define OBIS_TEMP_THRESHOLD         0x15
+#define OBIS_PC_BOX_FIX_MOTOR       0x16
 
 #define OBIS_PC_BOX_CTRL_MOTOR      0x20
-#define OBIS_ON_OFF_RELAY_PC        0x21
-#define OBIS_ON_OFF_RELAY_SCREEN    0x22
-#define OBIS_ON_OFF_RELAY_LAMP      0x23
-#define OBIS_ON_OFF_RELAY_WARM      0x24
+#define OBIS_ON_OFF_RELAY_SCREEN    0x21
+#define OBIS_ON_OFF_RELAY_LAMP      0x22
+#define OBIS_ON_OFF_RELAY_WARM      0x23
 
 #define OBIS_WARNING_VIB_SENSOR     0x30
 #define OBIS_WARNING_DOOR_SENSOR    0x31
-#define OBIS_TEMP_THRESHOLD         0x32
+
+#define OBIS_ON_GOING_PUSH          0x40
+#define OBIS_COMPLETE_PUSH          0x41
 
 #define OBIS_TSVH_PC_BOX            0x0A
 #define OBIS_PING_PC_BOX            0x0B
+
+#define OBIS_GET_DCU_ID             0x0C
+#define OBIS_SET_DCU_ID             0x0D
+#define OBIS_RESET_DCU              0x0E
 /*=============== Define Using Debug ==============*/
 #define USING_APP_CTRL_MOTOR_DEBUG
 #define USING_APP_DOOR_SENSOR_DEBUG
@@ -38,14 +46,13 @@
 #define TIME_ENTRY                  15000
 /*=========== Define App PcBox ================*/
 #define NUMBER_MAX_MOTOR            60
-
+#define TIME_SEND_TSVH              60000
+#define TIME_RESET_WDG              1000
 /*=========== Define App Motor =================*/
-#define MOTOR_PUSH_OFF                  0
-#define MOTOR_PUSH_ON                   1
 
 #define TIME_MOTOR_PUSH_EARLY           1000
 #define TIME_MOTOR_PUSH_LATE            3000
-#define TIME_MOTOR_RESPOND_PC_BOX       TIME_MOTOR_PUSH_LATE + 3000
+#define TIME_MOTOR_RESPOND_PC_BOX       TIME_MOTOR_PUSH_LATE + 2000
 
 
 /*============ Define App Relay =============*/
@@ -78,7 +85,7 @@ void        Respond_PcBox(uint8_t *pData, uint16_t Length);
 uint32_t    Scale_To_Int(uint8_t Scale);
 int16_t     Calculator_Scale(int16_t Value, uint8_t Scale);
 
-
+uint8_t     Reset_Chip(void);
 uint8_t     Convert_Int_To_String(char cData[], int var);
 uint8_t     Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale);
 #endif

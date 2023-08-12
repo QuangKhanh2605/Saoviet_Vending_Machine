@@ -3,11 +3,11 @@
 #include "user_comm_vending_machine.h"
 
 /*============== Function static =============*/
+static uint8_t fevent_electric_entry(uint8_t event);
 static uint8_t fevent_electric_pgood(uint8_t event);
 static uint8_t fevent_electric_transmit_485(uint8_t event);
 static uint8_t fevent_electric_receive_485(uint8_t event);
 static uint8_t fevent_electric_handle(uint8_t event);
-static uint8_t fevent_electric_entry(uint8_t event);
 /*============== Struct ===================*/
 sEvent_struct               sEventAppElectric[] = 
 {

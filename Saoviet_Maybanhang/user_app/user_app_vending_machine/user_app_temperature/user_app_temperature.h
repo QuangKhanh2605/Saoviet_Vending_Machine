@@ -18,7 +18,7 @@
 #define VDDA_VREFINT_CAL        ((uint32_t) 3300)  
 #define NUM_SAMPLING_ADC        100
 
-#define DEFAULT_THRESHOLD       100
+#define DEFAULT_THRESHOLD       50
 #define TIME_ONE_MINUTES        60*1000
 #define TIME_OFF_FROZEN         10*TIME_ONE_MINUTES
 

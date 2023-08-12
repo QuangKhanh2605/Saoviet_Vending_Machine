@@ -17,7 +17,7 @@
 #define uart_485        huart4
 #define uart_pcbox      huart6
 /*===========Var struct=============*/
-extern uint8_t UartDebugBuff[1200];
+extern uint8_t UartDebugBuff[100];
 extern sData sUartDebug;
 
 extern uint8_t Uart485Buff[50];

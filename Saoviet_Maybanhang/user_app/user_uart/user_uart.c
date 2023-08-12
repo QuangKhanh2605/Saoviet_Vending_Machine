@@ -8,7 +8,7 @@
 #include "user_uart.h"
 
 /*==================var struct======================*/
-uint8_t UartDebugBuff[1200] = {0};
+uint8_t UartDebugBuff[100] = {0};
 sData 	sUartDebug = {&UartDebugBuff[0], 0};
 
 uint8_t Uart485Buff[50] = {0};

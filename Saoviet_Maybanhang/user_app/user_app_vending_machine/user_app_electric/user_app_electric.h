@@ -28,6 +28,7 @@ typedef struct
 
 extern sEvent_struct                sEventAppElectric[];
 extern Struct_Electric_Current      sElectric;
+extern uint8_t                      Status_Supply_Power;
 /*============= Function handle ==============*/
 
 uint8_t     AppElectric_Task(void);

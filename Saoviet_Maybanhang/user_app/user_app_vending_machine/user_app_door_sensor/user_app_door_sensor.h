@@ -36,6 +36,7 @@ typedef struct
 {
     uint8_t Sensor1;
     uint8_t Sensor2;
+    uint8_t Handle_Respond;         //Xu ly gui ban tin Server
 }StructStatusDoor;
 
 extern sEvent_struct    sEventAppDoorSensor[];

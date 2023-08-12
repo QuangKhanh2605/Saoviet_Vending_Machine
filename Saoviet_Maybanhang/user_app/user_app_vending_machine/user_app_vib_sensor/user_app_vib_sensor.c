@@ -15,29 +15,28 @@ sEvent_struct       sEventAppVibSensor[]=
 };
 
 StructStatusVib     sStatusVib = {0};
-uint8_t LevelWarningVib = 0;
 /*================== Function Handle ==============*/
 static uint8_t fevent_vib_sensor(uint8_t event)
 {
     if(sStatusVib.Sensor1 != 0)
     {
-        LevelWarningVib++;
+        sStatusVib.LevelWarning++;
         sStatusVib.Sensor1 = 0;
     }
     
     if(sStatusVib.Sensor2 != 0)
     {
-        LevelWarningVib++;
+        sStatusVib.LevelWarning++;
         sStatusVib.Sensor2 = 0;
     }
     
     if(sStatusVib.Sensor3 != 0)
     {
-        LevelWarningVib++;
+        sStatusVib.LevelWarning++;
         sStatusVib.Sensor3 = 0;
     }
     
-    if(LevelWarningVib != 0)
+    if(sStatusVib.LevelWarning != 0)
     {
         uint8_t aData[5];
         uint8_t length = 0;
@@ -47,11 +46,11 @@ static uint8_t fevent_vib_sensor(uint8_t event)
         
         AppVibSensor_Debug();
         
-        if(LevelWarningVib == 3)
+        if(sStatusVib.LevelWarning == 3)
         {
             fevent_active(sEventAppVibSensor, _EVENT_VIB_ON_ALARM);
         }
-        LevelWarningVib = 0;
+        sStatusVib.LevelWarning = 0;
     }
     
     fevent_enable(sEventAppVibSensor, event);
@@ -86,12 +85,13 @@ uint8_t Log_Data_Vib(uint8_t *aData)
     
     aData[length++] = OBIS_WARNING_VIB_SENSOR;
     aData[length++] = 0x01;
-    aData[length++] = LevelWarningVib;
+    aData[length++] = sStatusVib.LevelWarning;
     
     Calculator_Crc_U16(&TempCrc, aData, length);
     
-    aData[length++] = TempCrc << 8;
     aData[length++] = TempCrc;
+    aData[length++] = TempCrc << 8;
+
       
     return length;
 }
@@ -100,7 +100,7 @@ void AppVibSensor_Debug(void)
 {
 #ifdef USING_APP_VIB_SENSOR_DEBUG
     char cData[1];
-    Convert_Int_To_String(cData, LevelWarningVib);
+    Convert_Int_To_String(cData, sStatusVib.LevelWarning);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_vib_sensor: Level ", sizeof("app_vib_sensor: Level"));
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 1);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));

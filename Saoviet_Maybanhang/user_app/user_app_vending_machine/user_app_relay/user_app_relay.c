@@ -3,25 +3,25 @@
 #include "user_comm_vending_machine.h"
 
 /*============== Function static ===============*/
-static uint8_t fevent_on_off_relay_pc(uint8_t event);
+static uint8_t fevent_relay_entry(uint8_t event);
+static uint8_t fevent_on_off_relay_elevator(uint8_t event);
 static uint8_t fevent_on_off_relay_screen(uint8_t event);
 static uint8_t fevent_on_off_relay_fridge_cool(uint8_t event);
 static uint8_t fevent_on_off_relay_alarm(uint8_t event);
 static uint8_t fevent_on_off_relay_fridge_heat(uint8_t event);
 static uint8_t fevent_on_off_relay_lamp(uint8_t event);
 static uint8_t fevent_on_off_relay_warm(uint8_t event);
-static uint8_t fevent_relay_entry(uint8_t event);
 /*=================== struct ==================*/
 sEvent_struct               sEventAppRelay[] = 
 {
-  {_EVENT_RELAY_ENTRY,              1, 0, 5,    fevent_relay_entry},
-  {_EVENT_ON_OFF_RELAY_PC,          0, 0, 5,    fevent_on_off_relay_pc},
-  {_EVENT_ON_OFF_RELAY_SCREEN,      0, 0, 5,    fevent_on_off_relay_screen},
-  {_EVENT_ON_OFF_RELAY_FRIDGE_COOL, 0, 0, 5,    fevent_on_off_relay_fridge_cool},
-  {_EVENT_ON_OFF_RELAY_ALARM,       0, 0, 5,    fevent_on_off_relay_alarm},
-  {_EVENT_ON_OFF_RELAY_FRIDGE_HEAT, 0, 0, 5,    fevent_on_off_relay_fridge_heat},
-  {_EVENT_ON_OFF_RELAY_LAMP,        0, 0, 5,    fevent_on_off_relay_lamp},
-  {_EVENT_ON_OFF_RELAY_WARM,        0, 0, 5,    fevent_on_off_relay_warm},
+  {_EVENT_RELAY_ENTRY,              1, 0, 5,        fevent_relay_entry},
+  {_EVENT_ON_OFF_RELAY_ELEVATOR,    0, 0, 5,        fevent_on_off_relay_elevator},
+  {_EVENT_ON_OFF_RELAY_SCREEN,      0, 0, 5,        fevent_on_off_relay_screen},
+  {_EVENT_ON_OFF_RELAY_FRIDGE_COOL, 0, 0, 5,        fevent_on_off_relay_fridge_cool},
+  {_EVENT_ON_OFF_RELAY_ALARM,       0, 0, 5,        fevent_on_off_relay_alarm},
+  {_EVENT_ON_OFF_RELAY_FRIDGE_HEAT, 0, 0, 5,        fevent_on_off_relay_fridge_heat},
+  {_EVENT_ON_OFF_RELAY_LAMP,        0, 0, 5,        fevent_on_off_relay_lamp},
+  {_EVENT_ON_OFF_RELAY_WARM,        0, 0, 5,        fevent_on_off_relay_warm},
 };
 
 
@@ -45,24 +45,22 @@ static uint16_t             RELAY_PIN[7] = {ON_OFF_PC_Pin,
 /*================= Function Handle ==============*/
 static uint8_t fevent_relay_entry(uint8_t event)
 {
-    sStatusRelay.PC = ON_RELAY;
-    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_PC);
+    Respond_PcBox((uint8_t*)"ON",2);
     return 1;
 }
 
-static uint8_t fevent_on_off_relay_pc(uint8_t event)
+static uint8_t fevent_on_off_relay_elevator(uint8_t event)
 {
-    if(sStatusRelay.PC == ON_RELAY)
+    if(sStatusRelay.Elevator == ON_RELAY)
     {
-        On_Relay(RELAY_PC);
-        AppRelay_Debug(ON_RELAY, RELAY_PC);
+        On_Relay(RELAY_ELEVATOR);
+        AppRelay_Debug(ON_RELAY, RELAY_ELEVATOR);
     }
-    else if(sStatusRelay.PC == OFF_RELAY)
+    else if(sStatusRelay.Elevator == OFF_RELAY)
     {
-        Off_Relay(RELAY_PC);
-        AppRelay_Debug(OFF_RELAY, RELAY_PC);
+        Off_Relay(RELAY_ELEVATOR);
+        AppRelay_Debug(OFF_RELAY, RELAY_ELEVATOR);
     }
-
     return 1;
 }
 
@@ -161,6 +159,7 @@ static uint8_t fevent_on_off_relay_warm(uint8_t event)
     
     return 1;
 }
+
 /*========== Function Handle ============*/
 void AppRelay_Debug(uint8_t Status, uint8_t Relay)
 {
@@ -176,8 +175,8 @@ void AppRelay_Debug(uint8_t Status, uint8_t Relay)
     
     switch(Relay)
     {
-        case RELAY_PC:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"PC ", sizeof("PC ")); 
+        case RELAY_ELEVATOR:
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"ELEVATOR ", sizeof("ELEVATOR ")); 
            break;
            
         case RELAY_SCREEN:

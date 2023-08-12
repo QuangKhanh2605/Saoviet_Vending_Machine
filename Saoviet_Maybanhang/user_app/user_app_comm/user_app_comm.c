@@ -10,6 +10,7 @@ void SysApp_Init (void)
 
 void SysApp_Setting (void)
 {
+    Init_DCU_ID();
     AppComm_Init();
 }
 

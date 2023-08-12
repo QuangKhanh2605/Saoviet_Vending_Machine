@@ -7,12 +7,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
      if (GPIO_Pin == IR_Sensor_Irq_Pin)
      {
-        Response_Ir_Sensor++;
+        sPushMotor.IrSensor++;
      }
      
      if(GPIO_Pin == Count_Pin)
      {
-        PulseCount++;
+        sPushMotor.PulseCount++;
      }
      
      if (GPIO_Pin == Vib_Sensor_Irq_3_Pin)

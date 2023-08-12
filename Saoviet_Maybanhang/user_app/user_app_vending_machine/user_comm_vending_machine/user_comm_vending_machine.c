@@ -8,7 +8,7 @@
 */
 uint8_t Calculator_Crc_U16(uint16_t *crc, uint8_t* buf, uint16_t len)
 {
-  //uint16_t crc = 0xFFFF;
+  *crc = 0x0000;
   
   for (int pos = 0; pos < len; pos++) 
   {
@@ -171,6 +171,11 @@ uint8_t Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale)
     length++;
     return length;
 }
-
+uint8_t Reset_Chip (void)
+{
+    __disable_irq();
+    //Reset
+    NVIC_SystemReset(); 
+}
 
 

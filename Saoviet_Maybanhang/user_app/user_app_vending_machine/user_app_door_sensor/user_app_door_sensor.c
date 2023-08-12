@@ -18,7 +18,6 @@ sEvent_struct           sEventAppDoorSensor[]=
 };
 
 StructStatusDoor        sStatusDoor = {0};
-uint8_t                 Handle_Respond = 0;
 /*================== Function Handle =================*/
 static uint8_t fevent_door_entry(uint8_t event)
 {
@@ -75,7 +74,7 @@ static uint8_t fevent_door_ctrl_respond(uint8_t event)
     
     if(status != status_before)
     {
-        Handle_Respond = 1;
+        sStatusDoor.Handle_Respond = 1;
         fevent_active(sEventAppDoorSensor, _EVENT_DOOR_RESPOND_PC_BOX);
     }
     
@@ -86,9 +85,9 @@ static uint8_t fevent_door_ctrl_respond(uint8_t event)
 
 static uint8_t fevent_door_respond_pc_box(uint8_t event)
 {
-    if(sStatusDoor.Sensor1 == DOOR_OPEN || sStatusDoor.Sensor2 == DOOR_OPEN || Handle_Respond == 1)
+    if(sStatusDoor.Sensor1 == DOOR_OPEN || sStatusDoor.Sensor2 == DOOR_OPEN || sStatusDoor.Handle_Respond == 1)
     {
-        Handle_Respond = 0;
+        sStatusDoor.Handle_Respond = 0;
         uint8_t aData[5];
         uint8_t length = 0;
         length = Log_Data_Door(aData);
@@ -116,8 +115,9 @@ uint8_t Log_Data_Door(uint8_t *aData)
     
     Calculator_Crc_U16(&TempCrc, aData, length);
     
-    aData[length++] = TempCrc << 8;
     aData[length++] = TempCrc;
+    aData[length++] = TempCrc << 8;
+    
       
     return length;
 }

@@ -2,8 +2,9 @@
 
 #include "user_app_ctrl_motor.h"
 #include "user_comm_vending_machine.h"
-#include "stdio.h"
+
 /*=============Function Static==============*/
+static uint8_t fevent_motor_entry(uint8_t event);
 static uint8_t fevent_control_motor_push(uint8_t event);
 static uint8_t fevent_input_motor_push(uint8_t event);
 static uint8_t fevent_motor_push_off_error(uint8_t event);
@@ -11,6 +12,7 @@ static uint8_t fevent_respond_pcbox(uint8_t event);
 /*================ Struct =================*/
 sEvent_struct         sEventAppMotor[] =
 {   
+  { _EVENT_MOTOR_ENTRY,               0, 0, 5,                          fevent_motor_entry},
   { _EVENT_CONTROL_MOTOR_PUSH,        0, 0, 5,                          fevent_control_motor_push}, 
   { _EVENT_INPUT_MOTOR_PUSH,          1, 0, 5,                          fevent_input_motor_push},
   { _EVENT_MOTOR_PUSH_OFF_ERROR,      0, 0, TIME_MOTOR_PUSH_LATE,       fevent_motor_push_off_error},
@@ -31,21 +33,28 @@ static const uint16_t SLOT_PIN[10] = {Slot_1_Pin, Slot_2_Pin, Slot_3_Pin, Slot_4
                                       Slot_5_Pin, Slot_6_Pin, Slot_7_Pin, Slot_8_Pin,
                                       Slot_9_Pin, Slot_10_Pin};
 
-uint8_t PosPushMotor = 0;
-
-uint8_t PulseCount = 0;
-uint8_t StatusPushMotor = MOTOR_PUSH_OFF;
-uint8_t Response_Ir_Sensor = 0;
-uint8_t ErrorPush = PUSH_SUCCESS;
+struct_ControlMotor         sPushMotor = {0};
+struct_InforMotor           sInforPush = {0};
 /*================ Function Handler =================*/
+static uint8_t fevent_motor_entry(uint8_t event)
+{   
+    sInforPush.NumEarly = 0;
+    sInforPush.NumLate  = 0;
+    sInforPush.IrSensor = 0;
+    
+    sPushMotor.NumHandle = 0;
+    fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
+    sPushMotor.StatePush = ON_GOING_PUSH;
+    return 1;
+}
+
 static uint8_t fevent_control_motor_push(uint8_t event)
 {
-    if(PosPushMotor <= NUMBER_MAX_MOTOR)
+    if(sPushMotor.Pos <= NUMBER_MAX_MOTOR)
     {
-        ErrorPush = PUSH_SUCCESS;
-        On_Motor_Push(PosPushMotor);
+        sPushMotor.IrSensor = 0;
+        sPushMotor.NumHandle++;
         
-        StatusPushMotor = MOTOR_PUSH_ON;
         fevent_active(sEventAppMotor, _EVENT_MOTOR_PUSH_OFF_ERROR);
         sEventAppMotor[_EVENT_MOTOR_PUSH_OFF_ERROR].e_systick = HAL_GetTick();
         
@@ -53,6 +62,8 @@ static uint8_t fevent_control_motor_push(uint8_t event)
         sEventAppMotor[_EVENT_RESPOND_PCBOX].e_systick = HAL_GetTick();
         
         fevent_active(sEventAppMotor, _EVENT_INPUT_MOTOR_PUSH);
+        
+        On_Motor_Push(sPushMotor.Pos);
     }
     
     return 1;
@@ -60,18 +71,17 @@ static uint8_t fevent_control_motor_push(uint8_t event)
 
 static uint8_t fevent_input_motor_push(uint8_t event)
 {
-    if(PulseCount == 3)
+    if(sPushMotor.PulseCount == 3)
     {
         if(HAL_GetTick() - sEventAppMotor[_EVENT_MOTOR_PUSH_OFF_ERROR].e_systick < TIME_MOTOR_PUSH_EARLY)
         {
-            ErrorPush = PUSH_EARLY;
-            PulseCount = 2;
+            sInforPush.NumEarly++;
+            sPushMotor.PulseCount = 2;
         }
         else
         {
             Off_Motor_Push();
-            PulseCount = 0;
-            StatusPushMotor = MOTOR_PUSH_OFF;
+            sPushMotor.PulseCount = 0;
             fevent_disable(sEventAppMotor, _EVENT_MOTOR_PUSH_OFF_ERROR);
             return 1;
         }
@@ -83,39 +93,53 @@ static uint8_t fevent_input_motor_push(uint8_t event)
 
 static uint8_t fevent_motor_push_off_error(uint8_t event)
 {
-    if(StatusPushMotor == MOTOR_PUSH_ON)
-    {
-        PulseCount = 0;
-        Off_Motor_Push();
-        ErrorPush = PUSH_LATE;
-        StatusPushMotor = MOTOR_PUSH_OFF;
-    }
+    Off_Motor_Push();
+    sPushMotor.PulseCount = 0;
+    sInforPush.NumLate++;
+    
     return 1;
 }
 
 static uint8_t fevent_respond_pcbox(uint8_t event)
 {
-    uint8_t aData[10];
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
-    
-/*=============== Log ===============*/
-    
-    aData[length++] = 0x20;
-    aData[length++] = 0x03;
-    aData[length++] = PosPushMotor;
-    aData[length++] = ErrorPush;
-    aData[length++] = Response_Ir_Sensor;
-    
-    Calculator_Crc_U16(&TempCrc, aData, length);
-    
-    aData[length++] = TempCrc << 8;
-    aData[length++] = TempCrc;
-    Respond_PcBox(aData, length);
+    if(sPushMotor.State == PUSH_MOTOR)
+    {
+        sInforPush.IrSensor += sPushMotor.IrSensor;
+        uint8_t aData[10];
+        uint8_t length = 0;
+        uint16_t TempCrc = 0;
+        
+    /*=============== Log ===============*/
+        if(sPushMotor.NumHandle < sPushMotor.Num)
+        {
+            aData[length++] = OBIS_ON_GOING_PUSH;
+            aData[length++] = 0x04;
+            aData[length++] = sPushMotor.Pos;
+            aData[length++] = sPushMotor.IrSensor;
+            aData[length++] = sPushMotor.NumHandle;
+            aData[length++] = sPushMotor.Num;
+            fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
+        }
+        else
+        {
+            sPushMotor.StatePush = COMPLETE_PUSH;
+            aData[length++] = OBIS_COMPLETE_PUSH;
+            aData[length++] = 0x04;
+            aData[length++] = sPushMotor.Pos;
+            aData[length++] = sInforPush.IrSensor;
+            aData[length++] = sInforPush.NumEarly;
+            aData[length++] = sInforPush.NumLate;
+            AppMotor_Debug();
+        }
+        
+        Calculator_Crc_U16(&TempCrc, aData, length);
+        
+        aData[length++] = TempCrc;
+        aData[length++] = TempCrc << 8;
+        Respond_PcBox(aData, length);
 
-    AppMotor_Debug();
-    
-    Response_Ir_Sensor = 0;
+        
+    }
     return 1;
 }
 
@@ -146,23 +170,25 @@ void AppMotor_Debug(void)
 {
 #ifdef USING_APP_CTRL_MOTOR_DEBUG
     char cData[2];
-    Convert_Int_To_String(cData, PosPushMotor);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_ctrl_motor: Pos: ", sizeof("app_ctrl_motor: Pos: "));
+    Convert_Int_To_String(cData, sPushMotor.Pos);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_ctrl_motor: Pos:", sizeof("app_ctrl_motor: Pos:"));
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
-    if(ErrorPush == PUSH_SUCCESS)
-    {
-      UTIL_Printf(DBLEVEL_M, (uint8_t*)" |Push Success| Ir: ", sizeof(" |Push Success| Ir: "));
-    }
-    else if(ErrorPush == PUSH_EARLY)
-    {
-      UTIL_Printf(DBLEVEL_M, (uint8_t*)" |Push Early| Ir: ", sizeof(" |Push Early| Ir: "));
-    }
-    else if(ErrorPush == PUSH_LATE)
-    {
-      UTIL_Printf(DBLEVEL_M, (uint8_t*)" |Push Late| Ir: ", sizeof(" |Push Late| Ir: "));
-    }
-    Convert_Int_To_String(cData, Response_Ir_Sensor);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 1);
+    
+    cData[1]=0x00;
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" IR:", sizeof(" IR:"));
+    Convert_Int_To_String(cData, sInforPush.IrSensor);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
+    
+    cData[1]=0x00;
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Early:", sizeof(" Early:"));
+    Convert_Int_To_String(cData, sInforPush.NumEarly);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
+    
+    cData[1]=0x00;
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Late:", sizeof(" Late:"));
+    Convert_Int_To_String(cData, sInforPush.NumLate);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
+    
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
 #endif
 }

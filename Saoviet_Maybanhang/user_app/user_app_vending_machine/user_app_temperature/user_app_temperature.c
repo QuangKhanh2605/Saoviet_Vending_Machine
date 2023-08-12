@@ -13,9 +13,9 @@
 #include "user_app_relay.h"
 
 /*============== Function Static ================*/
+static uint8_t fevent_temp_entry(uint8_t event);
 static uint8_t fevent_temp_get_adc(uint8_t event);
 static uint8_t fevent_temp_calculator(uint8_t event);
-static uint8_t fevent_temp_entry(uint8_t event);
 static uint8_t fevent_temp_set_threshold(uint8_t event);
 static uint8_t fevent_temp_read_threshold(uint8_t event);
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event);
@@ -37,7 +37,7 @@ sEvent_struct                   sEventAppTemperature[] =
   {_EVENT_TEMP_OFF_FRIGE_FROZEN,0, 0, TIME_OFF_FROZEN,      fevent_temp_off_fridge_frozen},
 };
 
-uint32_t ADC_Temp[3];
+uint32_t ADC_Temp[3]={0};
 uint32_t ADC_Avg[3]={0};
 Struct_Temperature      sTemperature={0};
 Struct_Temperature      sTemp_Thresh_Recv={0};

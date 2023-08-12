@@ -11,7 +11,7 @@
 typedef enum
 {
     _EVENT_RELAY_ENTRY,
-    _EVENT_ON_OFF_RELAY_PC,
+    _EVENT_ON_OFF_RELAY_ELEVATOR,
     _EVENT_ON_OFF_RELAY_SCREEN,
     _EVENT_ON_OFF_RELAY_FRIDGE_COOL,
     _EVENT_ON_OFF_RELAY_ALARM,
@@ -27,7 +27,7 @@ typedef struct
     uint8_t FridgeHeat;
     uint8_t FridgeCool;
     uint8_t Alarm;
-    uint8_t PC;
+    uint8_t Elevator;
     uint8_t Screen;
     uint8_t Lamp;
     uint8_t Warm;
@@ -35,7 +35,7 @@ typedef struct
 
 typedef enum
 {
-    RELAY_PC,
+    RELAY_ELEVATOR,
     RELAY_SCREEN,
     RELAY_FRIDGE_COOL,
     RELAY_ALARM,
