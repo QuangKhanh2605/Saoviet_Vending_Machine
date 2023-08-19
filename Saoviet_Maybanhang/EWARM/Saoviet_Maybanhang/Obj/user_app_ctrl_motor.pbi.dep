@@ -1,5 +1,6 @@
 user_app_ctrl_motor.pbi: \
   D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_util\user_util.h \
+  D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.h \
   D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.h \
   D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\Core\Inc\main.h \
   D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\Core\Inc\usart.h \

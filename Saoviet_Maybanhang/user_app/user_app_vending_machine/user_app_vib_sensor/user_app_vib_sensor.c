@@ -2,6 +2,7 @@
 #include "user_app_vib_sensor.h"
 #include "user_comm_vending_machine.h"
 #include "user_app_relay.h"
+#include "user_app_pc_box.h"
 /*=============== Function static ================*/
 static uint8_t fevent_vib_sensor(uint8_t event);
 static uint8_t fevent_vib_on_alarm(uint8_t event);
@@ -42,7 +43,7 @@ static uint8_t fevent_vib_sensor(uint8_t event)
         uint8_t length = 0;
         
         length = Log_Data_Vib(aData);
-        Respond_PcBox(aData, length);
+        Write_Queue_Repond_PcBox(aData, length);
         
         AppVibSensor_Debug();
         
@@ -62,8 +63,7 @@ static uint8_t fevent_vib_on_alarm(uint8_t event)
     sStatusRelay.Alarm = ON_RELAY;
     fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
     
-    fevent_active(sEventAppVibSensor, _EVENT_VIB_OFF_ALARM);
-    sEventAppVibSensor[_EVENT_VIB_OFF_ALARM].e_systick = HAL_GetTick();
+    fevent_enable(sEventAppVibSensor, _EVENT_VIB_OFF_ALARM);
     
     return 1;
 }
@@ -90,7 +90,7 @@ uint8_t Log_Data_Vib(uint8_t *aData)
     Calculator_Crc_U16(&TempCrc, aData, length);
     
     aData[length++] = TempCrc;
-    aData[length++] = TempCrc << 8;
+    aData[length++] = TempCrc >> 8;
 
       
     return length;

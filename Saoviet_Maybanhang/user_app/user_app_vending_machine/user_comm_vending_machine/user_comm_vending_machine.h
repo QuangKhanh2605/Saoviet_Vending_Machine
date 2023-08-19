@@ -13,6 +13,8 @@
 
 #define DEVICE_ID                   "SVVDMC23000001" 
 #define MAX_DCU_ID_LENGTH	        20
+#define DEFAULT_READ_EXFLASH        0xAA
+#define TIME_ONE_SECOND             1000
 /*=============== Define Obis ===============*/
 #define OBIS_TEMP_THRESHOLD         0x15
 #define OBIS_PC_BOX_FIX_MOTOR       0x16
@@ -48,6 +50,9 @@
 #define NUMBER_MAX_MOTOR            60
 #define TIME_SEND_TSVH              60000
 #define TIME_RESET_WDG              1000
+
+#define TIME_RESPOND_PC_BOX         2000    
+#define TIME_REFRESH_DCU            2*86400*TIME_ONE_SECOND
 /*=========== Define App Motor =================*/
 
 #define TIME_MOTOR_PUSH_EARLY           1000
@@ -63,6 +68,7 @@
 #define ON_RELAY            1
 #define OFF_RELAY           0
 
+#define NUMBER_RELAY        7
 /*============ Define App Door Sensor ===========*/
 #define INIT_STATUS_DOOR_SENSOR_INPUT   GPIO_PIN_RESET
 

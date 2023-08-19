@@ -57,6 +57,6 @@ extern  int16_t                 Threshold_Ctrl;
 uint8_t     AppTemperature_Task(void);
 void        ADC_Init(void);
 void        AppTemperature_Debug(void);
-
+void        Threshold_Respond_Pc_Box_Setup(void);
 #endif
 

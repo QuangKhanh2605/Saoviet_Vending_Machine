@@ -46,9 +46,9 @@ typedef struct
 
 typedef struct
 {
-    uint8_t NumEarly;           //So lan loi Push som
-    uint8_t NumLate;            //So lan loi Push muon
-    uint8_t IrSensor;           //Tong so lan dem Ir Sensor
+    uint8_t NumEarly;           //So lan loi Push som (Error)
+    uint8_t NumLate;            //So lan loi Push muon (Error)
+    uint8_t IrSensor;           //Tong so lan dem Ir Sensor (Error)
 }struct_InforMotor;
 
 typedef enum

@@ -2,7 +2,7 @@
 
 #include "user_app_ctrl_motor.h"
 #include "user_comm_vending_machine.h"
-
+#include "user_app_pc_box.h"
 /*=============Function Static==============*/
 static uint8_t fevent_motor_entry(uint8_t event);
 static uint8_t fevent_control_motor_push(uint8_t event);
@@ -14,7 +14,7 @@ sEvent_struct         sEventAppMotor[] =
 {   
   { _EVENT_MOTOR_ENTRY,               0, 0, 5,                          fevent_motor_entry},
   { _EVENT_CONTROL_MOTOR_PUSH,        0, 0, 5,                          fevent_control_motor_push}, 
-  { _EVENT_INPUT_MOTOR_PUSH,          1, 0, 5,                          fevent_input_motor_push},
+  { _EVENT_INPUT_MOTOR_PUSH,          0, 0, 5,                          fevent_input_motor_push},
   { _EVENT_MOTOR_PUSH_OFF_ERROR,      0, 0, TIME_MOTOR_PUSH_LATE,       fevent_motor_push_off_error},
   { _EVENT_RESPOND_PCBOX,             0, 0, TIME_MOTOR_RESPOND_PC_BOX,  fevent_respond_pcbox},
 };  
@@ -55,11 +55,9 @@ static uint8_t fevent_control_motor_push(uint8_t event)
         sPushMotor.IrSensor = 0;
         sPushMotor.NumHandle++;
         
-        fevent_active(sEventAppMotor, _EVENT_MOTOR_PUSH_OFF_ERROR);
-        sEventAppMotor[_EVENT_MOTOR_PUSH_OFF_ERROR].e_systick = HAL_GetTick();
+        fevent_enable(sEventAppMotor, _EVENT_MOTOR_PUSH_OFF_ERROR);
         
-        fevent_active(sEventAppMotor, _EVENT_RESPOND_PCBOX);
-        sEventAppMotor[_EVENT_RESPOND_PCBOX].e_systick = HAL_GetTick();
+        fevent_enable(sEventAppMotor, _EVENT_RESPOND_PCBOX);
         
         fevent_active(sEventAppMotor, _EVENT_INPUT_MOTOR_PUSH);
         
@@ -135,10 +133,8 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
         Calculator_Crc_U16(&TempCrc, aData, length);
         
         aData[length++] = TempCrc;
-        aData[length++] = TempCrc << 8;
-        Respond_PcBox(aData, length);
-
-        
+        aData[length++] = TempCrc >> 8;
+        Write_Queue_Repond_PcBox(aData, length);
     }
     return 1;
 }

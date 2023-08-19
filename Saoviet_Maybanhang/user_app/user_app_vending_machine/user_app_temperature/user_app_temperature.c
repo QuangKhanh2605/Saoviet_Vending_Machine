@@ -11,6 +11,7 @@
 #include "user_comm_vending_machine.h"
 #include "user_external_flash.h"
 #include "user_app_relay.h"
+#include "user_app_pc_box.h"
 
 /*============== Function Static ================*/
 static uint8_t fevent_temp_entry(uint8_t event);
@@ -128,12 +129,13 @@ static uint8_t fevent_temp_set_threshold(uint8_t event)
     int16_t threshold = 0;
     threshold = Calculator_Scale(sTemp_Thresh_Recv.Value ,sTemp_Thresh_Recv.Scale);
     Threshold_Ctrl = threshold;
-    write[0] = 0xAA;
+    write[0] = DEFAULT_READ_EXFLASH;
     write[1] = threshold >> 8;
     write[2] = threshold;
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TEMP_THRESH);
     HAL_Delay(1);
     eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_THRESH, 3);
+    Threshold_Respond_Pc_Box_Setup();
     return 1;
 }
 
@@ -141,7 +143,7 @@ static uint8_t fevent_temp_read_threshold(uint8_t event)
 {
     uint8_t read[3] = {0};
     eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_TEMP_THRESH , 3);
-    if( read[0] == 0xAA)
+    if( read[0] == DEFAULT_READ_EXFLASH)
     {
         Threshold_Ctrl  = read[1] << 8;
         Threshold_Ctrl |= read[2];
@@ -166,12 +168,10 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
         sStatusRelay.FridgeHeat = OFF_RELAY;
         fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
         
-        fevent_active(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
-        sEventAppTemperature[_EVENT_TEMP_OFF_FRIGE_FROZEN].e_systick = HAL_GetTick();
+        fevent_enable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
     }
     
-    fevent_active(sEventAppTemperature, _EVENT_TEMP_TIME_GET);
-    sEventAppTemperature[_EVENT_TEMP_TIME_GET].e_systick = HAL_GetTick();
+    fevent_enable(sEventAppTemperature, _EVENT_TEMP_TIME_GET);
     return 1;
 }
 
@@ -189,6 +189,28 @@ static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 }
 
 /*=============== Function Handle ============== */
+void Threshold_Respond_Pc_Box_Setup(void)
+{
+    uint8_t aData[5];
+    uint8_t length = 0;
+    uint16_t TempCrc = 0;
+    
+/*=============== Log ===============*/
+    
+    aData[length++] = OBIS_TEMP_THRESHOLD;
+    aData[length++] = 0x01;
+    aData[length++] = sTemp_Thresh_Recv.Value >> 8;
+    aData[length++] = sTemp_Thresh_Recv.Value;
+    aData[length++] = sTemp_Thresh_Recv.Scale;
+    
+    Calculator_Crc_U16(&TempCrc, aData, length);
+    
+    aData[length++] = TempCrc;
+    aData[length++] = TempCrc >> 8;
+    
+    Write_Queue_Repond_PcBox(aData, length);
+}
+
 void AppTemperature_Debug(void)
 {
 #ifdef  USING_APP_TEMPERATURE_DEBUG

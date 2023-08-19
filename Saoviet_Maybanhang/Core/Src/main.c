@@ -67,18 +67,6 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-typedef struct 
-{
-    uint8_t array[20];
-    uint8_t length;
-}sDataQueue;
-
-sDataQueue   checkqueue[5];
-sDataQueue    sTest;
-sDataQueue      recei;
-uint8_t test[100];
-uint8_t receive[10];
-uint8_t length=0;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -111,19 +99,9 @@ int main(void)
   MX_USART2_UART_Init();
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
-    sDataQueue checksend=
-    {
-        "123",3,
-    };
-    Struct_Queue_Type check;
-    qQueue_Create(&check, 5, sizeof(sDataQueue), (sDataQueue*)&checkqueue);
-    
-    qQueue_Send(&check, (sDataQueue*)&checksend, _TYPE_SEND_TO_END);
-    qQueue_Receive(&check ,&recei, 1);
-    length = qGet_Number_Items(&check);
-    
-    
+  
   Main_Task();
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */

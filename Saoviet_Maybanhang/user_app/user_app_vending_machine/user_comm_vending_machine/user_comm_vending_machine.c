@@ -171,6 +171,7 @@ uint8_t Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale)
     length++;
     return length;
 }
+
 uint8_t Reset_Chip (void)
 {
     __disable_irq();

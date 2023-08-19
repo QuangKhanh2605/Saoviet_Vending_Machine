@@ -5,7 +5,8 @@
 
 void SysApp_Init (void)
 {
-
+    Init_AppRelay();
+    Pc_Box_Init();
 }
 
 void SysApp_Setting (void)
@@ -22,7 +23,7 @@ void Main_Task (void)
 {
   SysApp_Init();
   SysApp_Setting();
-  HAL_Delay(500);
+  HAL_Delay(50);
   for(;;)
   {
     #ifdef USING_APP_PC_BOX

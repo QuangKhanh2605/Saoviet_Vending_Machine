@@ -24,11 +24,11 @@ typedef enum
 
 typedef struct
 {
-    uint8_t FridgeHeat;
-    uint8_t FridgeCool;
-    uint8_t Alarm;
     uint8_t Elevator;
     uint8_t Screen;
+    uint8_t FridgeCool;
+    uint8_t Alarm;
+    uint8_t FridgeHeat;
     uint8_t Lamp;
     uint8_t Warm;
 }Struct_StatusRelay;
@@ -49,11 +49,15 @@ extern Struct_StatusRelay         sStatusRelay;
 /*=============== Function handle ================*/
 
 uint8_t     AppRelay_Task(void);
-
+void        Init_AppRelay(void);
 void        On_Relay(Relay_TypeDef Relay);
 void        Off_Relay(Relay_TypeDef Relay);
 
 void        AppRelay_Debug(uint8_t Status, uint8_t Relay);
+void        Relay_Respond_Pc_Box_Control(uint8_t Obis, uint8_t Data);
 
+void        Write_Status_Relay_ExFlash(void);
+void        Read_Status_Relay_ExFlash(void);
+void        Init_StatusRelay(void);
 
 #endif

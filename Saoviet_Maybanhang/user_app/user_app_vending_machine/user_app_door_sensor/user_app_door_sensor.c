@@ -1,7 +1,7 @@
 
 #include "user_app_door_sensor.h"
 #include "user_comm_vending_machine.h"
-
+#include "user_app_pc_box.h"
 /*================= Function static ==============*/
 static uint8_t fevent_door_entry(uint8_t event);
 static uint8_t fevent_door_sensor(uint8_t event);
@@ -91,7 +91,8 @@ static uint8_t fevent_door_respond_pc_box(uint8_t event)
         uint8_t aData[5];
         uint8_t length = 0;
         length = Log_Data_Door(aData);
-        Respond_PcBox(aData, length);
+        
+        Write_Queue_Repond_PcBox(aData, length);
         
         AppDoorSensor_Debug();
     }
@@ -116,7 +117,7 @@ uint8_t Log_Data_Door(uint8_t *aData)
     Calculator_Crc_U16(&TempCrc, aData, length);
     
     aData[length++] = TempCrc;
-    aData[length++] = TempCrc << 8;
+    aData[length++] = TempCrc >> 8;
     
       
     return length;
