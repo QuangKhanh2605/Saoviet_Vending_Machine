@@ -85,10 +85,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 	if (huart->Instance == uart_debug.Instance)
 	{
-        *(sUartDebug.Data_a8 + sUartDebug.Length_u16++) = UartDebugRxByte;
-
-        if (sUartDebug.Length_u16 > (sizeof (UartDebugBuff) - 1))
-            sUartDebug.Length_u16 = 0;
+        if (sUartDebug.Length_u16 < sizeof (UartDebugBuff))
+        {
+            *(sUartDebug.Data_a8 + sUartDebug.Length_u16++) = UartDebugRxByte;
+        }
+//        if (sUartDebug.Length_u16 > (sizeof (UartDebugBuff) - 1))
+//            sUartDebug.Length_u16 = 0;
 
         HAL_UART_Receive_IT(&uart_debug, &UartDebugRxByte, 1);
         
@@ -97,10 +99,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     
     if (huart->Instance == uart_485.Instance)
 	{
-        *(sUart485.Data_a8 + sUart485.Length_u16++) = Uart485RxByte;
-
-        if (sUart485.Length_u16 >= (sizeof(Uart485Buff) - 1))
-            sUart485.Length_u16 = 0;
+        if (sUart485.Length_u16 < sizeof(Uart485Buff))
+        {
+            *(sUart485.Data_a8 + sUart485.Length_u16++) = Uart485RxByte;
+        }
+//        if (sUart485.Length_u16 >= (sizeof(Uart485Buff) - 1))
+//            sUart485.Length_u16 = 0;
         
         HAL_UART_Receive_IT(&uart_485, &Uart485RxByte, 1);
         
@@ -109,10 +113,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     
     if (huart->Instance == uart_pcbox.Instance)
 	{
-        *(sUartPcBox.Data_a8 + sUartPcBox.Length_u16++) = UartPcBoxRxByte;
-
-        if (sUartPcBox.Length_u16 >= (sizeof(UartPcBoxBuff) - 1))
-            sUartPcBox.Length_u16 = 0;
+        if (sUartPcBox.Length_u16 < sizeof(UartPcBoxBuff))
+        {
+            *(sUartPcBox.Data_a8 + sUartPcBox.Length_u16++) = UartPcBoxRxByte;
+        }
+//        if (sUartPcBox.Length_u16 >= (sizeof(UartPcBoxBuff) - 1))
+//            sUartPcBox.Length_u16 = 0;
         
         HAL_UART_Receive_IT(&uart_pcbox, &UartPcBoxRxByte, 1);
         

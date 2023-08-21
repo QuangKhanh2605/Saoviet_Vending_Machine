@@ -12,7 +12,7 @@
 #include "user_util.h"
 
 #define DEVICE_ID                   "SVVDMC23000001" 
-#define MAX_DCU_ID_LENGTH	        20
+#define MAX_LENGTH_DCU_ID	        20
 #define DEFAULT_READ_EXFLASH        0xAA
 #define TIME_ONE_SECOND             1000
 /*=============== Define Obis ===============*/
@@ -83,6 +83,16 @@
 #define DEFAULT_TEMP_SCALE              0xFF
 
 #define CALIB_TEMP                      10
+
+
+/*================== Struct Var ==================*/
+typedef enum
+{
+    _AT_REQUEST_SERIAL = 1,
+    _AT_REQUEST_SERVER = 2,
+    _AT_REQUEST_LORA = 3,
+}Kind_Request_AT_Cmd;
+
 
 /*================== Function ===========================*/
 uint8_t     Calculator_Crc_U16(uint16_t *crc, uint8_t* buf, uint16_t len);

@@ -58,6 +58,10 @@ D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_compone
 -I
 D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_queue
 -I
+D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_app\user_at_serial
+-I
+D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_app\user_app_at_debug
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\arm\inc\c
@@ -109,6 +113,10 @@ D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\user_component\user_m
 D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\user_component\user_mem\user_external_flash\external_flash_S25FL216K
 -I
 D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\user_queue
+-I
+D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\user_app\user_at_serial
+-I
+D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\user_app\user_app_at_debug
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

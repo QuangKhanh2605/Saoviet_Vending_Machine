@@ -11,10 +11,10 @@ static uint8_t fevent_door_respond_pc_box(uint8_t event);
 /*================= Struct ======================*/
 sEvent_struct           sEventAppDoorSensor[]=
 {
-  {_EVENT_DOOR_ENTRY,               1, 5, TIME_ENTRY,                  fevent_door_entry},
-  {_EVENT_DOOR_SENSOR,              0, 0, 2000,                        fevent_door_sensor},
-  {_EVENT_DOOR_CTRL_RESPOND,        0, 0, 0,                           fevent_door_ctrl_respond},
-  {_EVENT_DOOR_RESPOND_PC_BOX,      0, 0, 60000,                       fevent_door_respond_pc_box},
+  {_EVENT_DOOR_ENTRY,               1, 5, 0,                  fevent_door_entry},
+  {_EVENT_DOOR_SENSOR,              0, 0, 3000,               fevent_door_sensor},
+  {_EVENT_DOOR_CTRL_RESPOND,        0, 0, 0,                  fevent_door_ctrl_respond},
+  {_EVENT_DOOR_RESPOND_PC_BOX,      0, 0, 60000,              fevent_door_respond_pc_box},
 };
 
 StructStatusDoor        sStatusDoor = {0};

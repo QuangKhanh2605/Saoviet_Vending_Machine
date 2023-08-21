@@ -31,11 +31,12 @@ typedef enum
 
 typedef struct 
 {
-    uint8_t aData_u8[18];
+    uint8_t aData_u8[20];
     uint8_t Length;
 }sDataQueueRespondPcBox;
 
 extern sEvent_struct  sEventAppPcBox[];
+extern sData   sDCU_ID;
 /*================ Function ===================*/
 
 uint8_t     AppPcBox_Task(void);

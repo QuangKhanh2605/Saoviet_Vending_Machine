@@ -1,5 +1,4 @@
 
-
 #include "user_app_ctrl_motor.h"
 #include "user_comm_vending_machine.h"
 #include "user_app_pc_box.h"
@@ -38,31 +37,31 @@ struct_InforMotor           sInforPush = {0};
 /*================ Function Handler =================*/
 static uint8_t fevent_motor_entry(uint8_t event)
 {   
-    sInforPush.NumEarly = 0;
-    sInforPush.NumLate  = 0;
-    sInforPush.IrSensor = 0;
-    
-    sPushMotor.NumHandle = 0;
-    fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
-    sPushMotor.StatePush = ON_GOING_PUSH;
+    if(sPushMotor.Pos <= NUMBER_MAX_MOTOR)
+    {
+        sInforPush.NumEarly = 0;
+        sInforPush.NumLate  = 0;
+        sInforPush.IrSensor = 0;
+        
+        sPushMotor.NumHandle = 0;
+        fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
+        sPushMotor.StatePush = ON_GOING_PUSH;
+    }
     return 1;
 }
 
 static uint8_t fevent_control_motor_push(uint8_t event)
 {
-    if(sPushMotor.Pos <= NUMBER_MAX_MOTOR)
-    {
-        sPushMotor.IrSensor = 0;
-        sPushMotor.NumHandle++;
-        
-        fevent_enable(sEventAppMotor, _EVENT_MOTOR_PUSH_OFF_ERROR);
-        
-        fevent_enable(sEventAppMotor, _EVENT_RESPOND_PCBOX);
-        
-        fevent_active(sEventAppMotor, _EVENT_INPUT_MOTOR_PUSH);
-        
-        On_Motor_Push(sPushMotor.Pos);
-    }
+    sPushMotor.IrSensor = 0;
+    sPushMotor.NumHandle++;
+    
+    fevent_enable(sEventAppMotor, _EVENT_MOTOR_PUSH_OFF_ERROR);
+    
+    fevent_enable(sEventAppMotor, _EVENT_RESPOND_PCBOX);
+    
+    fevent_active(sEventAppMotor, _EVENT_INPUT_MOTOR_PUSH);
+    
+    On_Motor_Push(sPushMotor.Pos);
     
     return 1;
 }
@@ -100,12 +99,14 @@ static uint8_t fevent_motor_push_off_error(uint8_t event)
 
 static uint8_t fevent_respond_pcbox(uint8_t event)
 {
+    uint8_t aData[10];
+    uint8_t length = 0;
+    uint16_t TempCrc = 0;
+  
     if(sPushMotor.State == PUSH_MOTOR)
     {
         sInforPush.IrSensor += sPushMotor.IrSensor;
-        uint8_t aData[10];
-        uint8_t length = 0;
-        uint16_t TempCrc = 0;
+
         
     /*=============== Log ===============*/
         if(sPushMotor.NumHandle < sPushMotor.Num)
@@ -129,13 +130,19 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
             aData[length++] = sInforPush.NumLate;
             AppMotor_Debug();
         }
-        
-        Calculator_Crc_U16(&TempCrc, aData, length);
-        
-        aData[length++] = TempCrc;
-        aData[length++] = TempCrc >> 8;
-        Write_Queue_Repond_PcBox(aData, length);
     }
+    else
+    {
+            aData[length++] = OBIS_PC_BOX_FIX_MOTOR;
+            aData[length++] = 0x01;
+            aData[length++] = sPushMotor.Pos;
+    }
+    
+    Calculator_Crc_U16(&TempCrc, aData, length);
+        
+    aData[length++] = TempCrc;
+    aData[length++] = TempCrc >> 8;
+    Write_Queue_Repond_PcBox(aData, length);
     return 1;
 }
 

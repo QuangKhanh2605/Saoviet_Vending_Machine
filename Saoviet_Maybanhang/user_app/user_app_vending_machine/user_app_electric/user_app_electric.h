@@ -22,7 +22,8 @@ typedef enum
 
 typedef struct 
 {
-    uint16_t Value;
+    uint16_t Voltage;
+    uint16_t Current;
     uint8_t  Scale;
 }Struct_Electric_Current;
 

@@ -49,6 +49,7 @@ build stm32f4xx_hal_tim.pbi : index stm32f4xx_hal_tim.xcl
 build stm32f4xx_hal_tim_ex.pbi : index stm32f4xx_hal_tim_ex.xcl
 build stm32f4xx_hal_uart.pbi : index stm32f4xx_hal_uart.xcl
 build stm32f4xx_ll_adc.pbi : index stm32f4xx_ll_adc.xcl
+build user_app_at_debug.pbi : index user_app_at_debug.xcl
 build user_app_comm.pbi : index user_app_comm.xcl
 build user_app_ctrl_motor.pbi : index user_app_ctrl_motor.xcl
 build user_app_door_sensor.pbi : index user_app_door_sensor.xcl
@@ -59,6 +60,7 @@ build user_app_temperature.pbi : index user_app_temperature.xcl
 build user_app_vib_sensor.pbi : index user_app_vib_sensor.xcl
 build user_comm_vending_machine.pbi : index user_comm_vending_machine.xcl
 build user_irq_input.pbi : index user_irq_input.xcl
+build user_at_serial.pbi : index user_at_serial.xcl
 build user_uart.pbi : index user_uart.xcl
 build S25FL216K.pbi : index S25FL216K.xcl
 build user_external_flash.pbi : index user_external_flash.xcl
@@ -67,15 +69,17 @@ build event_driven.pbi : index event_driven.xcl
 build queue_p.pbi : index queue_p.xcl
 build onchipflash.pbi : index onchipflash.xcl
 build user_modbus_rtu.pbi : index user_modbus_rtu.xcl
+build user_string.pbi : index user_string.xcl
 build user_util.pbi : index user_util.xcl
 build Saoviet_Maybanhang_part0.pbi : link adc.pbi dma.pbi gpio.pbi main.pbi spi.pbi stm32f4xx_hal_msp.pbi stm32f4xx_it.pbi
 build Saoviet_Maybanhang_part1.pbi : link usart.pbi system_stm32f4xx.pbi stm32f4xx_hal.pbi stm32f4xx_hal_adc.pbi stm32f4xx_hal_adc_ex.pbi stm32f4xx_hal_cortex.pbi stm32f4xx_hal_dma.pbi
 build Saoviet_Maybanhang_part2.pbi : link stm32f4xx_hal_dma_ex.pbi stm32f4xx_hal_exti.pbi stm32f4xx_hal_flash.pbi stm32f4xx_hal_flash_ex.pbi stm32f4xx_hal_flash_ramfunc.pbi stm32f4xx_hal_gpio.pbi stm32f4xx_hal_pwr.pbi
 build Saoviet_Maybanhang_part3.pbi : link stm32f4xx_hal_pwr_ex.pbi stm32f4xx_hal_rcc.pbi stm32f4xx_hal_rcc_ex.pbi stm32f4xx_hal_spi.pbi stm32f4xx_hal_tim.pbi stm32f4xx_hal_tim_ex.pbi stm32f4xx_hal_uart.pbi
-build Saoviet_Maybanhang_part4.pbi : link stm32f4xx_ll_adc.pbi user_app_comm.pbi user_app_ctrl_motor.pbi user_app_door_sensor.pbi user_app_electric.pbi user_app_pc_box.pbi user_app_relay.pbi
-build Saoviet_Maybanhang_part5.pbi : link user_app_temperature.pbi user_app_vib_sensor.pbi user_comm_vending_machine.pbi user_irq_input.pbi user_uart.pbi S25FL216K.pbi user_external_flash.pbi
-build Saoviet_Maybanhang_part6.pbi : link user_internal_mem.pbi event_driven.pbi queue_p.pbi onchipflash.pbi user_modbus_rtu.pbi user_util.pbi
-build Saoviet_Maybanhang.pbd : link Saoviet_Maybanhang_part0.pbi Saoviet_Maybanhang_part1.pbi Saoviet_Maybanhang_part2.pbi Saoviet_Maybanhang_part3.pbi Saoviet_Maybanhang_part4.pbi Saoviet_Maybanhang_part5.pbi Saoviet_Maybanhang_part6.pbi
+build Saoviet_Maybanhang_part4.pbi : link stm32f4xx_ll_adc.pbi user_app_at_debug.pbi user_app_comm.pbi user_app_ctrl_motor.pbi user_app_door_sensor.pbi user_app_electric.pbi user_app_pc_box.pbi
+build Saoviet_Maybanhang_part5.pbi : link user_app_relay.pbi user_app_temperature.pbi user_app_vib_sensor.pbi user_comm_vending_machine.pbi user_irq_input.pbi user_at_serial.pbi user_uart.pbi
+build Saoviet_Maybanhang_part6.pbi : link S25FL216K.pbi user_external_flash.pbi user_internal_mem.pbi event_driven.pbi queue_p.pbi onchipflash.pbi user_modbus_rtu.pbi
+build Saoviet_Maybanhang_part7.pbi : link user_string.pbi user_util.pbi
+build Saoviet_Maybanhang.pbd : link Saoviet_Maybanhang_part0.pbi Saoviet_Maybanhang_part1.pbi Saoviet_Maybanhang_part2.pbi Saoviet_Maybanhang_part3.pbi Saoviet_Maybanhang_part4.pbi Saoviet_Maybanhang_part5.pbi Saoviet_Maybanhang_part6.pbi Saoviet_Maybanhang_part7.pbi
 build Saoviet_Maybanhang.pbw : browsedata Saoviet_Maybanhang.pbd
 
 

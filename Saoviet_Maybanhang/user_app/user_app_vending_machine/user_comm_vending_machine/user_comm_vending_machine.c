@@ -41,7 +41,6 @@ uint8_t Calculator_Crc_U8(uint8_t *crc, uint8_t* buf, uint16_t len)
 void Respond_PcBox (uint8_t *pData, uint16_t Length)
 {
     HAL_UART_Transmit(&uart_pcbox, pData, Length, 1000);
-    HAL_Delay(1);
 }
 
 /*

@@ -55,4 +55,5 @@ user_app_comm.pbi: \
   D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM/../Core/Inc\adc.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\string.h \
   C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\DLib_Product_string.h \
-  D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.h
+  D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.h \
+  D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\..\user_app\user_app_at_debug\user_app_at_debug.h

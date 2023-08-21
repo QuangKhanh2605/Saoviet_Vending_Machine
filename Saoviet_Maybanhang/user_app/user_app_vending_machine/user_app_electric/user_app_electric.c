@@ -21,8 +21,7 @@ sEvent_struct               sEventAppElectric[] =
 uint8_t Status_Supply_Power = 0;
 Struct_Electric_Current         sElectric=
 {
-  0,
-  DEFAULT_ELECTRIC_SCALE,
+  0, 0, DEFAULT_ELECTRIC_SCALE,
 };
 /*============= Function Handle =============*/
 static uint8_t fevent_electric_entry(uint8_t event)

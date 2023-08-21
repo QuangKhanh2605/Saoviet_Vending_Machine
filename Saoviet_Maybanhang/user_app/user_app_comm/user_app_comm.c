@@ -1,5 +1,6 @@
 #include "user_app_comm.h"
 #include "user_inc_vending_machine.h"
+#include "user_app_at_debug.h"
 
 /*=========================== Func App Main ========================*/
 
@@ -26,6 +27,10 @@ void Main_Task (void)
   HAL_Delay(50);
   for(;;)
   {
+    #ifdef USING_APP_AT_DEBUG
+        TaskStatus_u8 |= AppAtDebug_Task();
+    #endif
+    
     #ifdef USING_APP_PC_BOX
         TaskStatus_u8 |= AppPcBox_Task();
     #endif

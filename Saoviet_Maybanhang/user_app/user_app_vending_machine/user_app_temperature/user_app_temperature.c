@@ -125,16 +125,7 @@ static uint8_t fevent_temp_calculator(uint8_t event)
 
 static uint8_t fevent_temp_set_threshold(uint8_t event)
 {
-    uint8_t write[3]={0x00};
-    int16_t threshold = 0;
-    threshold = Calculator_Scale(sTemp_Thresh_Recv.Value ,sTemp_Thresh_Recv.Scale);
-    Threshold_Ctrl = threshold;
-    write[0] = DEFAULT_READ_EXFLASH;
-    write[1] = threshold >> 8;
-    write[2] = threshold;
-    eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TEMP_THRESH);
-    HAL_Delay(1);
-    eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_THRESH, 3);
+    Set_Threshold_Temperature(sTemp_Thresh_Recv.Value, sTemp_Thresh_Recv.Scale);
     Threshold_Respond_Pc_Box_Setup();
     return 1;
 }
@@ -189,6 +180,19 @@ static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 }
 
 /*=============== Function Handle ============== */
+void Set_Threshold_Temperature(int16_t temp, uint8_t scale)
+{
+    uint8_t write[3]={0x00};
+    int16_t threshold = 0;
+    threshold = Calculator_Scale(temp , scale);
+    Threshold_Ctrl = threshold;
+    write[0] = DEFAULT_READ_EXFLASH;
+    write[1] = threshold >> 8;
+    write[2] = threshold;
+    eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TEMP_THRESH);
+    eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_THRESH, 3);
+}
+
 void Threshold_Respond_Pc_Box_Setup(void)
 {
     uint8_t aData[5];

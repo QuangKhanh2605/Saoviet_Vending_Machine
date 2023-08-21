@@ -31,7 +31,7 @@ sEvent_struct               sEventAppPcBox[]=
   {_EVENT_QUEUE_RESPOND_IMMEDIATELY,    1, 0, 5,                    fevent_queue_respond_immediately},
   {_EVENT_QUEUE_RESPOND_TIME,           0, 0, TIME_RESPOND_PC_BOX,  fevent_queue_respond_time},
   
-  {_EVENT_REFRESH_DCU,                  0, 5, 70000,     fevent_refresh_dcu},
+  {_EVENT_REFRESH_DCU,                  0, 5, TIME_REFRESH_DCU,     fevent_refresh_dcu},
 };
 
 uint8_t     aBuffer_Ping[20];
@@ -40,7 +40,7 @@ sData       sBuffer_Ping=
     .Data_a8    = aBuffer_Ping,
     .Length_u16 = 0,
 };
-uint8_t aDCU_ID[MAX_DCU_ID_LENGTH] = DEVICE_ID;
+uint8_t aDCU_ID[MAX_LENGTH_DCU_ID] = DEVICE_ID;
 sData   sDCU_ID=
 {
     .Data_a8 = &aDCU_ID[0], 
@@ -194,7 +194,8 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   Length_Data = sUartPcBox.Data_a8[pos++];
                   if(Length_Data == 0x03 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
                   {
-                        sTemp_Thresh_Recv.Value  =  sUartPcBox.Data_a8[pos++] << 8;
+                        sTemp_Thresh_Recv.Value  =  sUartPcBox.Data_a8[pos++];
+                        sTemp_Thresh_Recv.Value  =  sTemp_Thresh_Recv.Value << 8;
                         sTemp_Thresh_Recv.Value |=  sUartPcBox.Data_a8[pos++];
                         sTemp_Thresh_Recv.Scale  =  sUartPcBox.Data_a8[pos++];
                         fevent_active(sEventAppTemperature , _EVENT_TEMP_SET_THRESHOLD);
@@ -233,7 +234,10 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                         sDCU_ID.Length_u16 = 0;
                         while(Length_Data > 0)
                         {
-                            sDCU_ID.Data_a8[sDCU_ID.Length_u16++] = sUartPcBox.Data_a8[pos++];
+                            if(sDCU_ID.Length_u16 < MAX_LENGTH_DCU_ID)
+                            {
+                              sDCU_ID.Data_a8[sDCU_ID.Length_u16++] = sUartPcBox.Data_a8[pos++];
+                            }
                             Length_Data--;
                         }
                         fevent_active(sEventAppPcBox , _EVENT_PC_BOX_SET_DCU_ID);
@@ -284,7 +288,7 @@ static uint8_t fevent_pcbox_ping(uint8_t event)
 
 static uint8_t fevent_pcbox_set_dcu_ID(uint8_t event)
 {
-    uint8_t write[MAX_DCU_ID_LENGTH+2] = {0};
+    uint8_t write[MAX_LENGTH_DCU_ID+2] = {0};
     write[0]= DEFAULT_READ_EXFLASH;
     write[1]= sDCU_ID.Length_u16;
    
@@ -294,6 +298,7 @@ static uint8_t fevent_pcbox_set_dcu_ID(uint8_t event)
     }
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_MAIN_ID);
     eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_MAIN_ID, sDCU_ID.Length_u16+2);
+    
     Write_Queue_Repond_PcBox(sDCU_ID.Data_a8,sDCU_ID.Length_u16);
     return 1;
 }
@@ -395,9 +400,11 @@ uint8_t Log_TSVH(uint8_t *aData)
     aData[length++] = sTemperature.Value >> 8;
     aData[length++] = sTemperature.Value;
     aData[length++] = DEFAULT_TEMP_SCALE;
-    
-    aData[length++] = sElectric.Value >> 8;
-    aData[length++] = sElectric.Value;
+
+    aData[length++] = sElectric.Current >> 8;
+    aData[length++] = sElectric.Current;
+    aData[length++] = sElectric.Voltage >> 8;
+    aData[length++] = sElectric.Voltage;
     aData[length++] = sElectric.Scale;
     
     aData[1] = length - 2;
@@ -417,8 +424,8 @@ void Pc_Box_Init(void)
 
 void Init_DCU_ID(void)
 {
-    uint8_t read[MAX_DCU_ID_LENGTH+2] = {0};
-    eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_MAIN_ID , MAX_DCU_ID_LENGTH+2);
+    uint8_t read[MAX_LENGTH_DCU_ID+2] = {0};
+    eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_MAIN_ID , MAX_LENGTH_DCU_ID+2);
     
     if(read[0] == DEFAULT_READ_EXFLASH)
     {
@@ -442,11 +449,11 @@ void Init_DCU_ID(void)
     }
 }
 
-
 void AppPcBox_Debug(void)
 {
 #ifdef USING_APP_PC_BOX_DEBUG
 
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_pc_box: Recv: ", sizeof("app_pc_box: Recv: "));
     uint8_t array[50]={0};
     sData sSource=
     {
@@ -454,11 +461,14 @@ void AppPcBox_Debug(void)
     };
     if(sUartPcBox.Length_u16 < 25)
     {
-      Convert_Hex_To_String_Hex(&sSource, &sUartPcBox);
+        Convert_Hex_To_String_Hex(&sSource, &sUartPcBox);
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)sSource.Data_a8, sSource.Length_u16);
     }
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_pc_box: Recv: ", sizeof("app_pc_box: Recv: "));
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)sSource.Data_a8, sSource.Length_u16);
-    
+    else
+    {
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Data Large", sizeof("Data Large"));
+    }
+
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
     HAL_Delay(1);
 #endif

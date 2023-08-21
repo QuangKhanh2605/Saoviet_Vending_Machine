@@ -1300,6 +1300,15 @@
     <group>
         <name>user_app</name>
         <group>
+            <name>user_app_at_debug</name>
+            <file>
+                <name>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.h</name>
+            </file>
+        </group>
+        <group>
             <name>user_app_common</name>
             <file>
                 <name>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.c</name>
@@ -1396,6 +1405,15 @@
             </file>
         </group>
         <group>
+            <name>user_at_serial</name>
+            <file>
+                <name>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.h</name>
+            </file>
+        </group>
+        <group>
             <name>user_uart</name>
             <file>
                 <name>$PROJ_DIR$\..\user_app\user_uart\user_uart.c</name>
@@ -1469,6 +1487,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\user_util\user_modbus_rtu.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_string.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_string.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\user_util\user_util.c</name>
