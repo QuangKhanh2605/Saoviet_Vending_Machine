@@ -55,7 +55,7 @@ static uint16_t         RELAY_PIN[NUMBER_RELAY] = {ON_OFF_PC_Pin,
 /*================= Function Handle ==============*/
 static uint8_t fevent_relay_entry(uint8_t event)
 {
-    Respond_PcBox((uint8_t*)"ON",2);
+    Write_Queue_Repond_PcBox((uint8_t*)"ON",2);
     return 1;
 }
 

@@ -16,9 +16,16 @@ typedef enum
     _EVENT_ELECTRIC_TRANSMIT_485,
     _EVENT_ELECTRIC_RECEIVE_485,
     _EVENT_ELECTRIC_HANDLE_485,
+    _EVENT_ELECTRIC_OFF_POWER,
     
     _EVENT_ELECTRIC_END,
 }eKindEventElectric;
+
+typedef enum
+{
+    POWER_OFF = 0,
+    POWER_ON,
+}eStatusPower;
 
 typedef struct 
 {
@@ -35,5 +42,6 @@ extern uint8_t                      Status_Supply_Power;
 uint8_t     AppElectric_Task(void);
 void        Send_Command_IVT (uint8_t SlaveID, uint8_t Func_Code, uint16_t Addr_Register, uint16_t Infor_Register, void (*pFuncResetRecvData) (void));
 void        AppIVT_Clear_Before_Recv (void);
+uint8_t     Status_Power_Respond_PcBox(uint8_t aData[]);
 #endif
 

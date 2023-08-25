@@ -326,7 +326,7 @@ static uint8_t fevent_queue_respond_immediately(uint8_t event)
     {
         qQueue_Receive(&qRespondPcBox ,&sQueueReadData, 1);
         Respond_PcBox(sQueueReadData.aData_u8,sQueueReadData.Length);
-        
+
         fevent_enable(sEventAppPcBox, _EVENT_QUEUE_RESPOND_TIME);
         return 1;
     }
@@ -345,7 +345,7 @@ static uint8_t fevent_queue_respond_time(uint8_t event)
     {
         qQueue_Receive(&qRespondPcBox ,&sQueueReadData, 1);
         Respond_PcBox(sQueueReadData.aData_u8,sQueueReadData.Length);
-        
+
         fevent_enable(sEventAppPcBox, _EVENT_QUEUE_RESPOND_TIME);
     }
     return 1;

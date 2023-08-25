@@ -36,6 +36,7 @@
 #define OBIS_GET_DCU_ID             0x0C
 #define OBIS_SET_DCU_ID             0x0D
 #define OBIS_RESET_DCU              0x0E
+#define OBIS_WARNING_POWER          0x0F
 /*=============== Define Using Debug ==============*/
 #define USING_APP_CTRL_MOTOR_DEBUG
 #define USING_APP_DOOR_SENSOR_DEBUG
