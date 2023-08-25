@@ -148,11 +148,13 @@ static uint8_t fevent_on_off_relay_lamp(uint8_t event)
     {
         On_Relay(RELAY_LAMP);
         AppRelay_Debug(ON_RELAY, RELAY_LAMP);
+        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_LAMP, ON_RELAY);
     }
     else if(sStatusRelay.Lamp == OFF_RELAY)
     {
         Off_Relay(RELAY_LAMP);
         AppRelay_Debug(OFF_RELAY, RELAY_LAMP);
+        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_LAMP, OFF_RELAY);
     }
     
     return 1;
@@ -164,11 +166,13 @@ static uint8_t fevent_on_off_relay_warm(uint8_t event)
     {
         On_Relay(RELAY_WARM);
         AppRelay_Debug(ON_RELAY, RELAY_WARM);
+        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_WARM, OFF_RELAY);
     }
     else if(sStatusRelay.Warm == OFF_RELAY)
     {
         Off_Relay(RELAY_WARM);
         AppRelay_Debug(OFF_RELAY, RELAY_WARM);
+        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_WARM, OFF_RELAY);
     }
     
     return 1;

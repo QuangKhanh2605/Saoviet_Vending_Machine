@@ -23,10 +23,10 @@ uint8_t 		aDATA_CONFIG[128];
 /*=============== Function Handle Receive =============*/
 void        _fRESET_DCU (sData *strRecei, uint16_t Pos)
 {
-    Write_Status_Relay_ExFlash();
-    Reset_Chip();
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    Write_Status_Relay_ExFlash();
+    Reset_Chip();
 }
 
 void        _fGET_SERI_DCU (sData *strRecei, uint16_t Pos)

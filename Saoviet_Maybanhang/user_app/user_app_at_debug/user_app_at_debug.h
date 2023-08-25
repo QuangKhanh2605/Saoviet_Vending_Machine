@@ -20,7 +20,7 @@ typedef enum
     _EVENT_AT_DEBUG_END,
 }eKindEventAtDebug;
 
-extern sEvent_struct  sEventAppAtSerial[];
+extern sEvent_struct  sEventAppAtDebug[];
 
 /*================== Function Handle ===============*/
 uint8_t     AppAtDebug_Task(void);
