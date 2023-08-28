@@ -17,8 +17,8 @@
 static uint8_t fevent_temp_entry(uint8_t event);
 static uint8_t fevent_temp_get_adc(uint8_t event);
 static uint8_t fevent_temp_calculator(uint8_t event);
-static uint8_t fevent_temp_set_threshold(uint8_t event);
-static uint8_t fevent_temp_read_threshold(uint8_t event);
+static uint8_t fevent_temp_set_setuptemp(uint8_t event);
+static uint8_t fevent_temp_read_setuptemp(uint8_t event);
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event);
 static uint8_t fevent_temp_time_get(uint8_t event);
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event);
@@ -29,8 +29,8 @@ sEvent_struct                   sEventAppTemperature[] =
   {_EVENT_TEMP_GET_ADC,         0, 0, 10,                   fevent_temp_get_adc},
   {_EVENT_TEMP_CALCULATOR,      0, 0, 0,                    fevent_temp_calculator},
     
-  {_EVENT_TEMP_SET_THRESHOLD,   0, 0, 0,                    fevent_temp_set_threshold},
-  {_EVENT_TEMP_READ_THRESHOLD,  1, 0, 0,                    fevent_temp_read_threshold},
+  {_EVENT_TEMP_SET_SETUPTEMP,   0, 0, 0,                    fevent_temp_set_setuptemp},
+  {_EVENT_TEMP_READ_SETUPTEMP,  1, 0, 0,                    fevent_temp_read_setuptemp},
   
   {_EVENT_TEMP_CTRL_FRIDGE,     0, 0, 0,                    fevent_temp_ctrl_fridge},
   
@@ -42,7 +42,7 @@ uint32_t ADC_Temp[3]={0};
 uint32_t ADC_Avg[3]={0};
 Struct_Temperature      sTemperature={0};
 Struct_Temperature      sTemp_Thresh_Recv={0};
-int16_t Threshold_Ctrl = DEFAULT_THRESHOLD;
+Struct_Control_Fridge   sTemp_Crtl_Fridge={DEFAULT_SETUP_TEMP, DEFAULT_THRESH_TEMP};
 /*=================== Function Handle ============*/
 static uint8_t fevent_temp_entry(uint8_t event)
 {
@@ -65,17 +65,18 @@ static uint8_t fevent_temp_get_adc(uint8_t event)
     status = HAL_ADC_Start_DMA(&ADC_TEMPERATURE, (uint32_t*)ADC_Temp, 3);
     if( status == HAL_OK)
     {
-        count++;
         ADC_Avg[0] += ADC_Temp[0];
         ADC_Avg[1] += ADC_Temp[1];
         ADC_Avg[2] += ADC_Temp[2];
-        if(count >= NUM_SAMPLING_ADC)
-        {
-            count = 0;
-            fevent_active(sEventAppTemperature, _EVENT_TEMP_CALCULATOR);
-            return 1;
-        }
+    } 
+    count++;
+    if(count >= NUM_SAMPLING_ADC)
+    {
+        count = 0;
+        fevent_active(sEventAppTemperature, _EVENT_TEMP_CALCULATOR);
+        return 1;
     }
+    
     fevent_enable(sEventAppTemperature, event);
     return 1;
 }
@@ -123,28 +124,29 @@ static uint8_t fevent_temp_calculator(uint8_t event)
     return 1;
 }
 
-static uint8_t fevent_temp_set_threshold(uint8_t event)
+static uint8_t fevent_temp_set_setuptemp(uint8_t event)
 {
     Set_Threshold_Temperature(sTemp_Thresh_Recv.Value, sTemp_Thresh_Recv.Scale);
     Threshold_Respond_Pc_Box_Setup();
     return 1;
 }
 
-static uint8_t fevent_temp_read_threshold(uint8_t event)
+static uint8_t fevent_temp_read_setuptemp(uint8_t event)
 {
-    uint8_t read[3] = {0};
-    eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_TEMP_THRESH , 3);
+    uint8_t read[4] = {0};
+    eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_TEMP_THRESH , 4);
     if( read[0] == DEFAULT_READ_EXFLASH)
     {
-        Threshold_Ctrl  = read[1] << 8;
-        Threshold_Ctrl |= read[2];
+        sTemp_Crtl_Fridge.TempSetup  = read[1] << 8;
+        sTemp_Crtl_Fridge.TempSetup |= read[2];
+        sTemp_Crtl_Fridge.Threshold  = read[3];
     }
     return 1;
 }
 
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
 {
-    if(sTemperature.Value > Threshold_Ctrl + THRESHOLD_UPPER)
+    if(sTemperature.Value > sTemp_Crtl_Fridge.TempSetup + sTemp_Crtl_Fridge.Threshold)
     {
         sStatusRelay.FridgeHeat = ON_RELAY;
         fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
@@ -153,8 +155,10 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
         fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
         
         fevent_disable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
+        
+        sStatusApp.Temperature = BUSY;
     }
-    else if(sTemperature.Value < Threshold_Ctrl - THRESHOLD_LOWER)
+    else if(sTemperature.Value < sTemp_Crtl_Fridge.TempSetup - sTemp_Crtl_Fridge.Threshold)
     {
         sStatusRelay.FridgeHeat = OFF_RELAY;
         fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
@@ -176,21 +180,23 @@ static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 {
     sStatusRelay.FridgeCool = OFF_RELAY;
     fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
+    sStatusApp.Temperature = FREE;
     return 1;
 }
 
 /*=============== Function Handle ============== */
 void Set_Threshold_Temperature(int16_t temp, uint8_t scale)
 {
-    uint8_t write[3]={0x00};
+    uint8_t write[4]={0x00};
     int16_t threshold = 0;
     threshold = Calculator_Scale(temp , scale);
-    Threshold_Ctrl = threshold;
+    sTemp_Crtl_Fridge.TempSetup = threshold;
     write[0] = DEFAULT_READ_EXFLASH;
-    write[1] = threshold >> 8;
-    write[2] = threshold;
+    write[1] = sTemp_Crtl_Fridge.TempSetup >> 8;
+    write[2] = sTemp_Crtl_Fridge.TempSetup;
+    write[3] = sTemp_Crtl_Fridge.Threshold;
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TEMP_THRESH);
-    eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_THRESH, 3);
+    eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_THRESH, 4);
 }
 
 void Threshold_Respond_Pc_Box_Setup(void)
@@ -224,8 +230,8 @@ void AppTemperature_Debug(void)
     length = Convert_Int_To_String_Scale(cData, (int)sTemperature.Value, 0xFF);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_temperature: ", sizeof("app_temperature: "));
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Threshold: ", sizeof(" Threshold: "));
-    length = Convert_Int_To_String_Scale(cData, (int)Threshold_Ctrl, 0xFF);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" SetupTemp: ", sizeof(" SetupTemp: "));
+    length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.TempSetup , 0xFF);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
 #endif

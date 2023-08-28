@@ -129,6 +129,7 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
             aData[length++] = sInforPush.NumEarly;
             aData[length++] = sInforPush.NumLate;
             AppMotor_Debug();
+            sStatusApp.Motor = FREE;
         }
     }
     else
@@ -136,6 +137,7 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
             aData[length++] = OBIS_PC_BOX_FIX_MOTOR;
             aData[length++] = 0x01;
             aData[length++] = sPushMotor.Pos;
+            sStatusApp.Motor = FREE;
     }
     
     Calculator_Crc_U16(&TempCrc, aData, length);

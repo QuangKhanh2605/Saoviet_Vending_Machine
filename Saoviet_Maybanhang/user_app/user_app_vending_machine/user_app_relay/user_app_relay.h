@@ -8,6 +8,8 @@
 #include "event_driven.h"
 #include "user_util.h"
 
+#define  TIME_LED_STATUS    2000
+
 typedef enum
 {
     _EVENT_RELAY_ENTRY,
@@ -19,8 +21,17 @@ typedef enum
     _EVENT_ON_OFF_RELAY_LAMP,
     _EVENT_ON_OFF_RELAY_WARM,
     
+    _EVENT_CONTROL_LED_STATUS,
+    
     _EVENT_RELAY_END,
 }eKindEventRelay;
+
+typedef enum
+{
+    _LED_STATUS,
+    _LED_1,
+    _LED_2,
+} Led_TypeDef;
 
 typedef struct
 {
@@ -59,5 +70,9 @@ void        Relay_Respond_Pc_Box_Control(uint8_t Obis, uint8_t Data);
 void        Write_Status_Relay_ExFlash(void);
 void        Read_Status_Relay_ExFlash(void);
 void        Init_StatusRelay(void);
+
+void        LED_Toggle (Led_TypeDef Led);
+void        LED_On (Led_TypeDef Led);
+void        LED_Off (Led_TypeDef Led);
 
 #endif

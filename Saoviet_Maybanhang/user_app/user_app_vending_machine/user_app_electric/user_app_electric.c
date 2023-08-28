@@ -2,6 +2,7 @@
 #include "user_modbus_rtu.h"
 #include "user_comm_vending_machine.h"
 #include "user_app_pc_box.h"
+#include "user_external_flash.h"
 /*============== Function static =============*/
 static uint8_t fevent_electric_entry(uint8_t event);
 static uint8_t fevent_electric_pgood(uint8_t event);
@@ -18,13 +19,16 @@ sEvent_struct               sEventAppElectric[] =
   {_EVENT_ELECTRIC_RECEIVE_485,     1, 0, 5,           fevent_electric_receive_485},
   {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 5,           fevent_electric_handle},
   
-  {_EVENT_ELECTRIC_OFF_POWER,       1, 0, 2000,        fevent_electric_off_power},
+  {_EVENT_ELECTRIC_OFF_POWER,       1, 0, 100,         fevent_electric_off_power},
 };
 
-uint8_t Status_Supply_Power = POWER_ON;
 Struct_Electric_Current         sElectric=
 {
-  0, 0, DEFAULT_ELECTRIC_SCALE,
+  .Voltage = 0, 
+  .Current = 0, 
+  .Scale = DEFAULT_ELECTRIC_SCALE,
+  .PowerPresent = POWER_ON,
+  .PowerBefore  = POWER_ON,
 };
 /*============= Function Handle =============*/
 static uint8_t fevent_electric_entry(uint8_t event)
@@ -57,11 +61,11 @@ static uint8_t fevent_electric_pgood(uint8_t event)
             count_handle = NUMBER_SPLG_PGOOD_SENSOR_INPUT;
             if(status_current == INIT_STATUS_PGOOD_SENSOR_INPUT)
             {
-                Status_Supply_Power = 1;
+                sElectric.PowerPresent = 1;
             }
             else
             {
-                Status_Supply_Power = 0;
+                sElectric.PowerPresent = 0;
             }
         }
     }
@@ -112,19 +116,16 @@ static uint8_t fevent_electric_handle(uint8_t event)
 
 static uint8_t fevent_electric_off_power(uint8_t event)
 {
-    static uint8_t Status_Power_Current = POWER_ON;
-    static uint8_t Statuc_Power_Before  = POWER_ON;
-    
-    Status_Power_Current = Status_Supply_Power;
-    if(Status_Power_Current != Statuc_Power_Before)
+    if(sElectric.PowerPresent != sElectric.PowerBefore)
     {
         uint8_t aData[5]={0};
         uint8_t length = 0;
         length = Status_Power_Respond_PcBox(aData);
         Write_Queue_Repond_PcBox(aData, length);
+        Write_Status_Electric_ExFlash();
     }
        
-    Statuc_Power_Before = Status_Power_Current;
+    sElectric.PowerBefore = sElectric.PowerPresent;
     
     fevent_enable(sEventAppElectric, event);
     return 1;
@@ -136,7 +137,7 @@ uint8_t  Status_Power_Respond_PcBox(uint8_t aData[])
     uint16_t TempCrc = 0;
     aData[length++] = OBIS_WARNING_POWER;
     aData[length++] = 0x01;
-    aData[length++] = Status_Supply_Power;
+    aData[length++] = sElectric.PowerPresent;
     
     Calculator_Crc_U16(&TempCrc, aData, length);
     
@@ -170,6 +171,36 @@ void AppIVT_Clear_Before_Recv (void)
 }
 
 /*============== Function Handle ==============*/ 
+void Write_Status_Electric_ExFlash(void)
+{
+    uint8_t aWrite[9]={0};
+    aWrite[0] = DEFAULT_READ_EXFLASH;
+    aWrite[1] = NUMBER_RELAY;
+    aWrite[2] = sElectric.PowerPresent;
+    eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_STATUS_ELECTRIC);
+    HAL_Delay(1);
+    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_STATUS_ELECTRIC, 3);
+}
+
+void Read_Status_Electric_ExFlash(void)
+{
+    uint8_t aRead[9] = {0};
+    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_ELECTRIC, 3);
+    if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == NUMBER_RELAY)
+    {
+        if(aRead[2] <= 0x01) 
+        {
+          sElectric.PowerPresent  = aRead[2];
+          sElectric.PowerBefore   = aRead[2];
+        }
+    }
+}
+
+void Init_AppElectric(void)
+{
+    Read_Status_Electric_ExFlash();
+}
+
 uint8_t  AppElectric_Task(void)
 {
   

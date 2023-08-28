@@ -29,6 +29,20 @@ typedef enum
     _EVENT_PC_BOX_END,
 }eKindEventPcBox;
 
+typedef enum
+{
+    FREE = 0,
+    BUSY,
+}eStatusApp;
+
+typedef struct
+{
+    uint8_t Motor;
+    uint8_t Door;
+    uint8_t Temperature;
+    uint8_t Electric;
+}StructStatusApp;
+
 typedef struct 
 {
     uint8_t aData_u8[20];
@@ -37,6 +51,7 @@ typedef struct
 
 extern sEvent_struct  sEventAppPcBox[];
 extern sData   sDCU_ID;
+extern StructStatusApp  sStatusApp;
 /*================ Function ===================*/
 
 uint8_t     AppPcBox_Task(void);
@@ -45,4 +60,5 @@ void        Pc_Box_Init(void);
 uint8_t     Log_TSVH(uint8_t *aData);
 void        AppPcBox_Debug(void);
 void        Write_Queue_Repond_PcBox(uint8_t aData[], uint8_t Length);
+void        Save_ExFlash_Config_App(void);
 #endif

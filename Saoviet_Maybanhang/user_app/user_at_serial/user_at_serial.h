@@ -15,6 +15,9 @@ typedef enum
     _GET_SERI_DCU,
     _SET_SERI_DCU,
     
+    _GET_SETUP_TEMP,
+    _SET_SETUP_TEMP,
+    
     _GET_THRESH_TEMP,
     _SET_THRESH_TEMP,
     
@@ -35,6 +38,9 @@ uint8_t     Check_AT_User(sData *StrUartRecei, uint8_t Type);
 void        _fRESET_DCU(sData *strRecei, uint16_t Pos);
 void        _fGET_SERI_DCU (sData *strRecei, uint16_t Pos);
 void        _fSET_SERI_DCU (sData *strRecei, uint16_t Pos);
+
+void        _fGET_SETUP_TEMP (sData *strRecei, uint16_t Pos);
+void        _fSET_SETUP_TEMP (sData *strRecei, uint16_t Pos);
 
 void        _fGET_THRESH_TEMP (sData *strRecei, uint16_t Pos);
 void        _fSET_THRESH_TEMP (sData *strRecei, uint16_t Pos);

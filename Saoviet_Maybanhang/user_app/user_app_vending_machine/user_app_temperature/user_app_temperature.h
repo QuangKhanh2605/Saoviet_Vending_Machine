@@ -18,12 +18,10 @@
 #define VDDA_VREFINT_CAL        ((uint32_t) 3300)  
 #define NUM_SAMPLING_ADC        100
 
-#define DEFAULT_THRESHOLD       50
+#define DEFAULT_SETUP_TEMP      50
+#define DEFAULT_THRESH_TEMP     25
 #define TIME_ONE_MINUTES        60*1000
 #define TIME_OFF_FROZEN         10*TIME_ONE_MINUTES
-
-#define THRESHOLD_UPPER         25
-#define THRESHOLD_LOWER         25
 
 #define TIME_GET_TEMP           30000
 
@@ -33,8 +31,8 @@ typedef enum
     _EVENT_TEMP_GET_ADC,
     _EVENT_TEMP_CALCULATOR,
     
-    _EVENT_TEMP_SET_THRESHOLD,
-    _EVENT_TEMP_READ_THRESHOLD,
+    _EVENT_TEMP_SET_SETUPTEMP,
+    _EVENT_TEMP_READ_SETUPTEMP,
     
     _EVENT_TEMP_CTRL_FRIDGE,
     _EVENT_TEMP_TIME_GET,
@@ -49,10 +47,16 @@ typedef struct
     uint8_t Scale;
 }Struct_Temperature;
 
+typedef struct
+{
+    int16_t TempSetup;
+    uint8_t Threshold;
+}Struct_Control_Fridge;
+
 extern  sEvent_struct           sEventAppTemperature[];
 extern  Struct_Temperature      sTemp_Thresh_Recv;
 extern  Struct_Temperature      sTemperature;
-extern  int16_t                 Threshold_Ctrl;
+extern  Struct_Control_Fridge   sTemp_Crtl_Fridge;
 /*=============== Function ================*/
 uint8_t     AppTemperature_Task(void);
 void        ADC_Init(void);

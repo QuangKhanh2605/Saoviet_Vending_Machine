@@ -8,6 +8,7 @@ void SysApp_Init (void)
 {
     Init_AppRelay();
     Pc_Box_Init();
+    Init_AppElectric();
 }
 
 void SysApp_Setting (void)

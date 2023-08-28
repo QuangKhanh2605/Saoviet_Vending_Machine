@@ -25,13 +25,13 @@ sEvent_struct               sEventAppPcBox[]=
   {_EVENT_PC_BOX_PING,                  0, 0, 5,                    fevent_pcbox_ping},
   {_EVENT_PC_BOX_SET_DCU_ID,            0, 0, 5,                    fevent_pcbox_set_dcu_ID},
   {_EVENT_PC_BOX_GET_DCU_ID,            0, 0, 5,                    fevent_pcbox_get_dcu_ID},
-  {_EVENT_WDG_STM32F4,                  0, 0, TIME_RESET_WDG,       fevent_wdg_stm32f4},
-  {_EVENT_RESET_DCU,                    0, 0, 2000,                 fevent_reset_dcu},
+  {_EVENT_WDG_STM32F4,                  1, 0, TIME_RESET_WDG,       fevent_wdg_stm32f4},
+  {_EVENT_RESET_DCU,                    0, 5, 2000,                 fevent_reset_dcu},
   
   {_EVENT_QUEUE_RESPOND_IMMEDIATELY,    1, 0, 5,                    fevent_queue_respond_immediately},
   {_EVENT_QUEUE_RESPOND_TIME,           0, 0, TIME_RESPOND_PC_BOX,  fevent_queue_respond_time},
   
-  {_EVENT_REFRESH_DCU,                  0, 5, TIME_REFRESH_DCU,     fevent_refresh_dcu},
+  {_EVENT_REFRESH_DCU,                  1, 5, TIME_REFRESH_DCU,     fevent_refresh_dcu},
 };
 
 uint8_t     aBuffer_Ping[20];
@@ -50,7 +50,7 @@ sDataQueueRespondPcBox          sQueueRespondPcBox[20];
 sDataQueueRespondPcBox          sQueueReadData;
 Struct_Queue_Type               qRespondPcBox;
 
-uint32_t Flag_Refresh_Dcu = 0;
+StructStatusApp                 sStatusApp = {FREE};
 /*============== Function Static ===========*/
 static uint8_t fevent_pcbox_entry(uint8_t event)
 {
@@ -115,6 +115,8 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {
                     if(sPushMotor.StatePush == COMPLETE_PUSH)
                     {
+                        sStatusApp.Motor      = BUSY;
+                          
                         sPushMotor.State      = FIX_MOTOR;
                         sPushMotor.StatePush  = ON_GOING_PUSH;
                         sPushMotor.Pos        = sUartPcBox.Data_a8[pos];
@@ -132,6 +134,8 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {
                     if(sPushMotor.StatePush == COMPLETE_PUSH)
                     {
+                        sStatusApp.Motor      = BUSY;
+                        
                         sPushMotor.State      = PUSH_MOTOR;
                         sPushMotor.StatePush  = ON_GOING_PUSH;
                         sPushMotor.Pos        = sUartPcBox.Data_a8[pos];
@@ -147,7 +151,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   Length_Data = sUartPcBox.Data_a8[pos++];
                   if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
                   {              
-                        fevent_active(sEventAppPcBox, _EVENT_RESET_DCU);
+                        fevent_enable(sEventAppPcBox, _EVENT_RESET_DCU);
                   }
                   break; 
                   
@@ -198,7 +202,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                         sTemp_Thresh_Recv.Value  =  sTemp_Thresh_Recv.Value << 8;
                         sTemp_Thresh_Recv.Value |=  sUartPcBox.Data_a8[pos++];
                         sTemp_Thresh_Recv.Scale  =  sUartPcBox.Data_a8[pos++];
-                        fevent_active(sEventAppTemperature , _EVENT_TEMP_SET_THRESHOLD);
+                        fevent_active(sEventAppTemperature , _EVENT_TEMP_SET_SETUPTEMP);
                   }
                   break;
                   
@@ -267,7 +271,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
 static uint8_t fevent_pcbox_log_tsvh(uint8_t event)
 {
     uint8_t length=0;
-    uint8_t aData[50]={0};
+    uint8_t aData[25]={0};
     length = Log_TSVH(aData);
     Write_Queue_Repond_PcBox(aData, length);
     fevent_enable(sEventAppPcBox, _EVENT_PC_BOX_LOG_TSVH);
@@ -313,7 +317,7 @@ static uint8_t fevent_reset_dcu(uint8_t event)
 {
     if(qGet_Number_Items(&qRespondPcBox) == 0)
     {
-        Write_Status_Relay_ExFlash();
+        Save_ExFlash_Config_App();
         Reset_Chip();
     }
     fevent_active(sEventAppPcBox, event);
@@ -353,16 +357,19 @@ static uint8_t fevent_queue_respond_time(uint8_t event)
 
 static uint8_t fevent_refresh_dcu(uint8_t event)
 {
-    if(Flag_Refresh_Dcu == 0)
+    if(sStatusApp.Motor == FREE && sStatusApp.Door == FREE 
+       && sStatusApp.Electric == FREE && sStatusApp.Temperature == FREE)
     {
-        fevent_active(sEventAppPcBox, _EVENT_RESET_DCU);
+      if(HAL_GetTick() - sEventAppPcBox[_EVENT_PC_BOX_LOG_TSVH].e_systick >=  TIME_SEND_TSVH - TIME_ENTRY)
+      {
+        fevent_enable(sEventAppPcBox, _EVENT_RESET_DCU);
         fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
         fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_COMPLETE_RECEIVE);
+        return 1;
+      }
     }
-    else
-    {
-        fevent_enable(sEventAppPcBox, event);
-    }
+    
+    fevent_active(sEventAppPcBox, event);
     return 1;
 }
 /*================= Function Handle ================*/
@@ -388,15 +395,15 @@ uint8_t Log_TSVH(uint8_t *aData)
     
     aData[length++] = OBIS_TSVH_PC_BOX;
     aData[length++] = 0x00;
-    aData[length++] = Status_Supply_Power;
+    aData[length++] = sElectric.PowerPresent;
     aData[length++] = sStatusRelay.Screen;
     aData[length++] = sStatusRelay.Lamp;
     aData[length++] = sStatusRelay.Warm;
     aData[length++] = sStatusRelay.FridgeHeat;
     aData[length++] = sStatusRelay.FridgeCool;
     
-    aData[length++] = Threshold_Ctrl >> 8;
-    aData[length++] = Threshold_Ctrl;
+    aData[length++] = sTemp_Crtl_Fridge.TempSetup >> 8;
+    aData[length++] = sTemp_Crtl_Fridge.TempSetup;
     aData[length++] = sTemperature.Value >> 8;
     aData[length++] = sTemperature.Value;
     aData[length++] = DEFAULT_TEMP_SCALE;
@@ -447,6 +454,11 @@ void Init_DCU_ID(void)
         HAL_Delay(1);
         eFlash_S25FL_BufferWrite(read, EX_FLASH_ADDR_MAIN_ID, sDCU_ID.Length_u16 + 2);
     }
+}
+
+void Save_ExFlash_Config_App(void)
+{
+    Write_Status_Relay_ExFlash();
 }
 
 void AppPcBox_Debug(void)

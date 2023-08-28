@@ -12,17 +12,20 @@ static uint8_t fevent_on_off_relay_alarm(uint8_t event);
 static uint8_t fevent_on_off_relay_fridge_heat(uint8_t event);
 static uint8_t fevent_on_off_relay_lamp(uint8_t event);
 static uint8_t fevent_on_off_relay_warm(uint8_t event);
+static uint8_t fevent_control_led_status(uint8_t event);
 /*=================== struct ==================*/
 sEvent_struct               sEventAppRelay[] = 
 {
-  {_EVENT_RELAY_ENTRY,              1, 5, 2000,     fevent_relay_entry},
-  {_EVENT_ON_OFF_RELAY_ELEVATOR,    0, 0, 5,        fevent_on_off_relay_elevator},
-  {_EVENT_ON_OFF_RELAY_SCREEN,      0, 0, 5,        fevent_on_off_relay_screen},
-  {_EVENT_ON_OFF_RELAY_FRIDGE_COOL, 0, 0, 5,        fevent_on_off_relay_fridge_cool},
-  {_EVENT_ON_OFF_RELAY_ALARM,       0, 0, 5,        fevent_on_off_relay_alarm},
-  {_EVENT_ON_OFF_RELAY_FRIDGE_HEAT, 0, 0, 5,        fevent_on_off_relay_fridge_heat},
-  {_EVENT_ON_OFF_RELAY_LAMP,        0, 0, 5,        fevent_on_off_relay_lamp},
-  {_EVENT_ON_OFF_RELAY_WARM,        0, 0, 5,        fevent_on_off_relay_warm},
+  {_EVENT_RELAY_ENTRY,              1, 5, 2000,             fevent_relay_entry},
+  {_EVENT_ON_OFF_RELAY_ELEVATOR,    0, 0, 5,                fevent_on_off_relay_elevator},
+  {_EVENT_ON_OFF_RELAY_SCREEN,      0, 0, 5,                fevent_on_off_relay_screen},
+  {_EVENT_ON_OFF_RELAY_FRIDGE_COOL, 0, 0, 5,                fevent_on_off_relay_fridge_cool},
+  {_EVENT_ON_OFF_RELAY_ALARM,       0, 0, 5,                fevent_on_off_relay_alarm},
+  {_EVENT_ON_OFF_RELAY_FRIDGE_HEAT, 0, 0, 5,                fevent_on_off_relay_fridge_heat},
+  {_EVENT_ON_OFF_RELAY_LAMP,        0, 0, 5,                fevent_on_off_relay_lamp},
+  {_EVENT_ON_OFF_RELAY_WARM,        0, 0, 5,                fevent_on_off_relay_warm},
+  
+  {_EVENT_CONTROL_LED_STATUS,       0, 5, TIME_LED_STATUS,  fevent_control_led_status},
 };
 
 Struct_StatusRelay          sStatusRelay={OFF_RELAY};                
@@ -52,10 +55,15 @@ static uint16_t         RELAY_PIN[NUMBER_RELAY] = {ON_OFF_PC_Pin,
                                                    ON_OFF_Relay_5_Pin, 
                                                    Motor_Pin,
                                                    Layer_7_Pin};
+
+static GPIO_TypeDef*  LED_PORT[3] = {Led_1_GPIO_Port, Led_2_GPIO_Port, Led_3_GPIO_Port};
+static const uint16_t LED_PIN[3] = {Led_1_Pin, Led_2_Pin, Led_3_Pin};
 /*================= Function Handle ==============*/
 static uint8_t fevent_relay_entry(uint8_t event)
 {
+    fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_STATUS);
     Write_Queue_Repond_PcBox((uint8_t*)"ON",2);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"ON_MCU\r\n", sizeof("ON_MCU\r\n")); 
     return 1;
 }
 
@@ -178,6 +186,23 @@ static uint8_t fevent_on_off_relay_warm(uint8_t event)
     return 1;
 }
 
+static uint8_t fevent_control_led_status(uint8_t event)
+{
+    if(sEventAppRelay[_EVENT_CONTROL_LED_STATUS].e_period == TIME_LED_STATUS)
+    {
+        LED_On(_LED_STATUS);
+        sEventAppRelay[_EVENT_CONTROL_LED_STATUS].e_period = 40;
+    }
+    else
+    {
+        LED_Off(_LED_STATUS);
+        sEventAppRelay[_EVENT_CONTROL_LED_STATUS].e_period = TIME_LED_STATUS;
+    }
+    
+    fevent_enable(sEventAppRelay, event);
+    return 1;
+}
+
 /*========== Function Handle ============*/
 void Init_AppRelay(void)
 {
@@ -260,6 +285,23 @@ void Relay_Respond_Pc_Box_Control(uint8_t Obis, uint8_t Data)
     aData[length++] = TempCrc >> 8;
     
     Write_Queue_Repond_PcBox(aData, length);
+}
+
+void LED_Toggle (Led_TypeDef Led)
+{
+    HAL_GPIO_TogglePin(LED_PORT[Led], LED_PIN[Led]);
+}
+
+
+void LED_On (Led_TypeDef Led)
+{
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_SET);
+}
+
+
+void LED_Off (Led_TypeDef Led)
+{
+    HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
 }
 
 void AppRelay_Debug(uint8_t Status, uint8_t Relay)

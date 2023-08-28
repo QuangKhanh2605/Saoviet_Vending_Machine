@@ -12,7 +12,7 @@ static uint8_t fevent_door_respond_pc_box(uint8_t event);
 sEvent_struct           sEventAppDoorSensor[]=
 {
   {_EVENT_DOOR_ENTRY,               1, 5, 0,                  fevent_door_entry},
-  {_EVENT_DOOR_SENSOR,              0, 0, 3000,               fevent_door_sensor},
+  {_EVENT_DOOR_SENSOR,              0, 0, 2000,               fevent_door_sensor},
   {_EVENT_DOOR_CTRL_RESPOND,        0, 0, 0,                  fevent_door_ctrl_respond},
   {_EVENT_DOOR_RESPOND_PC_BOX,      0, 0, 60000,              fevent_door_respond_pc_box},
 };
@@ -58,18 +58,22 @@ static uint8_t fevent_door_ctrl_respond(uint8_t event)
     if(sStatusDoor.Sensor1 == DOOR_OPEN && sStatusDoor.Sensor2 == DOOR_OPEN)
     {
         status = DOOR1_OPEN_DOOR2_OPEN;
+        sStatusApp.Door = BUSY;
     }
     else if(sStatusDoor.Sensor1 == DOOR_CLOSE && sStatusDoor.Sensor2 == DOOR_OPEN)
     {
         status = DOOR1_CLOSE_DOOR2_OPEN;
+        sStatusApp.Door = BUSY;
     }
     else if(sStatusDoor.Sensor1 == DOOR_OPEN && sStatusDoor.Sensor2 == DOOR_CLOSE)
     {
         status = DOOR1_OPEN_DOOR2_CLOSE;
+        sStatusApp.Door = BUSY;
     }
     else
     {
         status = DOOR1_CLOSE_DOOR2_CLOSE;
+        sStatusApp.Door = FREE;
     }
     
     if(status != status_before)

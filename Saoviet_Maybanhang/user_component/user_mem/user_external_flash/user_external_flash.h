@@ -68,7 +68,7 @@
 #define EX_FLASH_ADDR_TEMP_THRESH       0x001000
 #define EX_FLASH_ADDR_MAIN_ID           0x002000
 #define EX_FLASH_ADDR_STATUS_RELAY      0x003000
-
+#define EX_FLASH_ADDR_STATUS_ELECTRIC   0x004000
 /*--------- Max size record ----------*/
 #define FLASH_MAX_RECORD_TSVH           500
 #define FLASH_MAX_RECORD_EVENT          500
