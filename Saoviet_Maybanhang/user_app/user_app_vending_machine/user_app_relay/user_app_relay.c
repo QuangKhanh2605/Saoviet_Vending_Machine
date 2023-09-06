@@ -13,10 +13,12 @@ static uint8_t fevent_on_off_relay_fridge_heat(uint8_t event);
 static uint8_t fevent_on_off_relay_lamp(uint8_t event);
 static uint8_t fevent_on_off_relay_warm(uint8_t event);
 static uint8_t fevent_control_led_status(uint8_t event);
+static uint8_t fevent_control_led_pcbox(uint8_t event);
+static uint8_t fevent_control_led_slave(uint8_t event);
 /*=================== struct ==================*/
 sEvent_struct               sEventAppRelay[] = 
 {
-  {_EVENT_RELAY_ENTRY,              1, 5, 2000,             fevent_relay_entry},
+  {_EVENT_RELAY_ENTRY,              1, 0, 5,                fevent_relay_entry},
   {_EVENT_ON_OFF_RELAY_ELEVATOR,    0, 0, 5,                fevent_on_off_relay_elevator},
   {_EVENT_ON_OFF_RELAY_SCREEN,      0, 0, 5,                fevent_on_off_relay_screen},
   {_EVENT_ON_OFF_RELAY_FRIDGE_COOL, 0, 0, 5,                fevent_on_off_relay_fridge_cool},
@@ -26,6 +28,8 @@ sEvent_struct               sEventAppRelay[] =
   {_EVENT_ON_OFF_RELAY_WARM,        0, 0, 5,                fevent_on_off_relay_warm},
   
   {_EVENT_CONTROL_LED_STATUS,       0, 5, TIME_LED_STATUS,  fevent_control_led_status},
+  {_EVENT_CONTROL_LED_PCBOX,        0, 5, TIME_LED_PCBOX,   fevent_control_led_pcbox},
+  {_EVENT_CONTROL_LED_SLAVE,        0, 5, TIME_LED_SLAVE,   fevent_control_led_slave},
 };
 
 Struct_StatusRelay          sStatusRelay={OFF_RELAY};                
@@ -58,12 +62,15 @@ static uint16_t         RELAY_PIN[NUMBER_RELAY] = {ON_OFF_PC_Pin,
 
 static GPIO_TypeDef*  LED_PORT[3] = {Led_1_GPIO_Port, Led_2_GPIO_Port, Led_3_GPIO_Port};
 static const uint16_t LED_PIN[3] = {Led_1_Pin, Led_2_Pin, Led_3_Pin};
+
+uint8_t LedRecvPcBox = 0;
+uint8_t ConnectSlave = 0;
 /*================= Function Handle ==============*/
 static uint8_t fevent_relay_entry(uint8_t event)
 {
     fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_STATUS);
-    Write_Queue_Repond_PcBox((uint8_t*)"ON",2);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"ON_MCU\r\n", sizeof("ON_MCU\r\n")); 
+    fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_PCBOX);
+    fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_SLAVE);
     return 1;
 }
 
@@ -72,12 +79,12 @@ static uint8_t fevent_on_off_relay_elevator(uint8_t event)
     if(sStatusRelay.Elevator == ON_RELAY)
     {
         On_Relay(RELAY_ELEVATOR);
-        AppRelay_Debug(ON_RELAY, RELAY_ELEVATOR);
+        //AppRelay_Debug(ON_RELAY, RELAY_ELEVATOR);
     }
     else if(sStatusRelay.Elevator == OFF_RELAY)
     {
         Off_Relay(RELAY_ELEVATOR);
-        AppRelay_Debug(OFF_RELAY, RELAY_ELEVATOR);
+        //AppRelay_Debug(OFF_RELAY, RELAY_ELEVATOR);
     }
     return 1;
 }
@@ -99,6 +106,7 @@ static uint8_t fevent_on_off_relay_screen(uint8_t event)
         Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_SCREEN, OFF_RELAY);
     }
     
+    Write_Status_Relay_ExFlash();
     return 1;
 }
 
@@ -165,6 +173,8 @@ static uint8_t fevent_on_off_relay_lamp(uint8_t event)
         Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_LAMP, OFF_RELAY);
     }
     
+    Write_Status_Relay_ExFlash();
+    
     return 1;
 }
 
@@ -203,6 +213,42 @@ static uint8_t fevent_control_led_status(uint8_t event)
     return 1;
 }
 
+static uint8_t fevent_control_led_pcbox(uint8_t event)
+{
+    if(LedRecvPcBox > 0)
+    {
+        if(sEventAppRelay[_EVENT_CONTROL_LED_PCBOX].e_period == TIME_LED_PCBOX)
+        {
+            LED_On(_LED_PCBOX);
+            sEventAppRelay[_EVENT_CONTROL_LED_PCBOX].e_period = 40;
+        }
+        else
+        {
+            LED_Off(_LED_PCBOX);
+            sEventAppRelay[_EVENT_CONTROL_LED_PCBOX].e_period = TIME_LED_PCBOX;
+            LedRecvPcBox--;
+        }
+    }
+    
+    fevent_enable(sEventAppRelay, event);
+    return 1;
+}
+
+static uint8_t fevent_control_led_slave(uint8_t event)
+{
+    if(ConnectSlave == CONNECT)
+    {
+        LED_Toggle(_LED_SLAVE);
+    }
+    else
+    {
+        LED_Off(_LED_SLAVE);
+    }
+    
+    fevent_enable(sEventAppRelay, event);
+    return 1;
+}
+
 /*========== Function Handle ============*/
 void Init_AppRelay(void)
 {
@@ -233,13 +279,13 @@ void Read_Status_Relay_ExFlash(void)
     eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_RELAY, 9);
     if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == NUMBER_RELAY)
     {
-        if(aRead[2] <= 0x01) sStatusRelay.Elevator  = aRead[2];
+        //if(aRead[2] <= 0x01) sStatusRelay.Elevator  = aRead[2];
         if(aRead[3] <= 0x01) sStatusRelay.Screen    = aRead[3];
-        if(aRead[4] <= 0x01) sStatusRelay.FridgeCool= aRead[4];
-        if(aRead[5] <= 0x01) sStatusRelay.Alarm     = aRead[5];
-        if(aRead[6] <= 0x01) sStatusRelay.FridgeHeat= aRead[6];
+        //if(aRead[4] <= 0x01) sStatusRelay.FridgeCool= aRead[4];
+        //if(aRead[5] <= 0x01) sStatusRelay.Alarm     = aRead[5];
+        //if(aRead[6] <= 0x01) sStatusRelay.FridgeHeat= aRead[6];
         if(aRead[7] <= 0x01) sStatusRelay.Lamp      = aRead[7];
-        if(aRead[8] <= 0x01) sStatusRelay.Warm      = aRead[8];
+        //if(aRead[8] <= 0x01) sStatusRelay.Warm      = aRead[8];
     }
 }
 

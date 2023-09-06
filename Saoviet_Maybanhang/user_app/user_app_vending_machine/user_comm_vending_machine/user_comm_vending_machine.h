@@ -16,7 +16,7 @@
 #define DEFAULT_READ_EXFLASH        0xAA
 #define TIME_ONE_SECOND             1000
 /*=============== Define Obis ===============*/
-#define OBIS_TEMP_THRESHOLD         0x15
+#define OBIS_SETUP_TEMP             0x15
 #define OBIS_PC_BOX_FIX_MOTOR       0x16
 
 #define OBIS_PC_BOX_CTRL_MOTOR      0x20
@@ -44,8 +44,10 @@
 #define USING_APP_RELAY_DEBUG
 #define USING_APP_TEMPERATURE_DEBUG
 #define USING_APP_VIB_SENSOR_DEBUG
+#define USING_APP_ELECTRIC_DEBUG
 
 /*=============== Define Common ==============*/
+#define TIME_ON_DCU                 5000
 #define TIME_ENTRY                  15000
 /*=========== Define App PcBox ================*/
 #define NUMBER_MAX_MOTOR            60
@@ -54,12 +56,14 @@
 
 #define TIME_RESPOND_PC_BOX         2000    
 #define TIME_REFRESH_DCU            2*86400*TIME_ONE_SECOND
+
+#define BEFORE_RESET_DCU            0
+#define AFTER_RESET_DCU             1
 /*=========== Define App Motor =================*/
 
 #define TIME_MOTOR_PUSH_EARLY           1000
 #define TIME_MOTOR_PUSH_LATE            3000
 #define TIME_MOTOR_RESPOND_PC_BOX       TIME_MOTOR_PUSH_LATE + 2000
-
 
 /*============ Define App Relay =============*/
 
@@ -78,6 +82,8 @@
 #define INIT_STATUS_PGOOD_SENSOR_INPUT  GPIO_PIN_RESET
 
 #define DEFAULT_ELECTRIC_SCALE          0xFF
+
+#define DEFAULT_ID_SLAVE                0x01
 
 /*========== Define App Temperature ===========*/
 #define ADC_RESOLUTION                  4095

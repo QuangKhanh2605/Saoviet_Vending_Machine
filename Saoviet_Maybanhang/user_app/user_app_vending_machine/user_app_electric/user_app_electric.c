@@ -8,28 +8,33 @@ static uint8_t fevent_electric_entry(uint8_t event);
 static uint8_t fevent_electric_pgood(uint8_t event);
 static uint8_t fevent_electric_transmit_485(uint8_t event);
 static uint8_t fevent_electric_receive_485(uint8_t event);
-static uint8_t fevent_electric_handle(uint8_t event);
+static uint8_t fevent_electric_handle_485(uint8_t event);
+static uint8_t fevent_electric_send_meter(uint8_t event);
 static uint8_t fevent_electric_off_power(uint8_t event);
 /*============== Struct ===================*/
 sEvent_struct               sEventAppElectric[] = 
 {
-  {_EVENT_ELECTRIC_ENTRY,           1, 5, TIME_ENTRY,  fevent_electric_entry},
-  {_EVENT_ELECTRIC_PGOOD,           1, 0, 10,          fevent_electric_pgood},
-  {_EVENT_ELECTRIC_TRANSMIT_485,    0, 0, 5,           fevent_electric_transmit_485},
-  {_EVENT_ELECTRIC_RECEIVE_485,     1, 0, 5,           fevent_electric_receive_485},
-  {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 5,           fevent_electric_handle},
+  {_EVENT_ELECTRIC_ENTRY,           1, 5, TIME_ENTRY,       fevent_electric_entry},
+  {_EVENT_ELECTRIC_PGOOD,           1, 0, 10,               fevent_electric_pgood},
+  {_EVENT_ELECTRIC_TRANSMIT_485,    1, 0, 2000,             fevent_electric_transmit_485},
+  {_EVENT_ELECTRIC_RECEIVE_485,     1, 0, 5,                fevent_electric_receive_485},
+  {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 5,                fevent_electric_handle_485},
   
-  {_EVENT_ELECTRIC_OFF_POWER,       1, 0, 100,         fevent_electric_off_power},
+  {_EVENT_ELECTRIC_SEND_METER,      1, 5, TIME_SEND_METER,  fevent_electric_send_meter},
+  
+  {_EVENT_ELECTRIC_OFF_POWER,       1, 0, 2000,             fevent_electric_off_power},
 };
 
 Struct_Electric_Current         sElectric=
 {
-  .Voltage = 0, 
-  .Current = 0, 
-  .Scale = DEFAULT_ELECTRIC_SCALE,
+  .ID           = DEFAULT_ID_SLAVE,
+  .Voltage      = 0, 
+  .Current      = 0, 
+  .Scale        = DEFAULT_ELECTRIC_SCALE,
   .PowerPresent = POWER_ON,
   .PowerBefore  = POWER_ON,
 };
+
 /*============= Function Handle =============*/
 static uint8_t fevent_electric_entry(uint8_t event)
 {
@@ -81,6 +86,16 @@ static uint8_t fevent_electric_pgood(uint8_t event)
 
 static uint8_t fevent_electric_transmit_485(uint8_t event)
 {
+    uint8_t Frame[8];
+    sData sFrame = {&Frame[0], 0};
+    
+    ModRTU_Master_Read_Frame(&sFrame, sElectric.ID, 0x03, 0x02, 4);
+    HAL_GPIO_WritePin(NET485IO_GPIO_Port, NET485IO_Pin, GPIO_PIN_SET);
+    HAL_Delay(10);
+    HAL_UART_Transmit(&uart_485, sFrame.Data_a8, sFrame.Length_u16, 1000);
+    HAL_GPIO_WritePin(NET485IO_GPIO_Port, NET485IO_Pin, GPIO_PIN_RESET);
+    
+    fevent_enable(sEventAppElectric, event);
     return 1;
 }
 
@@ -106,7 +121,7 @@ static uint8_t fevent_electric_receive_485(uint8_t event)
     return 1;
 }
 
-static uint8_t fevent_electric_handle(uint8_t event)
+static uint8_t fevent_electric_handle_485(uint8_t event)
 {
     UTIL_MEM_set(sUart485.Data_a8 , 0x00, sUart485.Length_u16);
     sUart485.Length_u16 = 0;
@@ -122,15 +137,33 @@ static uint8_t fevent_electric_off_power(uint8_t event)
         uint8_t length = 0;
         length = Status_Power_Respond_PcBox(aData);
         Write_Queue_Repond_PcBox(aData, length);
+        sElectric.PowerBefore = sElectric.PowerPresent;
         Write_Status_Electric_ExFlash();
+        
+        if(sElectric.PowerPresent == POWER_OFF)
+        {
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_electric: POWER OFF", sizeof("app_temperature: POWER OFF"));
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+        }
+        else
+        {
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_electric: POWER ON", sizeof("app_temperature: POWER ON"));
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+        }
     }
-       
-    sElectric.PowerBefore = sElectric.PowerPresent;
     
     fevent_enable(sEventAppElectric, event);
     return 1;
 }
 
+static uint8_t fevent_electric_send_meter(uint8_t event)
+{
+    AppElectric_Debug();
+    fevent_enable(sEventAppElectric, event);
+    return 1;
+}
+
+/*=================== Function Handle =====================*/
 uint8_t  Status_Power_Respond_PcBox(uint8_t aData[])
 {
     uint8_t length = 0;
@@ -170,12 +203,11 @@ void AppIVT_Clear_Before_Recv (void)
     Reset_Buff(&sUart485);
 }
 
-/*============== Function Handle ==============*/ 
 void Write_Status_Electric_ExFlash(void)
 {
-    uint8_t aWrite[9]={0};
+    uint8_t aWrite[3]={0};
     aWrite[0] = DEFAULT_READ_EXFLASH;
-    aWrite[1] = NUMBER_RELAY;
+    aWrite[1] = 0x01;
     aWrite[2] = sElectric.PowerPresent;
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_STATUS_ELECTRIC);
     HAL_Delay(1);
@@ -184,9 +216,9 @@ void Write_Status_Electric_ExFlash(void)
 
 void Read_Status_Electric_ExFlash(void)
 {
-    uint8_t aRead[9] = {0};
+    uint8_t aRead[3] = {0};
     eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_ELECTRIC, 3);
-    if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == NUMBER_RELAY)
+    if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == 0x01)
     {
         if(aRead[2] <= 0x01) 
         {
@@ -196,9 +228,46 @@ void Read_Status_Electric_ExFlash(void)
     }
 }
 
+void Write_IdSlave_Electric_ExFlash(void)
+{
+    uint8_t aWrite[3]={0};
+    aWrite[0] = DEFAULT_READ_EXFLASH;
+    aWrite[1] = 0x01;
+    aWrite[2] = sElectric.ID;
+    eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_IDSLAVE_ELECTRIC);
+    HAL_Delay(1);
+    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_IDSLAVE_ELECTRIC, 3);
+}
+
+void Read_IdSlave_Electric_ExFlash(void)
+{
+    uint8_t aRead[3] = {0};
+    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_IDSLAVE_ELECTRIC, 3);
+    if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == 0x01)
+    {
+        sElectric.ID  = aRead[2];
+    }
+}
+
 void Init_AppElectric(void)
 {
     Read_Status_Electric_ExFlash();
+    Read_IdSlave_Electric_ExFlash();
+}
+
+void AppElectric_Debug(void)
+{
+#ifdef USING_APP_ELECTRIC_DEBUG
+    char cData[5]={0};
+    uint8_t length = 0;
+    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Voltage, sElectric.Scale);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_electric: V: ", sizeof("app_electric: V: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" A: ", sizeof(" A: "));
+    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Current , sElectric.Scale);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+#endif
 }
 
 uint8_t  AppElectric_Task(void)

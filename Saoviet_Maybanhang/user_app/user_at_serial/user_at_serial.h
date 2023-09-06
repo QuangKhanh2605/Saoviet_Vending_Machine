@@ -21,6 +21,9 @@ typedef enum
     _GET_THRESH_TEMP,
     _SET_THRESH_TEMP,
     
+    _GET_ID_SLAVE,
+    _SET_ID_SLAVE,
+    
     _END_AT_CMD,
 }eNumTypeCommandAT;
 
@@ -44,5 +47,8 @@ void        _fSET_SETUP_TEMP (sData *strRecei, uint16_t Pos);
 
 void        _fGET_THRESH_TEMP (sData *strRecei, uint16_t Pos);
 void        _fSET_THRESH_TEMP (sData *strRecei, uint16_t Pos);
+
+void        _fGET_ID_SLAVE (sData *strRecei, uint16_t Pos);
+void        _fSET_ID_SLAVE (sData *strRecei, uint16_t Pos);
 
 #endif  

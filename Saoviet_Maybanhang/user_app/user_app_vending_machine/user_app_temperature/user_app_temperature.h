@@ -21,7 +21,7 @@
 #define DEFAULT_SETUP_TEMP      50
 #define DEFAULT_THRESH_TEMP     25
 #define TIME_ONE_MINUTES        60*1000
-#define TIME_OFF_FROZEN         10*TIME_ONE_MINUTES
+#define TIME_OFF_FROZEN         5*TIME_ONE_MINUTES
 
 #define TIME_GET_TEMP           30000
 
@@ -51,6 +51,7 @@ typedef struct
 {
     int16_t TempSetup;
     uint8_t Threshold;
+    uint8_t Scale;
 }Struct_Control_Fridge;
 
 extern  sEvent_struct           sEventAppTemperature[];

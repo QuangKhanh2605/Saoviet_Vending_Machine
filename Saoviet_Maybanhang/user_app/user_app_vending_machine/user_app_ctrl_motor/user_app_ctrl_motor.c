@@ -37,7 +37,7 @@ struct_InforMotor           sInforPush = {0};
 /*================ Function Handler =================*/
 static uint8_t fevent_motor_entry(uint8_t event)
 {   
-    if(sPushMotor.Pos <= NUMBER_MAX_MOTOR)
+    if(sPushMotor.Pos > 0 && sPushMotor.Pos <= NUMBER_MAX_MOTOR)
     {
         sInforPush.NumEarly = 0;
         sInforPush.NumLate  = 0;
@@ -109,14 +109,14 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
 
         
     /*=============== Log ===============*/
-        if(sPushMotor.NumHandle < sPushMotor.Num)
+        if(sPushMotor.NumHandle < sPushMotor.SumHandle)
         {
             aData[length++] = OBIS_ON_GOING_PUSH;
             aData[length++] = 0x04;
             aData[length++] = sPushMotor.Pos;
             aData[length++] = sPushMotor.IrSensor;
             aData[length++] = sPushMotor.NumHandle;
-            aData[length++] = sPushMotor.Num;
+            aData[length++] = sPushMotor.SumHandle;
             fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
         }
         else
@@ -134,6 +134,7 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
     }
     else
     {
+            sPushMotor.StatePush = COMPLETE_PUSH;
             aData[length++] = OBIS_PC_BOX_FIX_MOTOR;
             aData[length++] = 0x01;
             aData[length++] = sPushMotor.Pos;

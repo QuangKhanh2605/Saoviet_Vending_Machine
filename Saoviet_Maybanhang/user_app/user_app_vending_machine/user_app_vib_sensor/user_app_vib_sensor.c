@@ -5,20 +5,23 @@
 #include "user_app_pc_box.h"
 /*=============== Function static ================*/
 static uint8_t fevent_vib_sensor(uint8_t event);
-static uint8_t fevent_vib_on_alarm(uint8_t event);
 static uint8_t fevent_vib_off_alarm(uint8_t event);
+static uint8_t fevent_vib_led_warning(uint8_t event);
 /*================== Struct ===================*/
 sEvent_struct       sEventAppVibSensor[]=
 {
   {_EVENT_VIB_SENSOR,           1, 0, 3000,            fevent_vib_sensor},
-  {_EVENT_VIB_ON_ALARM,         0, 0, 5,               fevent_vib_on_alarm},
-  {_EVENT_VIB_OFF_ALARM,        0, 0, TIME_ON_ALARM,   fevent_vib_off_alarm},
+  {_EVENT_VIB_OFF_ALARM,        0, 0, 0,               fevent_vib_off_alarm},
+  
+  {_EVENT_VIB_LED_WARNING,      0, 0, 0,               fevent_vib_led_warning},
 };
 
 StructStatusVib     sStatusVib = {0};
+
 /*================== Function Handle ==============*/
 static uint8_t fevent_vib_sensor(uint8_t event)
 {
+    static uint32_t GetTickLevelAlarm = 0;
     if(sStatusVib.Sensor1 != 0)
     {
         sStatusVib.LevelWarning++;
@@ -46,25 +49,34 @@ static uint8_t fevent_vib_sensor(uint8_t event)
         Write_Queue_Repond_PcBox(aData, length);
         
         AppVibSensor_Debug();
-        
-        if(sStatusVib.LevelWarning == 3)
+
+        if(sStatusVib.LevelWarning >= 2)
         {
-            fevent_active(sEventAppVibSensor, _EVENT_VIB_ON_ALARM);
+            fevent_active(sEventAppVibSensor, _EVENT_VIB_LED_WARNING);
+            
+            if(sStatusVib.LevelWarning == 3)
+            {
+                sStatusRelay.Alarm = ON_RELAY;
+                fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
+                
+                if((HAL_GetTick() - GetTickLevelAlarm < TIME_LEVEL_ALARM) && (GetTickLevelAlarm != 0))
+                {
+                    sEventAppVibSensor[_EVENT_VIB_OFF_ALARM].e_period = TIME_ON_ALARM_2;
+                }
+                else
+                {
+                    sEventAppVibSensor[_EVENT_VIB_OFF_ALARM].e_period = TIME_ON_ALARM_1;
+                }
+                fevent_enable(sEventAppVibSensor, _EVENT_VIB_OFF_ALARM);
+                
+                GetTickLevelAlarm = HAL_GetTick();
+            }
         }
+        
         sStatusVib.LevelWarning = 0;
     }
     
     fevent_enable(sEventAppVibSensor, event);
-    return 1;
-}
-
-static uint8_t fevent_vib_on_alarm(uint8_t event)
-{
-    sStatusRelay.Alarm = ON_RELAY;
-    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
-    
-    fevent_enable(sEventAppVibSensor, _EVENT_VIB_OFF_ALARM);
-    
     return 1;
 }
 
@@ -73,6 +85,66 @@ static uint8_t fevent_vib_off_alarm(uint8_t event)
     sStatusRelay.Alarm = OFF_RELAY;
     fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
     
+    return 1;
+}
+
+static uint8_t fevent_vib_led_warning(uint8_t event)
+{
+    static uint8_t Count_Toggle = 0;
+    static uint8_t Count_Morse  = 0;
+    
+    if(sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period == TIME_LED_TOGGLE)
+    {
+        if(Count_Morse < NUMBER_LED_TOGGLE)
+        {
+            switch(Count_Toggle)
+            {
+                case 4:
+                case 5:
+                case 6:
+                    On_Relay(RELAY_LAMP);
+                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 250;
+                    break;
+                    
+                default:
+                    On_Relay(RELAY_LAMP);
+                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 40;
+                    break;
+            }
+        }
+        else
+        {
+            Count_Morse = 0;
+            Count_Toggle = 0;
+            if(sStatusRelay.Lamp == 1)
+            {
+                On_Relay(RELAY_LAMP);
+            }
+            else
+            {
+                Off_Relay(RELAY_LAMP);
+            }
+            sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 0;  
+            return 1;
+        }
+    }
+    else
+    {
+        Off_Relay(RELAY_LAMP);
+        sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = TIME_LED_TOGGLE;  
+        Count_Toggle++;
+        if(Count_Toggle >= 10)
+        {
+            Count_Toggle = 0;
+            Count_Morse++;
+            if(Count_Morse < NUMBER_LED_TOGGLE)
+            {
+                sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 1000;
+            }
+        }
+    }
+    
+    fevent_enable(sEventAppVibSensor, event);
     return 1;
 }
 /*============== Function Handle ==============*/

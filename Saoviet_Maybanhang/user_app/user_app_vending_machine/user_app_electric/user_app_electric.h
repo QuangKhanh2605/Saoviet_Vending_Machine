@@ -9,6 +9,8 @@
 #include "user_util.h"
 #include "user_uart.h"
 
+#define TIME_SEND_METER     60000
+
 typedef enum
 {
     _EVENT_ELECTRIC_ENTRY,
@@ -16,6 +18,7 @@ typedef enum
     _EVENT_ELECTRIC_TRANSMIT_485,
     _EVENT_ELECTRIC_RECEIVE_485,
     _EVENT_ELECTRIC_HANDLE_485,
+    _EVENT_ELECTRIC_SEND_METER,
     _EVENT_ELECTRIC_OFF_POWER,
     
     _EVENT_ELECTRIC_END,
@@ -29,6 +32,7 @@ typedef enum
 
 typedef struct 
 {
+    uint8_t  ID;
     uint16_t Voltage;
     uint16_t Current;
     uint8_t  Scale;
@@ -48,5 +52,10 @@ uint8_t     Status_Power_Respond_PcBox(uint8_t aData[]);
 void        Write_Status_Electric_ExFlash(void);
 void        Read_Status_Electric_ExFlash(void);
 void        Init_AppElectric(void);
+
+void        Write_IdSlave_Electric_ExFlash(void);
+void        Read_IdSlave_Electric_ExFlash(void);
+
+void        AppElectric_Debug(void);
 #endif
 

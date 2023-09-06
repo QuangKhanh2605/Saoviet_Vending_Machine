@@ -36,7 +36,7 @@ typedef enum
 typedef struct
 {
     uint8_t State;              //Trang thai Push hoac Fix Motor
-    uint8_t Num;                //Tong so lan Push
+    uint8_t SumHandle;          //Tong so lan Push
     uint8_t Pos;                //Vi tri Push
     uint8_t NumHandle;          //So thu tu dang xu ly
     uint8_t StatePush;          //Trang thai chua hoac da hoan thanh Push 

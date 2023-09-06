@@ -9,6 +9,8 @@
 #include "user_util.h"
 
 #define  TIME_LED_STATUS    2000
+#define  TIME_LED_PCBOX     80
+#define  TIME_LED_SLAVE     1000
 
 typedef enum
 {
@@ -22,19 +24,28 @@ typedef enum
     _EVENT_ON_OFF_RELAY_WARM,
     
     _EVENT_CONTROL_LED_STATUS,
+    _EVENT_CONTROL_LED_PCBOX,
+    _EVENT_CONTROL_LED_SLAVE,
     
     _EVENT_RELAY_END,
 }eKindEventRelay;
 
 typedef enum
 {
-    _LED_STATUS,
-    _LED_1,
-    _LED_2,
+    _LED_STATUS = 0,
+    _LED_PCBOX,
+    _LED_SLAVE,
 } Led_TypeDef;
+
+typedef enum 
+{
+    DISCONNECT,
+    CONNECT,
+}eNumConnectSlave;
 
 typedef struct
 {
+    uint8_t Respond_PcBox;
     uint8_t Elevator;
     uint8_t Screen;
     uint8_t FridgeCool;
@@ -57,6 +68,7 @@ typedef enum
 extern sEvent_struct        sEventAppRelay[];
 
 extern Struct_StatusRelay         sStatusRelay;
+extern uint8_t                    LedRecvPcBox;
 /*=============== Function handle ================*/
 
 uint8_t     AppRelay_Task(void);

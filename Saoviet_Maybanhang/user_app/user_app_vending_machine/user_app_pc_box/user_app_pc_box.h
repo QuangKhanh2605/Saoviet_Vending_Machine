@@ -60,5 +60,4 @@ void        Pc_Box_Init(void);
 uint8_t     Log_TSVH(uint8_t *aData);
 void        AppPcBox_Debug(void);
 void        Write_Queue_Repond_PcBox(uint8_t aData[], uint8_t Length);
-void        Save_ExFlash_Config_App(void);
 #endif

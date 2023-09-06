@@ -25,7 +25,7 @@ static uint8_t fevent_temp_off_fridge_frozen(uint8_t event);
 /*=================== Struct ====================*/
 sEvent_struct                   sEventAppTemperature[] =
 {
-  {_EVENT_TEMP_ENTRY,           1, 0, 20,                   fevent_temp_entry},
+  {_EVENT_TEMP_ENTRY,           1, 5, TIME_ON_DCU,          fevent_temp_entry},
   {_EVENT_TEMP_GET_ADC,         0, 0, 10,                   fevent_temp_get_adc},
   {_EVENT_TEMP_CALCULATOR,      0, 0, 0,                    fevent_temp_calculator},
     
@@ -42,10 +42,16 @@ uint32_t ADC_Temp[3]={0};
 uint32_t ADC_Avg[3]={0};
 Struct_Temperature      sTemperature={0};
 Struct_Temperature      sTemp_Thresh_Recv={0};
-Struct_Control_Fridge   sTemp_Crtl_Fridge={DEFAULT_SETUP_TEMP, DEFAULT_THRESH_TEMP};
+Struct_Control_Fridge   sTemp_Crtl_Fridge=
+{
+  .TempSetup = DEFAULT_SETUP_TEMP, 
+  .Threshold = DEFAULT_THRESH_TEMP, 
+  .Scale     = DEFAULT_TEMP_SCALE,
+};
 /*=================== Function Handle ============*/
 static uint8_t fevent_temp_entry(uint8_t event)
 {
+    sEventAppTemperature[_EVENT_TEMP_ENTRY].e_period = 20;
     static uint8_t once = 0;
     once++;
     HAL_ADC_Start_DMA(&ADC_TEMPERATURE, (uint32_t*)ADC_Temp, 3);
@@ -134,7 +140,7 @@ static uint8_t fevent_temp_set_setuptemp(uint8_t event)
 static uint8_t fevent_temp_read_setuptemp(uint8_t event)
 {
     uint8_t read[4] = {0};
-    eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_TEMP_THRESH , 4);
+    eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_TEMP_SET_THRESH , 4);
     if( read[0] == DEFAULT_READ_EXFLASH)
     {
         sTemp_Crtl_Fridge.TempSetup  = read[1] << 8;
@@ -195,8 +201,8 @@ void Set_Threshold_Temperature(int16_t temp, uint8_t scale)
     write[1] = sTemp_Crtl_Fridge.TempSetup >> 8;
     write[2] = sTemp_Crtl_Fridge.TempSetup;
     write[3] = sTemp_Crtl_Fridge.Threshold;
-    eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TEMP_THRESH);
-    eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_THRESH, 4);
+    eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TEMP_SET_THRESH);
+    eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_SET_THRESH, 4);
 }
 
 void Threshold_Respond_Pc_Box_Setup(void)
@@ -207,7 +213,7 @@ void Threshold_Respond_Pc_Box_Setup(void)
     
 /*=============== Log ===============*/
     
-    aData[length++] = OBIS_TEMP_THRESHOLD;
+    aData[length++] = OBIS_SETUP_TEMP;
     aData[length++] = 0x01;
     aData[length++] = sTemp_Thresh_Recv.Value >> 8;
     aData[length++] = sTemp_Thresh_Recv.Value;
@@ -227,11 +233,11 @@ void AppTemperature_Debug(void)
     char cData[5]={0};
     uint8_t length = 0;
 //    sprintf(c, "%d \r\n", sTemperature.Value);
-    length = Convert_Int_To_String_Scale(cData, (int)sTemperature.Value, 0xFF);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_temperature: ", sizeof("app_temperature: "));
+    length = Convert_Int_To_String_Scale(cData, (int)sTemperature.Value, sTemperature.Scale);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_temperature: Temp: ", sizeof("app_temperature: Temp: "));
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" SetupTemp: ", sizeof(" SetupTemp: "));
-    length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.TempSetup , 0xFF);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Setup: ", sizeof(" Setup: "));
+    length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.TempSetup , sTemp_Crtl_Fridge.Scale);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
 #endif
