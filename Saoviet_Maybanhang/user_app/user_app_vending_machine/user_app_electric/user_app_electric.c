@@ -16,7 +16,7 @@ sEvent_struct               sEventAppElectric[] =
 {
   {_EVENT_ELECTRIC_ENTRY,           1, 5, TIME_ENTRY,       fevent_electric_entry},
   {_EVENT_ELECTRIC_PGOOD,           1, 0, 10,               fevent_electric_pgood},
-  {_EVENT_ELECTRIC_TRANSMIT_485,    1, 0, 2000,             fevent_electric_transmit_485},
+  {_EVENT_ELECTRIC_TRANSMIT_485,    0, 0, 2000,             fevent_electric_transmit_485},
   {_EVENT_ELECTRIC_RECEIVE_485,     1, 0, 5,                fevent_electric_receive_485},
   {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 5,                fevent_electric_handle_485},
   

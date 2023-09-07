@@ -56,8 +56,6 @@ static uint8_t fevent_vib_sensor(uint8_t event)
             
             if(sStatusVib.LevelWarning == 3)
             {
-//                sStatusRelay.Alarm = ON_RELAY;
-//                fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
               ControlRelay(RELAY_ALARM, ON_RELAY, _RL_UNRESPOND, _RL_DEBUG);
                 
                 if((HAL_GetTick() - GetTickLevelAlarm < TIME_LEVEL_ALARM) && (GetTickLevelAlarm != 0))
@@ -83,8 +81,6 @@ static uint8_t fevent_vib_sensor(uint8_t event)
 
 static uint8_t fevent_vib_off_alarm(uint8_t event)
 {
-//    sStatusRelay.Alarm = OFF_RELAY;
-//    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
     ControlRelay(RELAY_ALARM, OFF_RELAY, _RL_UNRESPOND, _RL_DEBUG);
     
     return 1;
@@ -99,17 +95,16 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
     {
         if(Count_Morse < NUMBER_LED_TOGGLE)
         {
+            OnOff_Relay(RELAY_LAMP, ON_RELAY);
             switch(Count_Toggle)
             {
                 case 4:
                 case 5:
                 case 6:
-                    OnOff_Relay(RELAY_LAMP, ON_RELAY);
-                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 250;
+                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 300;
                     break;
                     
                 default:
-                    OnOff_Relay(RELAY_LAMP, ON_RELAY);
                     sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 40;
                     break;
             }
@@ -118,14 +113,7 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
         {
             Count_Morse = 0;
             Count_Toggle = 0;
-            if(sStatusRelay.Lamp == 1)
-            {
-                OnOff_Relay(RELAY_LAMP, ON_RELAY);
-            }
-            else
-            {
-                OnOff_Relay(RELAY_LAMP, OFF_RELAY);
-            }
+            OnOff_Relay(RELAY_LAMP, sStatusRelay.Lamp);
             sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 0;  
             return 1;
         }
