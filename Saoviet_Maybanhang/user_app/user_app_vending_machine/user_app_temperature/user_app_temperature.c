@@ -154,11 +154,13 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
 {
     if(sTemperature.Value > sTemp_Crtl_Fridge.TempSetup + sTemp_Crtl_Fridge.Threshold)
     {
-        sStatusRelay.FridgeHeat = ON_RELAY;
-        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
+//        sStatusRelay.FridgeHeat = ON_RELAY;
+//        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
+        ControlRelay(RELAY_FRIDGE_HEAT, ON_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
         
-        sStatusRelay.FridgeHeat = ON_RELAY;
-        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
+//        sStatusRelay.FridgeHeat = ON_RELAY;
+//        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
+        ControlRelay(RELAY_FRIDGE_COOL, ON_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
         
         fevent_disable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
         
@@ -166,8 +168,9 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
     }
     else if(sTemperature.Value < sTemp_Crtl_Fridge.TempSetup - sTemp_Crtl_Fridge.Threshold)
     {
-        sStatusRelay.FridgeHeat = OFF_RELAY;
-        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
+//        sStatusRelay.FridgeHeat = OFF_RELAY;
+//        fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_HEAT);
+        ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
         
         fevent_enable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
     }
@@ -184,8 +187,9 @@ static uint8_t fevent_temp_time_get(uint8_t event)
 
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 {
-    sStatusRelay.FridgeCool = OFF_RELAY;
-    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
+//    sStatusRelay.FridgeCool = OFF_RELAY;
+//    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_FRIDGE_COOL);
+    ControlRelay(RELAY_FRIDGE_COOL, OFF_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
     sStatusApp.Temperature = FREE;
     return 1;
 }

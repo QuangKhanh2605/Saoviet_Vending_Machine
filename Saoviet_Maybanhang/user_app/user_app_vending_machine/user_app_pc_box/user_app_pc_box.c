@@ -180,8 +180,8 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {
                       if(sUartPcBox.Data_a8[pos] <= 0x01)
                       {
-                        sStatusRelay.Screen= sUartPcBox.Data_a8[pos];
-                        fevent_active(sEventAppRelay , _EVENT_ON_OFF_RELAY_SCREEN);
+                        ControlRelay(RELAY_SCREEN, sUartPcBox.Data_a8[pos], _RL_RESPOND, _RL_DEBUG);
+                        Write_Status_Relay_ExFlash();
                         pos += 1;
                       }
                   }
@@ -193,8 +193,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {
                       if(sUartPcBox.Data_a8[pos] <= 0x01)
                       {
-                        sStatusRelay.Lamp = sUartPcBox.Data_a8[pos];
-                        fevent_active(sEventAppRelay , _EVENT_ON_OFF_RELAY_LAMP);
+                        ControlRelay(RELAY_LAMP, sUartPcBox.Data_a8[pos], _RL_RESPOND, _RL_DEBUG);
                         pos += 1;
                       }
                   }
@@ -206,8 +205,8 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {
                       if(sUartPcBox.Data_a8[pos] <= 0x01)
                       {
-                        sStatusRelay.Warm = sUartPcBox.Data_a8[pos];
-                        fevent_active(sEventAppRelay , _EVENT_ON_OFF_RELAY_WARM);
+                        ControlRelay(RELAY_WARM, sUartPcBox.Data_a8[pos], _RL_RESPOND, _RL_DEBUG);
+                        Write_Status_Relay_ExFlash();
                         pos += 1;
                       }
                   }

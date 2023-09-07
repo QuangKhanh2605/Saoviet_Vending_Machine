@@ -56,8 +56,9 @@ static uint8_t fevent_vib_sensor(uint8_t event)
             
             if(sStatusVib.LevelWarning == 3)
             {
-                sStatusRelay.Alarm = ON_RELAY;
-                fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
+//                sStatusRelay.Alarm = ON_RELAY;
+//                fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
+              ControlRelay(RELAY_ALARM, ON_RELAY, _RL_UNRESPOND, _RL_DEBUG);
                 
                 if((HAL_GetTick() - GetTickLevelAlarm < TIME_LEVEL_ALARM) && (GetTickLevelAlarm != 0))
                 {
@@ -82,8 +83,9 @@ static uint8_t fevent_vib_sensor(uint8_t event)
 
 static uint8_t fevent_vib_off_alarm(uint8_t event)
 {
-    sStatusRelay.Alarm = OFF_RELAY;
-    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
+//    sStatusRelay.Alarm = OFF_RELAY;
+//    fevent_active(sEventAppRelay, _EVENT_ON_OFF_RELAY_ALARM);
+    ControlRelay(RELAY_ALARM, OFF_RELAY, _RL_UNRESPOND, _RL_DEBUG);
     
     return 1;
 }
@@ -102,12 +104,12 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
                 case 4:
                 case 5:
                 case 6:
-                    On_Relay(RELAY_LAMP);
+                    OnOff_Relay(RELAY_LAMP, ON_RELAY);
                     sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 250;
                     break;
                     
                 default:
-                    On_Relay(RELAY_LAMP);
+                    OnOff_Relay(RELAY_LAMP, ON_RELAY);
                     sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 40;
                     break;
             }
@@ -118,11 +120,11 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
             Count_Toggle = 0;
             if(sStatusRelay.Lamp == 1)
             {
-                On_Relay(RELAY_LAMP);
+                OnOff_Relay(RELAY_LAMP, ON_RELAY);
             }
             else
             {
-                Off_Relay(RELAY_LAMP);
+                OnOff_Relay(RELAY_LAMP, OFF_RELAY);
             }
             sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 0;  
             return 1;
@@ -130,7 +132,7 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
     }
     else
     {
-        Off_Relay(RELAY_LAMP);
+        OnOff_Relay(RELAY_LAMP, OFF_RELAY);
         sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = TIME_LED_TOGGLE;  
         Count_Toggle++;
         if(Count_Toggle >= 10)

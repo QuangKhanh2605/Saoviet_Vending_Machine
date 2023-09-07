@@ -5,13 +5,7 @@
 #include "user_external_flash.h"
 /*============== Function static ===============*/
 static uint8_t fevent_relay_entry(uint8_t event);
-static uint8_t fevent_on_off_relay_elevator(uint8_t event);
-static uint8_t fevent_on_off_relay_screen(uint8_t event);
-static uint8_t fevent_on_off_relay_fridge_cool(uint8_t event);
-static uint8_t fevent_on_off_relay_alarm(uint8_t event);
-static uint8_t fevent_on_off_relay_fridge_heat(uint8_t event);
-static uint8_t fevent_on_off_relay_lamp(uint8_t event);
-static uint8_t fevent_on_off_relay_warm(uint8_t event);
+
 static uint8_t fevent_control_led_status(uint8_t event);
 static uint8_t fevent_control_led_pcbox(uint8_t event);
 static uint8_t fevent_control_led_slave(uint8_t event);
@@ -19,13 +13,6 @@ static uint8_t fevent_control_led_slave(uint8_t event);
 sEvent_struct               sEventAppRelay[] = 
 {
   {_EVENT_RELAY_ENTRY,              1, 0, 5,                fevent_relay_entry},
-  {_EVENT_ON_OFF_RELAY_ELEVATOR,    0, 0, 5,                fevent_on_off_relay_elevator},
-  {_EVENT_ON_OFF_RELAY_SCREEN,      0, 0, 5,                fevent_on_off_relay_screen},
-  {_EVENT_ON_OFF_RELAY_FRIDGE_COOL, 0, 0, 5,                fevent_on_off_relay_fridge_cool},
-  {_EVENT_ON_OFF_RELAY_ALARM,       0, 0, 5,                fevent_on_off_relay_alarm},
-  {_EVENT_ON_OFF_RELAY_FRIDGE_HEAT, 0, 0, 5,                fevent_on_off_relay_fridge_heat},
-  {_EVENT_ON_OFF_RELAY_LAMP,        0, 0, 5,                fevent_on_off_relay_lamp},
-  {_EVENT_ON_OFF_RELAY_WARM,        0, 0, 5,                fevent_on_off_relay_warm},
   
   {_EVENT_CONTROL_LED_STATUS,       0, 5, TIME_LED_STATUS,  fevent_control_led_status},
   {_EVENT_CONTROL_LED_PCBOX,        0, 5, TIME_LED_PCBOX,   fevent_control_led_pcbox},
@@ -71,128 +58,6 @@ static uint8_t fevent_relay_entry(uint8_t event)
     fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_STATUS);
     fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_PCBOX);
     fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_SLAVE);
-    return 1;
-}
-
-static uint8_t fevent_on_off_relay_elevator(uint8_t event)
-{
-    if(sStatusRelay.Elevator == ON_RELAY)
-    {
-        On_Relay(RELAY_ELEVATOR);
-        //AppRelay_Debug(ON_RELAY, RELAY_ELEVATOR);
-    }
-    else if(sStatusRelay.Elevator == OFF_RELAY)
-    {
-        Off_Relay(RELAY_ELEVATOR);
-        //AppRelay_Debug(OFF_RELAY, RELAY_ELEVATOR);
-    }
-    return 1;
-}
-
-static uint8_t fevent_on_off_relay_screen(uint8_t event)
-{
-    if(sStatusRelay.Screen == ON_RELAY)
-    {
-        On_Relay(RELAY_SCREEN);
-        AppRelay_Debug(ON_RELAY, RELAY_SCREEN);
-        
-        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_SCREEN, ON_RELAY);
-    }
-    else if(sStatusRelay.Screen == OFF_RELAY)
-    {
-        Off_Relay(RELAY_SCREEN);
-        AppRelay_Debug(OFF_RELAY, RELAY_SCREEN);
-        
-        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_SCREEN, OFF_RELAY);
-    }
-    
-    Write_Status_Relay_ExFlash();
-    return 1;
-}
-
-static uint8_t fevent_on_off_relay_fridge_cool(uint8_t event)
-{
-    if(sStatusRelay.FridgeCool == ON_RELAY)
-    {
-        On_Relay(RELAY_FRIDGE_COOL);
-        //AppRelay_Debug(ON_RELAY, RELAY_FRIDGE_COOL);
-    }
-    else if(sStatusRelay.FridgeCool == OFF_RELAY)
-    {
-        Off_Relay(RELAY_FRIDGE_COOL);
-        //AppRelay_Debug(OFF_RELAY, RELAY_FRIDGE_COOL);
-    }
-
-    return 1;
-}
-
-static uint8_t fevent_on_off_relay_alarm(uint8_t event)
-{
-    if(sStatusRelay.Alarm == ON_RELAY)
-    {
-        On_Relay(RELAY_ALARM);
-        AppRelay_Debug(ON_RELAY, RELAY_ALARM);
-    }
-    else if(sStatusRelay.Alarm == OFF_RELAY)
-    {
-        Off_Relay(RELAY_ALARM);
-        AppRelay_Debug(OFF_RELAY, RELAY_ALARM);
-    }
-        
-    return 1;
-}
-
-static uint8_t fevent_on_off_relay_fridge_heat(uint8_t event)
-{
-    if(sStatusRelay.FridgeHeat == ON_RELAY)
-    {
-        On_Relay(RELAY_FRIDGE_HEAT);
-        //AppRelay_Debug(ON_RELAY, RELAY_FRIDGE_HEAT);
-    }
-    else if(sStatusRelay.FridgeHeat == OFF_RELAY)
-    {
-        Off_Relay(RELAY_FRIDGE_HEAT);
-        //AppRelay_Debug(OFF_RELAY, RELAY_FRIDGE_HEAT);
-    }
-
-    return 1;
-}
-
-static uint8_t fevent_on_off_relay_lamp(uint8_t event)
-{
-    if(sStatusRelay.Lamp == ON_RELAY)
-    {
-        On_Relay(RELAY_LAMP);
-        AppRelay_Debug(ON_RELAY, RELAY_LAMP);
-        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_LAMP, ON_RELAY);
-    }
-    else if(sStatusRelay.Lamp == OFF_RELAY)
-    {
-        Off_Relay(RELAY_LAMP);
-        AppRelay_Debug(OFF_RELAY, RELAY_LAMP);
-        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_LAMP, OFF_RELAY);
-    }
-    
-    Write_Status_Relay_ExFlash();
-    
-    return 1;
-}
-
-static uint8_t fevent_on_off_relay_warm(uint8_t event)
-{
-    if(sStatusRelay.Warm == ON_RELAY)
-    {
-        On_Relay(RELAY_WARM);
-        AppRelay_Debug(ON_RELAY, RELAY_WARM);
-        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_WARM, OFF_RELAY);
-    }
-    else if(sStatusRelay.Warm == OFF_RELAY)
-    {
-        Off_Relay(RELAY_WARM);
-        AppRelay_Debug(OFF_RELAY, RELAY_WARM);
-        Relay_Respond_Pc_Box_Control(OBIS_ON_OFF_RELAY_WARM, OFF_RELAY);
-    }
-    
     return 1;
 }
 
@@ -250,6 +115,71 @@ static uint8_t fevent_control_led_slave(uint8_t event)
 }
 
 /*========== Function Handle ============*/
+void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug)
+{
+  if(State == OFF_RELAY || State == ON_RELAY)
+  {
+    switch(Relay)
+    {
+          case RELAY_ELEVATOR: 
+            OnOff_Relay(RELAY_ELEVATOR, State);
+            sStatusRelay.Elevator = State;
+            break;
+            
+          case RELAY_SCREEN: 
+            OnOff_Relay(RELAY_SCREEN, State);
+            sStatusRelay.Screen = State;
+            Relay_Respond_Pc_Box(StateRespond, OBIS_ON_OFF_RELAY_SCREEN, State);
+            break;
+            
+          case RELAY_FRIDGE_COOL: 
+            OnOff_Relay(RELAY_FRIDGE_COOL, State);
+            sStatusRelay.FridgeCool = State;
+            break;
+            
+          case RELAY_ALARM: 
+            OnOff_Relay(RELAY_ALARM, State);
+            sStatusRelay.Alarm = State;
+            break;
+            
+          case RELAY_FRIDGE_HEAT: 
+            OnOff_Relay(RELAY_FRIDGE_HEAT, State);
+            sStatusRelay.FridgeHeat = State;
+            break;
+            
+          case RELAY_LAMP: 
+            OnOff_Relay(RELAY_LAMP, State);
+            sStatusRelay.Lamp = State;
+            Relay_Respond_Pc_Box(StateRespond, OBIS_ON_OFF_RELAY_LAMP, State);
+            break;
+            
+          case RELAY_WARM: 
+            OnOff_Relay(RELAY_WARM, State);
+            sStatusRelay.Warm = State;
+            Relay_Respond_Pc_Box(StateRespond, OBIS_ON_OFF_RELAY_WARM, State);
+            break;
+        
+         default:
+            break;
+    }
+    
+    Relay_Debug(RelayDebug, Relay, State);
+  }
+}
+
+void OnOff_Relay(Relay_TypeDef Relay, uint8_t State)
+{
+    if(State == ON_RELAY)
+    {
+        HAL_GPIO_WritePin(RELAY_PORT[Relay], RELAY_PIN[Relay], GPIO_PIN_ON_RELAY);
+    }
+    else
+    {
+        HAL_GPIO_WritePin(RELAY_PORT[Relay], RELAY_PIN[Relay], GPIO_PIN_OFF_RELAY);
+    }
+}
+
+
 void Init_AppRelay(void)
 {
     Read_Status_Relay_ExFlash();
@@ -313,8 +243,10 @@ void Init_StatusRelay(void)
   else                              HAL_GPIO_WritePin(RELAY_PORT[6], RELAY_PIN[6], GPIO_PIN_OFF_RELAY);
 }
 
-void Relay_Respond_Pc_Box_Control(uint8_t Obis, uint8_t Data)
+void Relay_Respond_Pc_Box(uint8_t State, uint8_t Obis, uint8_t Data)
 {
+  if(State == _RL_RESPOND)
+  {
     uint8_t aData[5];
     uint8_t length = 0;
     uint16_t TempCrc = 0;
@@ -331,6 +263,7 @@ void Relay_Respond_Pc_Box_Control(uint8_t Obis, uint8_t Data)
     aData[length++] = TempCrc >> 8;
     
     Write_Queue_Repond_PcBox(aData, length);
+  }
 }
 
 void LED_Toggle (Led_TypeDef Led)
@@ -350,8 +283,10 @@ void LED_Off (Led_TypeDef Led)
     HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
 }
 
-void AppRelay_Debug(uint8_t Status, uint8_t Relay)
+void Relay_Debug(uint8_t State_Debug, uint8_t Relay, uint8_t Status)
 {
+    if(State_Debug == _RL_DEBUG)
+    {
 #ifdef USING_APP_RELAY_DEBUG
     if(Status == ON_RELAY)
     {
@@ -398,16 +333,7 @@ void AppRelay_Debug(uint8_t Status, uint8_t Relay)
     
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")); 
 #endif
-}
-
-void On_Relay(Relay_TypeDef Relay)
-{
-    HAL_GPIO_WritePin(RELAY_PORT[Relay], RELAY_PIN[Relay], GPIO_PIN_ON_RELAY);
-}
-
-void Off_Relay(Relay_TypeDef Relay)
-{
-    HAL_GPIO_WritePin(RELAY_PORT[Relay], RELAY_PIN[Relay], GPIO_PIN_OFF_RELAY);
+    }
 }
 
 uint8_t AppRelay_Task(void)

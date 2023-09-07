@@ -55,7 +55,7 @@
 #define TIME_RESET_WDG              1000
 
 #define TIME_RESPOND_PC_BOX         2000    
-#define TIME_REFRESH_DCU            2*86400*TIME_ONE_SECOND
+#define TIME_REFRESH_DCU            3*86400*TIME_ONE_SECOND
 
 #define BEFORE_RESET_DCU            0
 #define AFTER_RESET_DCU             1
@@ -69,9 +69,6 @@
 
 #define GPIO_PIN_ON_RELAY   GPIO_PIN_SET
 #define GPIO_PIN_OFF_RELAY  GPIO_PIN_RESET
-
-#define ON_RELAY            1
-#define OFF_RELAY           0
 
 #define NUMBER_RELAY        7
 /*============ Define App Door Sensor ===========*/
