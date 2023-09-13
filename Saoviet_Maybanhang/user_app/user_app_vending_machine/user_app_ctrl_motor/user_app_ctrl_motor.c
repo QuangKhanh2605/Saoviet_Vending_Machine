@@ -2,6 +2,8 @@
 #include "user_app_ctrl_motor.h"
 #include "user_comm_vending_machine.h"
 #include "user_app_pc_box.h"
+#include "user_app_relay.h"
+#include "user_app_electric.h"
 /*=============Function Static==============*/
 static uint8_t fevent_motor_entry(uint8_t event);
 static uint8_t fevent_control_motor_push(uint8_t event);

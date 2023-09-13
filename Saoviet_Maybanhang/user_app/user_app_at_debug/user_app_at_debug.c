@@ -8,8 +8,8 @@ static uint8_t fevent_at_debug_complete_receive(uint8_t event);
 /*=============== Struct =================*/
 sEvent_struct               sEventAppAtDebug[]=
 {
-  {_EVENT_AT_DEBUG_ENTRY,                 0, 5, 0,           fevent_at_debug_entry},
-  {_EVENT_AT_DEBUG_RECEIVE_HANDLE,        1, 0, 5,           fevent_at_debug_receive_handle},
+  {_EVENT_AT_DEBUG_ENTRY,                 1, 5, TIME_ON_DCU, fevent_at_debug_entry},
+  {_EVENT_AT_DEBUG_RECEIVE_HANDLE,        0, 0, 5,           fevent_at_debug_receive_handle},
   {_EVENT_AT_DEBUG_COMPLETE_RECEIVE,      0, 0, 5,           fevent_at_debug_complete_receive},
 };
 
@@ -17,6 +17,9 @@ sEvent_struct               sEventAppAtDebug[]=
 
 static uint8_t fevent_at_debug_entry(uint8_t event)
 {
+    fevent_active(sEventAppAtDebug, _EVENT_AT_DEBUG_RECEIVE_HANDLE);
+    UTIL_MEM_set(sUartDebug.Data_a8 , 0x00, sUartDebug.Length_u16);
+    sUartDebug.Length_u16 = 0;
     return 1;
 }
 

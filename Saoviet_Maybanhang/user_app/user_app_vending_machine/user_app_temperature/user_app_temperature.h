@@ -20,7 +20,7 @@
 
 #define DEFAULT_SETUP_TEMP      50
 #define DEFAULT_THRESH_TEMP     25
-#define TIME_ONE_MINUTES        60*1000
+
 #define TIME_OFF_FROZEN         5*TIME_ONE_MINUTES
 
 #define TIME_GET_TEMP           30000

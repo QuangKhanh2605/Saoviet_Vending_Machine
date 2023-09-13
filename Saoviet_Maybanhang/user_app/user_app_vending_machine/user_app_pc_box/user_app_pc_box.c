@@ -34,7 +34,7 @@ sEvent_struct               sEventAppPcBox[]=
   {_EVENT_QUEUE_RESPOND_IMMEDIATELY,    1, 0, 5,                    fevent_queue_respond_immediately},
   {_EVENT_QUEUE_RESPOND_TIME,           0, 0, TIME_RESPOND_PC_BOX,  fevent_queue_respond_time},
   
-  {_EVENT_REFRESH_DCU,                  1, 5, TIME_REFRESH_DCU,     fevent_refresh_dcu},
+  {_EVENT_REFRESH_DCU,                  1, 5, 15*60000,     fevent_refresh_dcu},
 };
 
 uint8_t     aBuffer_Ping[20];
@@ -49,7 +49,7 @@ sData   sDCU_ID=
     .Data_a8 = &aDCU_ID[0], 
     .Length_u16 = 14,
 };
-sDataQueueRespondPcBox          sQueueRespondPcBox[20];
+sDataQueueRespondPcBox          sQueueRespondPcBox[30];
 sDataQueueRespondPcBox          sQueueReadData;
 Struct_Queue_Type               qRespondPcBox;
 
@@ -116,6 +116,8 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
     uint16_t Crc_Check = 0;
     uint16_t Crc_Recv  = 0;
     uint8_t Respond = false;
+    
+    AppPcBox_Debug(sUartPcBox.Data_a8, sUartPcBox.Length_u16 , _RECV_PCBOX);
 
     Crc_Recv = (sUartPcBox.Data_a8[sUartPcBox.Length_u16-1] << 8) |
                (sUartPcBox.Data_a8[sUartPcBox.Length_u16-2]);
@@ -170,6 +172,8 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   Length_Data = sUartPcBox.Data_a8[pos++];
                   if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
                   {              
+                        fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
+                        fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_COMPLETE_RECEIVE);
                         fevent_active(sEventAppPcBox, _EVENT_RESET_DCU);
                   }
                   break; 
@@ -193,7 +197,12 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {
                       if(sUartPcBox.Data_a8[pos] <= 0x01)
                       {
+                        if(sElectric.PowerPresent != POWER_OFF)
                         ControlRelay(RELAY_LAMP, sUartPcBox.Data_a8[pos], _RL_RESPOND, _RL_DEBUG);
+                        else
+                        {
+                            ControlRelay(RELAY_LAMP, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+                        }
                         pos += 1;
                       }
                   }
@@ -205,8 +214,22 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {
                       if(sUartPcBox.Data_a8[pos] <= 0x01)
                       {
-                        ControlRelay(RELAY_WARM, sUartPcBox.Data_a8[pos], _RL_RESPOND, _RL_DEBUG);
-                        Write_Status_Relay_ExFlash();
+                        if(sUartPcBox.Data_a8[pos] == OFF_RELAY)
+                        {
+                            fevent_active(sEventAppRelay,_EVENT_RELAY_WARM_OFF);
+                        }
+                        else if(sUartPcBox.Data_a8[pos] == ON_RELAY)
+                        {
+                            if(sElectric.PowerPresent != POWER_OFF)
+                            {
+                                OnRelay_Warm(TIME_RL_WARM_1);
+                                fevent_active(sEventAppRelay,_EVENT_RELAY_WARM_ON);
+                            }
+                            else
+                            {
+                                fevent_active(sEventAppRelay,_EVENT_RELAY_WARM_OFF);
+                            }
+                        }
                         pos += 1;
                       }
                   }
@@ -280,7 +303,6 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
         Init_Uart_PcBox_Rx_IT();
         Write_Queue_Repond_PcBox((uint8_t*)"ERROR",5);
     }
-    AppPcBox_Debug();
     
     LedRecvPcBox = sUartPcBox.Length_u16;    
     
@@ -375,7 +397,7 @@ static uint8_t fevent_reset_dcu(uint8_t event)
         Calculator_Crc_U16(&TempCrc, aData, length);
         aData[length++] = TempCrc;
         aData[length++] = TempCrc << 8;
-        Respond_PcBox(aData, length);
+        Transmit_PCBOX(aData, length);
         UTIL_Printf(DBLEVEL_L, (uint8_t*)"OFF_MCU\r\n", sizeof("OFF_MCU\r\n")); 
         
         Reset_Chip();
@@ -389,7 +411,7 @@ static uint8_t fevent_queue_respond_immediately(uint8_t event)
     if(qGet_Number_Items(&qRespondPcBox) > 0)
     {
         qQueue_Receive(&qRespondPcBox ,&sQueueReadData, 1);
-        Respond_PcBox(sQueueReadData.aData_u8,sQueueReadData.Length);
+        Transmit_PCBOX(sQueueReadData.aData_u8,sQueueReadData.Length);
 
         fevent_enable(sEventAppPcBox, _EVENT_QUEUE_RESPOND_TIME);
         return 1;
@@ -408,7 +430,7 @@ static uint8_t fevent_queue_respond_time(uint8_t event)
     else
     {
         qQueue_Receive(&qRespondPcBox ,&sQueueReadData, 1);
-        Respond_PcBox(sQueueReadData.aData_u8,sQueueReadData.Length);
+        Transmit_PCBOX(sQueueReadData.aData_u8,sQueueReadData.Length);
 
         fevent_enable(sEventAppPcBox, _EVENT_QUEUE_RESPOND_TIME);
     }
@@ -418,7 +440,8 @@ static uint8_t fevent_queue_respond_time(uint8_t event)
 static uint8_t fevent_refresh_dcu(uint8_t event)
 {
     if(sStatusApp.Motor == FREE && sStatusApp.Door == FREE 
-       && sStatusApp.Electric == FREE && sStatusApp.Temperature == FREE)
+       && sStatusApp.Electric == FREE && sStatusApp.Temperature == FREE
+       && sStatusApp.RL_Warm == FREE)
     {
       if(HAL_GetTick() - sEventAppPcBox[_EVENT_PC_BOX_LOG_TSVH].e_systick >=  TIME_SEND_TSVH - TIME_ENTRY)
       {
@@ -433,6 +456,11 @@ static uint8_t fevent_refresh_dcu(uint8_t event)
     return 1;
 }
 /*================= Function Handle ================*/
+void Transmit_PCBOX(uint8_t aData[],uint8_t length)
+{
+    AppPcBox_Debug(aData, length , _TRANS_PCBOX);
+    Respond_PcBox(aData, length);
+};
 
 void Write_Queue_Repond_PcBox(uint8_t aData[], uint8_t Length)
 {
@@ -468,10 +496,10 @@ uint8_t Log_TSVH(uint8_t *aData)
     aData[length++] = sTemperature.Value;
     aData[length++] = DEFAULT_TEMP_SCALE;
 
-    aData[length++] = sElectric.Current >> 8;
-    aData[length++] = sElectric.Current;
     aData[length++] = sElectric.Voltage >> 8;
     aData[length++] = sElectric.Voltage;
+    aData[length++] = sElectric.Current >> 8;
+    aData[length++] = sElectric.Current;
     aData[length++] = sElectric.Scale;
     
     aData[1] = length - 2;
@@ -517,19 +545,32 @@ void Init_DCU_ID(void)
     }
 }
 
-void AppPcBox_Debug(void)
+void AppPcBox_Debug(uint8_t aData[], uint8_t length, uint8_t TransRecv)
 {
 #ifdef USING_APP_PC_BOX_DEBUG
-
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_pc_box: Recv: ", sizeof("app_pc_box: Recv: "));
     uint8_t array[50]={0};
+    sData   sArray=
+    {
+        .Data_a8    = aData,
+        .Length_u16 = length,
+    };
+    
+    if(TransRecv == _RECV_PCBOX)
+    {
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_pc_box: Recv: ", sizeof("app_pc_box: Recv: "));
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_pc_box: Trans: ", sizeof("app_pc_box: Trans: "));
+    }
     sData sSource=
     {
         .Data_a8 = array,
     };
-    if(sUartPcBox.Length_u16 < 25)
+    
+    if(sArray.Length_u16 < 25)
     {
-        Convert_Hex_To_String_Hex(&sSource, &sUartPcBox);
+        Convert_Hex_To_String_Hex(&sSource, &sArray);
         UTIL_Printf(DBLEVEL_M, (uint8_t*)sSource.Data_a8, sSource.Length_u16);
     }
     else

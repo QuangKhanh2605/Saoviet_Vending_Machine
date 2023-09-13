@@ -8,13 +8,24 @@
 #include "event_driven.h"
 #include "user_util.h"
 
-#define  TIME_LED_STATUS    2000
-#define  TIME_LED_PCBOX     80
-#define  TIME_LED_SLAVE     1000
+#define  TIME_LED_STATUS        2000
+#define  TIME_LED_PCBOX         80
+#define  TIME_LED_SLAVE         1000
+
+#define  TIME_RL_WARM_DELAY     30*TIME_ONE_SECOND
+
+#define  TIME_RL_WARM_1         5*TIME_ONE_MINUTES
+#define  TIME_RL_WARM_2         15*TIME_ONE_MINUTES
+
+#define  TIME_RL_WARM_REFRESH   60*TIME_ONE_MINUTES
 
 typedef enum
 {
     _EVENT_RELAY_ENTRY,
+    
+    _EVENT_RELAY_WARM_REFRESH,
+    _EVENT_RELAY_WARM_ON,
+    _EVENT_RELAY_WARM_OFF,
     
     _EVENT_CONTROL_LED_STATUS,
     _EVENT_CONTROL_LED_PCBOX,
@@ -32,8 +43,8 @@ typedef enum
 
 typedef enum 
 {
-    DISCONNECT,
-    CONNECT,
+    DISCONNECT_SLAVE,
+    CONNECT_SLAVE,
 }eNumConnectSlave;
     
 typedef enum
@@ -62,7 +73,7 @@ typedef struct
 
 typedef enum
 {
-    RELAY_ELEVATOR,
+    RELAY_ELEVATOR = 0,
     RELAY_SCREEN,
     RELAY_FRIDGE_COOL,
     RELAY_ALARM,
@@ -80,6 +91,7 @@ extern sEvent_struct        sEventAppRelay[];
 
 extern Struct_StatusRelay         sStatusRelay;
 extern uint8_t                    LedRecvPcBox;
+extern uint8_t                    ConnectSlave;
 /*=============== Function handle ================*/
 
 uint8_t     AppRelay_Task(void);
@@ -94,8 +106,10 @@ void        LED_On (Led_TypeDef Led);
 void        LED_Off (Led_TypeDef Led);
 
 void        OnOff_Relay(Relay_TypeDef Relay, uint8_t State);
-void        Relay_Respond_Pc_Box(uint8_t State, uint8_t Obis, uint8_t Data);
+void        Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Data);
 void        Relay_Debug(uint8_t State_Debug, uint8_t Relay, uint8_t Status);
 void        ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug);
+
+void        OnRelay_Warm(uint32_t time);
 
 #endif

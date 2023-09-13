@@ -15,6 +15,7 @@
 #define MAX_LENGTH_DCU_ID	        20
 #define DEFAULT_READ_EXFLASH        0xAA
 #define TIME_ONE_SECOND             1000
+#define TIME_ONE_MINUTES            60*TIME_ONE_SECOND
 /*=============== Define Obis ===============*/
 #define OBIS_SETUP_TEMP             0x15
 #define OBIS_PC_BOX_FIX_MOTOR       0x16
@@ -37,6 +38,8 @@
 #define OBIS_SET_DCU_ID             0x0D
 #define OBIS_RESET_DCU              0x0E
 #define OBIS_WARNING_POWER          0x0F
+
+#define OBIS_RESPOND_HANDLE_RELAY   0x50
 /*=============== Define Using Debug ==============*/
 #define USING_APP_CTRL_MOTOR_DEBUG
 #define USING_APP_DOOR_SENSOR_DEBUG
@@ -55,7 +58,7 @@
 #define TIME_RESET_WDG              1000
 
 #define TIME_RESPOND_PC_BOX         2000    
-#define TIME_REFRESH_DCU            3*86400*TIME_ONE_SECOND
+#define TIME_REFRESH_DCU            2*86400*TIME_ONE_SECOND
 
 #define BEFORE_RESET_DCU            0
 #define AFTER_RESET_DCU             1

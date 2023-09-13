@@ -3,8 +3,13 @@
 #include "user_comm_vending_machine.h"
 #include "user_app_pc_box.h"
 #include "user_external_flash.h"
+#include "user_app_electric.h"
 /*============== Function static ===============*/
 static uint8_t fevent_relay_entry(uint8_t event);
+
+static uint8_t fevent_relay_warm_refresh(uint8_t event);
+static uint8_t fevent_relay_warm_on(uint8_t event);
+static uint8_t fevent_relay_warm_off(uint8_t event);
 
 static uint8_t fevent_control_led_status(uint8_t event);
 static uint8_t fevent_control_led_pcbox(uint8_t event);
@@ -12,40 +17,44 @@ static uint8_t fevent_control_led_slave(uint8_t event);
 /*=================== struct ==================*/
 sEvent_struct               sEventAppRelay[] = 
 {
-  {_EVENT_RELAY_ENTRY,              1, 0, 5,                fevent_relay_entry},
+  {_EVENT_RELAY_ENTRY,              1, 0, 5,                    fevent_relay_entry},
   
-  {_EVENT_CONTROL_LED_STATUS,       0, 5, TIME_LED_STATUS,  fevent_control_led_status},
-  {_EVENT_CONTROL_LED_PCBOX,        0, 5, TIME_LED_PCBOX,   fevent_control_led_pcbox},
-  {_EVENT_CONTROL_LED_SLAVE,        0, 5, TIME_LED_SLAVE,   fevent_control_led_slave},
+  {_EVENT_RELAY_WARM_REFRESH,       1, 5, TIME_RL_WARM_REFRESH, fevent_relay_warm_refresh},
+  {_EVENT_RELAY_WARM_ON,            0, 5, TIME_RL_WARM_DELAY,   fevent_relay_warm_on},
+  {_EVENT_RELAY_WARM_OFF,           0, 0, 5,                    fevent_relay_warm_off},
+  
+  {_EVENT_CONTROL_LED_STATUS,       0, 5, TIME_LED_STATUS,      fevent_control_led_status},
+  {_EVENT_CONTROL_LED_PCBOX,        0, 5, TIME_LED_PCBOX,       fevent_control_led_pcbox},
+  {_EVENT_CONTROL_LED_SLAVE,        0, 5, TIME_LED_SLAVE,       fevent_control_led_slave},
 };
 
 Struct_StatusRelay          sStatusRelay={OFF_RELAY};                
 
 /*
-    Relay PC            ->      Elevator
+    Layer 7             ->      Elevator
+    Relay PC            ->      Warm
     Relay Screen        ->      Screen
     Relay Fridge        ->      Fridge Frozen
     Relay Alarm         ->      Fridge Alarm
     Relay 5             ->      Fridge Heat
     Motor Elevator      ->      Lamp
-    Layer 7             ->      Warm
 */
 
-static GPIO_TypeDef*    RELAY_PORT[NUMBER_RELAY] = {ON_OFF_PC_GPIO_Port, 
+static GPIO_TypeDef*    RELAY_PORT[NUMBER_RELAY] = {Layer_7_GPIO_Port, 
                                                     ON_OFF_Screen_GPIO_Port, 
                                                     ON_OFF_Fridge_GPIO_Port, 
                                                     ON_OFF_Alarm_GPIO_Port,
                                                     ON_OFF_Relay_5_GPIO_Port, 
                                                     Motor_GPIO_Port,
-                                                    Layer_7_GPIO_Port};
+                                                    ON_OFF_PC_GPIO_Port};
 
-static uint16_t         RELAY_PIN[NUMBER_RELAY] = {ON_OFF_PC_Pin, 
+static uint16_t         RELAY_PIN[NUMBER_RELAY] = {Layer_7_Pin, 
                                                    ON_OFF_Screen_Pin, 
                                                    ON_OFF_Fridge_Pin, 
                                                    ON_OFF_Alarm_Pin,
                                                    ON_OFF_Relay_5_Pin, 
                                                    Motor_Pin,
-                                                   Layer_7_Pin};
+                                                   ON_OFF_PC_Pin};
 
 static GPIO_TypeDef*  LED_PORT[3] = {Led_1_GPIO_Port, Led_2_GPIO_Port, Led_3_GPIO_Port};
 static const uint16_t LED_PIN[3] = {Led_1_Pin, Led_2_Pin, Led_3_Pin};
@@ -58,6 +67,28 @@ static uint8_t fevent_relay_entry(uint8_t event)
     fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_STATUS);
     fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_PCBOX);
     fevent_active(sEventAppRelay, _EVENT_CONTROL_LED_SLAVE);
+    return 1;
+}
+
+static uint8_t fevent_relay_warm_refresh(uint8_t event)
+{
+    if(sElectric.PowerPresent != POWER_OFF) 
+    OnRelay_Warm(TIME_RL_WARM_1);
+    else    fevent_enable(sEventAppRelay, event);
+    return 1;
+}
+
+static uint8_t fevent_relay_warm_on(uint8_t event)
+{
+    fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_OFF);
+    ControlRelay(RELAY_WARM, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+    return 1;
+}
+
+static uint8_t fevent_relay_warm_off(uint8_t event)
+{
+    ControlRelay(RELAY_WARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+    sStatusApp.RL_Warm = FREE;
     return 1;
 }
 
@@ -101,7 +132,7 @@ static uint8_t fevent_control_led_pcbox(uint8_t event)
 
 static uint8_t fevent_control_led_slave(uint8_t event)
 {
-    if(ConnectSlave == CONNECT)
+    if(ConnectSlave == CONNECT_SLAVE)
     {
         LED_Toggle(_LED_SLAVE);
     }
@@ -129,7 +160,6 @@ void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t Re
           case RELAY_SCREEN: 
             OnOff_Relay(RELAY_SCREEN, State);
             sStatusRelay.Screen = State;
-            Relay_Respond_Pc_Box(StateRespond, OBIS_ON_OFF_RELAY_SCREEN, State);
             break;
             
           case RELAY_FRIDGE_COOL: 
@@ -150,19 +180,17 @@ void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t Re
           case RELAY_LAMP: 
             OnOff_Relay(RELAY_LAMP, State);
             sStatusRelay.Lamp = State;
-            Relay_Respond_Pc_Box(StateRespond, OBIS_ON_OFF_RELAY_LAMP, State);
             break;
             
           case RELAY_WARM: 
             OnOff_Relay(RELAY_WARM, State);
             sStatusRelay.Warm = State;
-            Relay_Respond_Pc_Box(StateRespond, OBIS_ON_OFF_RELAY_WARM, State);
             break;
         
          default:
             break;
     }
-    
+    Relay_Respond_Pc_Box(StateRespond, Relay, State);
     Relay_Debug(RelayDebug, Relay, State);
   }
 }
@@ -243,7 +271,15 @@ void Init_StatusRelay(void)
   else                              HAL_GPIO_WritePin(RELAY_PORT[6], RELAY_PIN[6], GPIO_PIN_OFF_RELAY);
 }
 
-void Relay_Respond_Pc_Box(uint8_t State, uint8_t Obis, uint8_t Data)
+void OnRelay_Warm(uint32_t time)
+{
+    sStatusApp.RL_Warm = BUSY;
+    sEventAppRelay[_EVENT_RELAY_WARM_OFF].e_period = time;
+    fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_ON);
+    fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_REFRESH);
+}
+
+void Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Data)
 {
   if(State == _RL_RESPOND)
   {
@@ -253,8 +289,9 @@ void Relay_Respond_Pc_Box(uint8_t State, uint8_t Obis, uint8_t Data)
     
 /*=============== Log ===============*/
     
-    aData[length++] = Obis;
-    aData[length++] = 0x01;
+    aData[length++] = OBIS_RESPOND_HANDLE_RELAY;
+    aData[length++] = 0x02;
+    aData[length++] = KindRelay ;
     aData[length++] = Data;
     
     Calculator_Crc_U16(&TempCrc, aData, length);

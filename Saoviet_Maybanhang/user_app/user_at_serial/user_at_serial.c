@@ -7,21 +7,25 @@
 
 const struct_CheckList_AT CheckList_AT_CONFIG[] =
 {
-    {_RESET_DCU,        _fRESET_DCU,                {(uint8_t*)"at+resetdcu",11}},
+    {_RESET_DCU,            _fRESET_DCU,                {(uint8_t*)"at+resetdcu",11}},
   
-    {_GET_SERI_DCU,		_fGET_SERI_DCU,		        {(uint8_t*)"at+seri?",8}},
-    {_SET_SERI_DCU,     _fSET_SERI_DCU,             {(uint8_t*)"at+seri=",8}},
+    {_GET_SERI_DCU,		    _fGET_SERI_DCU,		        {(uint8_t*)"at+seri?",8}},
+    {_SET_SERI_DCU,         _fSET_SERI_DCU,             {(uint8_t*)"at+seri=",8}},
     
-    {_GET_SETUP_TEMP,   _fGET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp?",13}},
-    {_SET_SETUP_TEMP,   _fSET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp=",13}},
+    {_GET_SETUP_TEMP,       _fGET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp?",13}},
+    {_SET_SETUP_TEMP,       _fSET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp=",13}},
     
-    {_GET_THRESH_TEMP,  _fGET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp?",14}},
-    {_SET_THRESH_TEMP,  _fSET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp=",14}},
+    {_GET_THRESH_TEMP,      _fGET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp?",14}},
+    {_SET_THRESH_TEMP,      _fSET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp=",14}},
     
-    {_GET_ID_SLAVE,     _fGET_ID_SLAVE,             {(uint8_t*)"at+slaveid?",11}},
-    {_SET_ID_SLAVE,     _fSET_ID_SLAVE,             {(uint8_t*)"at+slaveid=",11}},
+    {_GET_ID_SLAVE,         _fGET_ID_SLAVE,             {(uint8_t*)"at+slaveid?",11}},
+    {_SET_ID_SLAVE,         _fSET_ID_SLAVE,             {(uint8_t*)"at+slaveid=",11}},
     
-    {_END_AT_CMD,	    NULL,	                    {(uint8_t*)"at+end",6}},
+    {_CTRL_RELAY_SCREEN,    _fCTRL_RELAY_SCREEN,        {(uint8_t*)"at+rlscreen=",12}},
+    {_CTRL_RELAY_LAMP,      _fCTRL_RELAY_LAMP,          {(uint8_t*)"at+rllamp=",10}},
+    {_CTRL_RELAY_WARM,      _fCTRL_RELAY_WARM,          {(uint8_t*)"at+rlwarm=",10}},
+    
+    {_END_AT_CMD,	        NULL,	                    {(uint8_t*)"at+end",6}},
 };
 
 uint8_t 		aDATA_CONFIG[128];
@@ -193,6 +197,48 @@ void        _fSET_ID_SLAVE (sData *strRecei, uint16_t Pos)
     {
         UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
         UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
+
+void        _fCTRL_RELAY_SCREEN (sData *strRecei, uint16_t Pos)
+{
+    if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
+    {
+        ControlRelay(RELAY_SCREEN, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+    }
+    else if(strRecei->Data_a8[Pos] - 0x30 == ON_RELAY)
+    {
+        ControlRelay(RELAY_SCREEN, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+    }
+    Write_Status_Relay_ExFlash();
+}
+
+void        _fCTRL_RELAY_LAMP (sData *strRecei, uint16_t Pos)
+{
+    if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
+    {
+        ControlRelay(RELAY_LAMP, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+    }
+    else if(strRecei->Data_a8[Pos] - 0x30 == ON_RELAY)
+    {
+        ControlRelay(RELAY_LAMP, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+    }
+    Write_Status_Relay_ExFlash();
+}
+
+void        _fCTRL_RELAY_WARM (sData *strRecei, uint16_t Pos)
+{
+    if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
+    {
+        fevent_active(sEventAppRelay, _EVENT_RELAY_WARM_OFF);
+    }
+    else if(strRecei->Data_a8[Pos] - 0x30 == ON_RELAY)
+    {
+        if(sElectric.PowerPresent != POWER_OFF)
+        {
+            OnRelay_Warm(TIME_RL_WARM_2);
+            fevent_active(sEventAppRelay,_EVENT_RELAY_WARM_ON);
+        }
     }
 }
 

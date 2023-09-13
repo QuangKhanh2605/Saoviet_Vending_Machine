@@ -24,6 +24,10 @@ typedef enum
     _GET_ID_SLAVE,
     _SET_ID_SLAVE,
     
+    _CTRL_RELAY_SCREEN,
+    _CTRL_RELAY_LAMP,
+    _CTRL_RELAY_WARM,
+    
     _END_AT_CMD,
 }eNumTypeCommandAT;
 
@@ -50,5 +54,9 @@ void        _fSET_THRESH_TEMP (sData *strRecei, uint16_t Pos);
 
 void        _fGET_ID_SLAVE (sData *strRecei, uint16_t Pos);
 void        _fSET_ID_SLAVE (sData *strRecei, uint16_t Pos);
+
+void        _fCTRL_RELAY_SCREEN (sData *strRecei, uint16_t Pos);
+void        _fCTRL_RELAY_LAMP (sData *strRecei, uint16_t Pos);
+void        _fCTRL_RELAY_WARM (sData *strRecei, uint16_t Pos);
 
 #endif  

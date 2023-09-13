@@ -3,26 +3,29 @@
 #include "user_comm_vending_machine.h"
 #include "user_app_pc_box.h"
 #include "user_external_flash.h"
+#include "user_app_relay.h"
+#include "user_app_temperature.h"
 /*============== Function static =============*/
 static uint8_t fevent_electric_entry(uint8_t event);
-static uint8_t fevent_electric_pgood(uint8_t event);
 static uint8_t fevent_electric_transmit_485(uint8_t event);
 static uint8_t fevent_electric_receive_485(uint8_t event);
 static uint8_t fevent_electric_handle_485(uint8_t event);
 static uint8_t fevent_electric_send_meter(uint8_t event);
 static uint8_t fevent_electric_off_power(uint8_t event);
+static uint8_t fevent_electric_handle_power(uint8_t event);
 /*============== Struct ===================*/
 sEvent_struct               sEventAppElectric[] = 
 {
-  {_EVENT_ELECTRIC_ENTRY,           1, 5, TIME_ENTRY,       fevent_electric_entry},
-  {_EVENT_ELECTRIC_PGOOD,           1, 0, 10,               fevent_electric_pgood},
-  {_EVENT_ELECTRIC_TRANSMIT_485,    0, 0, 2000,             fevent_electric_transmit_485},
-  {_EVENT_ELECTRIC_RECEIVE_485,     1, 0, 5,                fevent_electric_receive_485},
-  {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 5,                fevent_electric_handle_485},
+  {_EVENT_ELECTRIC_ENTRY,           1, 5, TIME_ON_DCU,      fevent_electric_entry},
+  {_EVENT_ELECTRIC_TRANSMIT_485,    1, 5, 1000,             fevent_electric_transmit_485},
+  {_EVENT_ELECTRIC_RECEIVE_485,     0, 0, 5,                fevent_electric_receive_485},
+  {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 500,              fevent_electric_handle_485},
   
-  {_EVENT_ELECTRIC_SEND_METER,      1, 5, TIME_SEND_METER,  fevent_electric_send_meter},
+  {_EVENT_ELECTRIC_SEND_METER,      1, 5, TIME_SEND_METER,  fevent_electric_send_meter}, //TIME_SEND_METER
   
-  {_EVENT_ELECTRIC_OFF_POWER,       1, 0, 2000,             fevent_electric_off_power},
+  {_EVENT_ELECTRIC_OFF_POWER,       0, 5, 3000,             fevent_electric_off_power},
+  
+  {_EVENT_ELECTRIC_HANDLE_POWER,    0, 5, 0,                fevent_electric_handle_power},
 };
 
 Struct_Electric_Current         sElectric=
@@ -31,56 +34,15 @@ Struct_Electric_Current         sElectric=
   .Voltage      = 0, 
   .Current      = 0, 
   .Scale        = DEFAULT_ELECTRIC_SCALE,
-  .PowerPresent = POWER_ON,
-  .PowerBefore  = POWER_ON,
+  .PowerPresent = POWER_ERROR,
+  .PowerBefore  = POWER_ERROR,
 };
 
 /*============= Function Handle =============*/
 static uint8_t fevent_electric_entry(uint8_t event)
 {
-    fevent_active(sEventAppElectric, _EVENT_ELECTRIC_PGOOD);
-    return 1;
-}
-
-static uint8_t fevent_electric_pgood(uint8_t event)
-{
-//    if(HAL_GPIO_ReadPin(PGOOD_GPIO_Port, PGOOD_Pin) == INIT_STATUS_PGOOD_SENSOR_INPUT)
-//    {
-//        Status_Supply_Power = 1;
-//    }
-//    else
-//    {
-//        Status_Supply_Power = 0;
-//    }
-    
-    static uint8_t count_handle  = 0;
-    static uint8_t status_current= 0;
-    static uint8_t status_before = INIT_STATUS_PGOOD_SENSOR_INPUT;
-    
-    status_current = HAL_GPIO_ReadPin(PGOOD_GPIO_Port, PGOOD_Pin);
-    if(status_current == status_before)
-    {
-        count_handle++;
-        if(count_handle >= NUMBER_SPLG_PGOOD_SENSOR_INPUT)
-        {
-            count_handle = NUMBER_SPLG_PGOOD_SENSOR_INPUT;
-            if(status_current == INIT_STATUS_PGOOD_SENSOR_INPUT)
-            {
-                sElectric.PowerPresent = 1;
-            }
-            else
-            {
-                sElectric.PowerPresent = 0;
-            }
-        }
-    }
-    else
-    {
-        count_handle = 0;
-    }
-    status_before = HAL_GPIO_ReadPin(PGOOD_GPIO_Port, PGOOD_Pin);
-    
-    fevent_enable(sEventAppElectric, event);
+    fevent_active(sEventAppElectric, _EVENT_ELECTRIC_TRANSMIT_485);
+    fevent_enable(sEventAppElectric, _EVENT_ELECTRIC_OFF_POWER);
     return 1;
 }
 
@@ -91,9 +53,15 @@ static uint8_t fevent_electric_transmit_485(uint8_t event)
     
     ModRTU_Master_Read_Frame(&sFrame, sElectric.ID, 0x03, 0x02, 4);
     HAL_GPIO_WritePin(NET485IO_GPIO_Port, NET485IO_Pin, GPIO_PIN_SET);
-    HAL_Delay(10);
+    HAL_Delay(5);
+    UTIL_MEM_set(sUart485.Data_a8 , 0x00, sUart485.Length_u16);
+    sUart485.Length_u16 = 0;
+    
     HAL_UART_Transmit(&uart_485, sFrame.Data_a8, sFrame.Length_u16, 1000);
     HAL_GPIO_WritePin(NET485IO_GPIO_Port, NET485IO_Pin, GPIO_PIN_RESET);
+    
+    fevent_active(sEventAppElectric, _EVENT_ELECTRIC_RECEIVE_485);
+    fevent_enable(sEventAppElectric, _EVENT_ELECTRIC_HANDLE_485);
     
     fevent_enable(sEventAppElectric, event);
     return 1;
@@ -123,9 +91,75 @@ static uint8_t fevent_electric_receive_485(uint8_t event)
 
 static uint8_t fevent_electric_handle_485(uint8_t event)
 {
-    UTIL_MEM_set(sUart485.Data_a8 , 0x00, sUart485.Length_u16);
-    sUart485.Length_u16 = 0;
-    fevent_active(sEventAppElectric, _EVENT_ELECTRIC_RECEIVE_485);
+    static uint8_t CountStatePower   = 0;
+    static uint8_t CountStateConnect = 0;
+  
+    uint16_t Crc_Check = 0;
+    uint16_t Crc_Recv  = 0;
+
+    Crc_Recv = (sUart485.Data_a8[sUart485.Length_u16-1] << 8) |
+               (sUart485.Data_a8[sUart485.Length_u16-2]);
+    Crc_Check = ModRTU_CRC(sUart485.Data_a8, sUart485.Length_u16 - 2);
+    if(Crc_Check == Crc_Recv)
+    {
+        if(sUart485.Data_a8[0] == sElectric.ID && sUart485.Data_a8[1] == 0x03)
+        {
+            sElectric.Voltage = sUart485.Data_a8[3]<<8 | sUart485.Data_a8[4];
+            sElectric.Current = sUart485.Data_a8[9]<<8 | sUart485.Data_a8[10];
+            sElectric.Current = sElectric.Current/100;
+            ConnectSlave = CONNECT_SLAVE;
+            if(CountStateConnect > 0) CountStateConnect--;
+            else CountStateConnect=0;
+        }  
+    }
+    else
+    {
+        sElectric.Voltage = 0xFFFF;
+        sElectric.Current = 0xFFFF;
+        ConnectSlave = DISCONNECT_SLAVE;
+        CountStateConnect++;
+        
+    }
+    if(sUart485.Length_u16 == 0)
+    {
+        sElectric.Voltage = 0xFFFF;
+        sElectric.Current = 0xFFFF;
+        ConnectSlave = DISCONNECT_SLAVE;
+        CountStateConnect++;
+    }
+    
+    if(CountStateConnect == 0)
+    {
+        if(sElectric.Voltage < MACHINE_VOLTAGE_MIN) 
+        {
+          if(CountStatePower < NUMBER_POWER_ON_OFF) CountStatePower++;
+          else CountStatePower = NUMBER_POWER_ON_OFF;
+        }
+        else                                        
+        {
+          if(CountStatePower > 0) CountStatePower--;
+          else CountStatePower=0;
+        }
+        
+        if(CountStatePower >= NUMBER_POWER_ON_OFF)
+        {
+            sElectric.PowerPresent = POWER_OFF;
+        }
+        else if(CountStatePower == 0)
+        {
+            sElectric.PowerPresent = POWER_ON;
+        }
+    }
+    else
+    {
+        if(CountStateConnect >= NUMBER_POWER_ON_OFF)
+        {
+            CountStateConnect = NUMBER_POWER_ON_OFF;
+            sElectric.PowerPresent = POWER_ERROR;
+        }
+    }
+    
+    fevent_disable(sEventAppElectric, _EVENT_ELECTRIC_RECEIVE_485);
     return 1;
 }
 
@@ -142,17 +176,48 @@ static uint8_t fevent_electric_off_power(uint8_t event)
         
         if(sElectric.PowerPresent == POWER_OFF)
         {
-            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_electric: POWER OFF", sizeof("app_temperature: POWER OFF"));
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_electric: POWER OFF", sizeof("app_electric: POWER OFF"));
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+        }
+        else if(sElectric.PowerPresent == POWER_ON)
+        {
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_electric: POWER ON", sizeof("app_electric: POWER ON"));
             UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
         }
         else
         {
-            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_electric: POWER ON", sizeof("app_temperature: POWER ON"));
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_electric: POWER DISCONNECT", sizeof("app_electric: POWER DISCONNECT"));
             UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
         }
+        fevent_active(sEventAppElectric, _EVENT_ELECTRIC_HANDLE_POWER);
     }
     
     fevent_enable(sEventAppElectric, event);
+    return 1;
+}
+
+static uint8_t fevent_electric_handle_power(uint8_t event)
+{
+    if(sElectric.PowerPresent == POWER_OFF)
+    {
+        if(sStatusRelay.Lamp == ON_RELAY)
+        ControlRelay(RELAY_LAMP, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+        
+        if(sStatusRelay.FridgeCool == ON_RELAY)
+        fevent_active(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
+        
+        if(sStatusRelay.FridgeHeat == ON_RELAY)
+        ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+        
+        if(sStatusRelay.Warm == ON_RELAY)
+        fevent_active(sEventAppRelay, _EVENT_RELAY_WARM_OFF);
+        fevent_disable(sEventAppRelay,_EVENT_RELAY_WARM_ON);
+    }
+    else 
+    {
+        if(sStatusRelay.Lamp == OFF_RELAY)
+        ControlRelay(RELAY_LAMP, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+    }
     return 1;
 }
 
@@ -218,9 +283,9 @@ void Read_Status_Electric_ExFlash(void)
 {
     uint8_t aRead[3] = {0};
     eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_ELECTRIC, 3);
-    if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == 0x01)
+    if(aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == 0x01)
     {
-        if(aRead[2] <= 0x01) 
+        if(aRead[2] <= POWER_ERROR) 
         {
           sElectric.PowerPresent  = aRead[2];
           sElectric.PowerBefore   = aRead[2];
@@ -251,8 +316,8 @@ void Read_IdSlave_Electric_ExFlash(void)
 
 void Init_AppElectric(void)
 {
-    Read_Status_Electric_ExFlash();
     Read_IdSlave_Electric_ExFlash();
+    Read_Status_Electric_ExFlash();
 }
 
 void AppElectric_Debug(void)

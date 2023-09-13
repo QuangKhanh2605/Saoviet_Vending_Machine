@@ -17,17 +17,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
      
      if (GPIO_Pin == Vib_Sensor_Irq_3_Pin)
      {
-        sStatusVib.Sensor3++;
+        sStatusVib_Scan.Sensor3++;
      }
      
      if (GPIO_Pin == Vib_Sensor_Irq_2_Pin)
      {
-        sStatusVib.Sensor2++;
+        sStatusVib_Scan.Sensor2++;
      }
      
      if (GPIO_Pin == Vib_Sensor_Irq_1_Pin)
      {
-        sStatusVib.Sensor1++;
+        sStatusVib_Scan.Sensor1++;
      }
 }
 

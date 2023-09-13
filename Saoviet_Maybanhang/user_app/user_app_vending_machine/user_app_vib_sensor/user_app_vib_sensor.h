@@ -12,11 +12,13 @@
 
 #define TIME_ON_ALARM_1     5000
 #define TIME_ON_ALARM_2     10000
-#define TIME_LED_TOGGLE     200
+#define TIME_LED_TOGGLE     150
 #define NUMBER_LED_TOGGLE   1
 
 typedef enum
 {
+    _EVENT_VIB_SENSOR_ENTRY,
+    _EVENT_VIB_SENSOR_SCAN,
     _EVENT_VIB_SENSOR,
     _EVENT_VIB_OFF_ALARM,
     _EVENT_VIB_LED_WARNING,
@@ -34,7 +36,7 @@ typedef struct
 
 extern sEvent_struct       sEventAppVibSensor[];
 extern StructStatusVib     sStatusVib;
-
+extern StructStatusVib     sStatusVib_Scan;
 /*================= Function Handle ================*/
 uint8_t     AppVibSensor_Task(void);
 

@@ -35,12 +35,19 @@ typedef enum
     BUSY,
 }eStatusApp;
 
+typedef enum
+{
+    _RECV_PCBOX=0,
+    _TRANS_PCBOX,
+}eKindTranRecvPcBox;
+
 typedef struct
 {
     uint8_t Motor;
     uint8_t Door;
     uint8_t Temperature;
     uint8_t Electric;
+    uint8_t RL_Warm;
 }StructStatusApp;
 
 typedef struct 
@@ -58,6 +65,7 @@ uint8_t     AppPcBox_Task(void);
 void        Init_DCU_ID(void);
 void        Pc_Box_Init(void);
 uint8_t     Log_TSVH(uint8_t *aData);
-void        AppPcBox_Debug(void);
+void        AppPcBox_Debug(uint8_t aData[], uint8_t length, uint8_t TransRecv);
 void        Write_Queue_Repond_PcBox(uint8_t aData[], uint8_t Length);
+void        Transmit_PCBOX(uint8_t aData[],uint8_t length);
 #endif

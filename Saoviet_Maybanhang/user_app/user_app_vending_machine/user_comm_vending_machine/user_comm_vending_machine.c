@@ -135,15 +135,15 @@ uint8_t Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale)
     }
     
     length = Convert_Int_To_String(cData, var);
-    division = Scale_To_Int(Scale);
-    while(stamp < division)
+    if(stamp != 0)
     {
-        stamp *=10;
-        size_cData++;
-        if(stamp == 0) break;
-    }
-    if(division > 1)
-    {
+        division = Scale_To_Int(Scale);
+        while(stamp < division)
+        {
+            stamp *=10;
+            size_cData++;
+            if(stamp == 0) break;
+        }
         while(size_cData > 0)
         {
             for(uint8_t i = length; ; i--)
@@ -161,18 +161,17 @@ uint8_t Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale)
             length++;
             size_cData--;
         }
-    }
-    division = division/10;
-    size_cData = length;
-    while(division > 0)
-    {
         division = division/10;
-        cData[size_cData] = cData[size_cData-1];
-        size_cData--;
-        if(division == 0) cData[size_cData]='.';
+        size_cData = length;
+        while(division > 0)
+        {
+            division = division/10;
+            cData[size_cData] = cData[size_cData-1];
+            size_cData--;
+            if(division == 0) cData[size_cData]='.';
+        }
+        length++;
     }
-    
-    length++;
     return length;
 }
 

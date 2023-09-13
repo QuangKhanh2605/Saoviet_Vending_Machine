@@ -55,4 +55,5 @@ user_app_temperature.pbi: \
   D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\..\user_queue\queue_p.h \
   D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\..\user_component\user_mem\user_mem_comm.h \
   D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.h \
-  D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.h
+  D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.h \
+  D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.h

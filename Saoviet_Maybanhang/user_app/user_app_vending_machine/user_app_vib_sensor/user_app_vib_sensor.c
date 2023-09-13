@@ -4,41 +4,76 @@
 #include "user_app_relay.h"
 #include "user_app_pc_box.h"
 /*=============== Function static ================*/
+static uint8_t fevent_vib_sensor_entry(uint8_t event);
+static uint8_t fevent_vib_sensor_scan(uint8_t event);
 static uint8_t fevent_vib_sensor(uint8_t event);
 static uint8_t fevent_vib_off_alarm(uint8_t event);
 static uint8_t fevent_vib_led_warning(uint8_t event);
 /*================== Struct ===================*/
 sEvent_struct       sEventAppVibSensor[]=
 {
-  {_EVENT_VIB_SENSOR,           1, 0, 3000,            fevent_vib_sensor},
+  {_EVENT_VIB_SENSOR_ENTRY,     1, 0, TIME_ON_DCU,     fevent_vib_sensor_entry},
+  {_EVENT_VIB_SENSOR_SCAN,      1, 0, 200,             fevent_vib_sensor_scan},
+
+  {_EVENT_VIB_SENSOR,           0, 0, 3000,            fevent_vib_sensor},
   {_EVENT_VIB_OFF_ALARM,        0, 0, 0,               fevent_vib_off_alarm},
   
   {_EVENT_VIB_LED_WARNING,      0, 0, 0,               fevent_vib_led_warning},
 };
 
 StructStatusVib     sStatusVib = {0};
-
+StructStatusVib     sStatusVib_Scan = {0};
 /*================== Function Handle ==============*/
+static uint8_t fevent_vib_sensor_entry(uint8_t event)
+{
+    fevent_active(sEventAppVibSensor, _EVENT_VIB_SENSOR);
+    return 1;
+}
+static uint8_t fevent_vib_sensor_scan(uint8_t event)
+{
+    if(sStatusVib_Scan.Sensor1 > sStatusVib.Sensor1)
+    {
+        sStatusVib.Sensor1 = sStatusVib_Scan.Sensor1;
+    }
+    
+    if(sStatusVib_Scan.Sensor2 > sStatusVib.Sensor2)
+    {
+        sStatusVib.Sensor2 = sStatusVib_Scan.Sensor2;
+    }
+    
+    if(sStatusVib_Scan.Sensor3 > sStatusVib.Sensor3)
+    {
+        sStatusVib.Sensor3 = sStatusVib_Scan.Sensor3;
+    }
+    
+    sStatusVib_Scan.Sensor1 = 0;
+    sStatusVib_Scan.Sensor2 = 0;
+    sStatusVib_Scan.Sensor3 = 0;
+    
+    fevent_enable(sEventAppVibSensor, event);
+    return 1;
+}
+
 static uint8_t fevent_vib_sensor(uint8_t event)
 {
     static uint32_t GetTickLevelAlarm = 0;
-    if(sStatusVib.Sensor1 != 0)
+    if(sStatusVib.Sensor1 > 0)
     {
         sStatusVib.LevelWarning++;
-        sStatusVib.Sensor1 = 0;
     }
     
-    if(sStatusVib.Sensor2 != 0)
+    if(sStatusVib.Sensor2 > 80)
     {
         sStatusVib.LevelWarning++;
-        sStatusVib.Sensor2 = 0;
     }
     
-    if(sStatusVib.Sensor3 != 0)
+    if(sStatusVib.Sensor3 > 160)
     {
         sStatusVib.LevelWarning++;
-        sStatusVib.Sensor3 = 0;
     }
+    sStatusVib.Sensor1 = 0;
+    sStatusVib.Sensor2 = 0;
+    sStatusVib.Sensor3 = 0;
     
     if(sStatusVib.LevelWarning != 0)
     {
@@ -56,7 +91,7 @@ static uint8_t fevent_vib_sensor(uint8_t event)
             
             if(sStatusVib.LevelWarning == 3)
             {
-              ControlRelay(RELAY_ALARM, ON_RELAY, _RL_UNRESPOND, _RL_DEBUG);
+              ControlRelay(RELAY_ALARM, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
                 
                 if((HAL_GetTick() - GetTickLevelAlarm < TIME_LEVEL_ALARM) && (GetTickLevelAlarm != 0))
                 {
@@ -81,8 +116,7 @@ static uint8_t fevent_vib_sensor(uint8_t event)
 
 static uint8_t fevent_vib_off_alarm(uint8_t event)
 {
-    ControlRelay(RELAY_ALARM, OFF_RELAY, _RL_UNRESPOND, _RL_DEBUG);
-    
+    ControlRelay(RELAY_ALARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
     return 1;
 }
 
@@ -101,11 +135,11 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
                 case 4:
                 case 5:
                 case 6:
-                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 300;
+                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 200;
                     break;
                     
                 default:
-                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 40;
+                    sEventAppVibSensor[_EVENT_VIB_LED_WARNING].e_period = 30;
                     break;
             }
         }

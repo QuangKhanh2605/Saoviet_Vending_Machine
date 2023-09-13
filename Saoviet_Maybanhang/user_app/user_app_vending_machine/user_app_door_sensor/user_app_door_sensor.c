@@ -2,6 +2,8 @@
 #include "user_app_door_sensor.h"
 #include "user_comm_vending_machine.h"
 #include "user_app_pc_box.h"
+#include "user_app_relay.h"
+#include "user_app_electric.h"
 /*================= Function static ==============*/
 static uint8_t fevent_door_entry(uint8_t event);
 static uint8_t fevent_door_sensor(uint8_t event);
@@ -55,10 +57,12 @@ static uint8_t fevent_door_ctrl_respond(uint8_t event)
 {
     static uint8_t status_before = DOOR1_CLOSE_DOOR2_CLOSE;
     static uint8_t status = DOOR1_CLOSE_DOOR2_CLOSE;
+    static uint8_t On_RL_Warm = 0;
     if(sStatusDoor.Sensor1 == DOOR_OPEN && sStatusDoor.Sensor2 == DOOR_OPEN)
     {
         status = DOOR1_OPEN_DOOR2_OPEN;
         sStatusApp.Door = BUSY;
+        On_RL_Warm = 1;
     }
     else if(sStatusDoor.Sensor1 == DOOR_CLOSE && sStatusDoor.Sensor2 == DOOR_OPEN)
     {
@@ -83,6 +87,17 @@ static uint8_t fevent_door_ctrl_respond(uint8_t event)
     }
     
     status_before = status;
+    
+    if(On_RL_Warm == 1)
+    {
+        if(status == DOOR1_CLOSE_DOOR2_CLOSE)
+        {
+            On_RL_Warm = 0;
+            if(sElectric.PowerPresent != POWER_OFF)
+            OnRelay_Warm(TIME_RL_WARM_2);
+        }
+    }
+        
        
     return 1;
 }

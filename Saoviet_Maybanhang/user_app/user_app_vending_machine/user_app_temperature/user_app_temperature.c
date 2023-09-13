@@ -12,6 +12,7 @@
 #include "user_external_flash.h"
 #include "user_app_relay.h"
 #include "user_app_pc_box.h"
+#include "user_app_electric.h"
 
 /*============== Function Static ================*/
 static uint8_t fevent_temp_entry(uint8_t event);
@@ -124,9 +125,11 @@ static uint8_t fevent_temp_calculator(uint8_t event)
     ADC_Avg[0] = 0;
     ADC_Avg[1] = 0;
     ADC_Avg[2] = 0;
-    AppTemperature_Debug();
     
-    fevent_active(sEventAppTemperature, _EVENT_TEMP_CTRL_FRIDGE);
+    if(sElectric.PowerPresent != POWER_OFF)
+    {
+        fevent_active(sEventAppTemperature, _EVENT_TEMP_CTRL_FRIDGE);
+    }
     return 1;
 }
 
@@ -152,23 +155,27 @@ static uint8_t fevent_temp_read_setuptemp(uint8_t event)
 
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
 {
-    if(sTemperature.Value > sTemp_Crtl_Fridge.TempSetup + sTemp_Crtl_Fridge.Threshold)
+    if(sTemperature.Value >= sTemp_Crtl_Fridge.TempSetup + sTemp_Crtl_Fridge.Threshold)
     {
-        ControlRelay(RELAY_FRIDGE_HEAT, ON_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
+        if(sStatusRelay.FridgeHeat == OFF_RELAY)
+        ControlRelay(RELAY_FRIDGE_HEAT, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
         
-        ControlRelay(RELAY_FRIDGE_COOL, ON_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
+        if(sStatusRelay.FridgeCool == OFF_RELAY)
+        ControlRelay(RELAY_FRIDGE_COOL, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
         
         fevent_disable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
         
         sStatusApp.Temperature = BUSY;
     }
-    else if(sTemperature.Value < sTemp_Crtl_Fridge.TempSetup - sTemp_Crtl_Fridge.Threshold)
+    else if(sTemperature.Value <= sTemp_Crtl_Fridge.TempSetup - sTemp_Crtl_Fridge.Threshold)
     {
-        ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
+        if(sStatusRelay.FridgeHeat == ON_RELAY)
+        ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
         
         fevent_enable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
     }
     
+    AppTemperature_Debug();
     fevent_enable(sEventAppTemperature, _EVENT_TEMP_TIME_GET);
     return 1;
 }
@@ -181,7 +188,9 @@ static uint8_t fevent_temp_time_get(uint8_t event)
 
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 {
-    ControlRelay(RELAY_FRIDGE_COOL, OFF_RELAY, _RL_UNRESPOND, _RL_UNDEBUG);
+    if(sStatusRelay.FridgeCool == ON_RELAY)
+    ControlRelay(RELAY_FRIDGE_COOL, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+    
     sStatusApp.Temperature = FREE;
     return 1;
 }
