@@ -33,7 +33,8 @@ Struct_Electric_Current         sElectric=
   .ID           = DEFAULT_ID_SLAVE,
   .Voltage      = 0, 
   .Current      = 0, 
-  .Scale        = DEFAULT_ELECTRIC_SCALE,
+  .ScaleVolCur  = DEFAULT_ELECTRIC_VOL_CUR_SCALE,
+  .ScalePowEne  = DEFAULT_ELECTRIC_POW_ENE_SCALE,
   .PowerPresent = POWER_ERROR,
   .PowerBefore  = POWER_ERROR,
 };
@@ -51,7 +52,7 @@ static uint8_t fevent_electric_transmit_485(uint8_t event)
     uint8_t Frame[8];
     sData sFrame = {&Frame[0], 0};
     
-    ModRTU_Master_Read_Frame(&sFrame, sElectric.ID, 0x03, 0x02, 4);
+    ModRTU_Master_Read_Frame(&sFrame, sElectric.ID, 0x03, 0x02, 12);
     HAL_GPIO_WritePin(NET485IO_GPIO_Port, NET485IO_Pin, GPIO_PIN_SET);
     HAL_Delay(5);
     UTIL_MEM_set(sUart485.Data_a8 , 0x00, sUart485.Length_u16);
@@ -107,6 +108,13 @@ static uint8_t fevent_electric_handle_485(uint8_t event)
             sElectric.Voltage = sUart485.Data_a8[3]<<8 | sUart485.Data_a8[4];
             sElectric.Current = sUart485.Data_a8[9]<<8 | sUart485.Data_a8[10];
             sElectric.Current = sElectric.Current/100;
+            
+            sElectric.Power   = sUart485.Data_a8[15]<<24 | sUart485.Data_a8[16]<<16 
+                              | sUart485.Data_a8[17]<<8  | sUart485.Data_a8[18];
+            
+            sElectric.Energy  = sUart485.Data_a8[23]<<24 | sUart485.Data_a8[24]<<16 
+                              | sUart485.Data_a8[25]<<8  | sUart485.Data_a8[26];
+            
             ConnectSlave = CONNECT_SLAVE;
             if(CountStateConnect > 0) CountStateConnect--;
             else CountStateConnect=0;
@@ -325,11 +333,11 @@ void AppElectric_Debug(void)
 #ifdef USING_APP_ELECTRIC_DEBUG
     char cData[5]={0};
     uint8_t length = 0;
-    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Voltage, sElectric.Scale);
+    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Voltage, sElectric.ScaleVolCur);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_electric: V: ", sizeof("app_electric: V: "));
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)" A: ", sizeof(" A: "));
-    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Current , sElectric.Scale);
+    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Current , sElectric.ScaleVolCur);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
 #endif

@@ -1,27 +1,30 @@
 #include "user_app_ade7953.h"
 #include "ade7953.h"
+#include "user_app_slave.h"
 /*=============Function Static==============*/
 static uint8_t fevent_ade_entry(uint8_t event);
 static uint8_t fevent_ade_check_source(uint8_t event);
 static uint8_t fevent_ade_handle(uint8_t event);
+static uint8_t fevent_ade_save_energy(uint8_t event);
+
 static uint8_t fevent_ctrl_led_status(uint8_t event);
 /*================ Struct =================*/
 sEvent_struct         sEventAppAde7953[] =
 {   
-  { _EVENT_ADE_ENTRY,           1, 0, 5,                fevent_ade_entry}, 
-  { _EVENT_ADE_CHECK_SCOURCE,   1, 0, 5,                fevent_ade_check_source},
-  { _EVENT_ADE_HANDLE,          0, 0, 5,                fevent_ade_handle},
+  { _EVENT_ADE_ENTRY,           1, 0, 5,                    fevent_ade_entry}, 
+  { _EVENT_ADE_CHECK_SCOURCE,   0, 0, 5,                    fevent_ade_check_source},
+  { _EVENT_ADE_HANDLE,          1, 0, 10,                   fevent_ade_handle},
   
-  { _EVENT_CTRL_LED_STATUS,     1, 5, TIME_LED_STATUS,  fevent_ctrl_led_status},
+  { _EVENT_ADE_SAVE_ENERGY,     1, 5, TIME_SAVE_ENERGY,     fevent_ade_save_energy},
+  
+  { _EVENT_CTRL_LED_STATUS,     1, 5, TIME_LED_STATUS,      fevent_ctrl_led_status},
 };
 
 Struct_Infor_Electric       sInforElectric={0};
-uint64_t Energy = 0;
-uint32_t GetTick = 0;
+Struct_Infor_Energy         sInforEnergy  ={0};
 /*=============== Function Static =================*/
 static uint8_t fevent_ade_entry(uint8_t event)
 {   
-    GetTick = HAL_GetTick();
     fevent_enable(sEventAppAde7953, event);
     return 1;
 }
@@ -30,7 +33,7 @@ static uint8_t fevent_ade_check_source(uint8_t event)
 {
     static uint8_t once_handle = 0;
     ADE7953_Read_Reg(VRMS,&sADE.vRMS_u32);
-    sInforElectric.Voltage = ((sADE.vRMS_u32 * 383)/1000000);
+    sInforElectric.Voltage = ((sADE.vRMS_u32 * 384)/1000000);
     if(sInforElectric.Voltage > VOLTAGE_ACTIVE_ADE)
     {
         if(once_handle != 0)
@@ -48,29 +51,34 @@ static uint8_t fevent_ade_check_source(uint8_t event)
     return 1;
 }
 
-uint32_t count_irq = 0;
-          
 static uint8_t fevent_ade_handle(uint8_t event)
 {
-    sMeter_Real_Value.countADE7953++; 
-    ADE7953_Read_Reg(AENERGYA,&sADE.active_En_u32);
-//          ADE7953_Read_Reg(RENERGYA,&sADE.reactive_En_u32);
-  sMeter_Real_Value.fw_Active_En_u64 += (int32_t)sADE.active_En_u32;
-  //Check if  fw_Active_En_i32 large enought -> convert to Wh -> add to EEPROM
-  if(sMeter_Real_Value.fw_Active_En_u64>2000000)
-  {
-      Energy += (sMeter_Real_Value.fw_Active_En_u64*4343)>>20;
-      sMeter_Real_Value.fw_Active_En_u64 = 0;
-  }
+    static uint32_t CountPowerOff = 0;
+    
+    ADE7953_Read_Reg(AENERGYA, &sADE.active_En_u32);
+    if(sADE.active_En_u32 > 2000000000)
+    {
+        sADE.active_En_u32 = 4294967296 - sADE.active_En_u32;
+
+        if(sADE.active_En_u32 != 0)
+        sADE.active_En_Noload_u8 = 0;
+
+        sInforEnergy.Reg_Energy = sInforEnergy.Reg_Energy + sADE.active_En_u32;
+
+        sInforEnergy.Pre_Energy = ((sInforEnergy.Reg_Energy*1000/18879)/1600);
+
+        sInforEnergy.Dis_Energy = sInforElectric.Energy + sInforEnergy.Pre_Energy;
+    }
+    sADE.active_En_u32 = 0;
+
     if(sMeter_Status.adeIntFlag == 1)
     {
-      count_irq++;
       sMeter_Status.adeIntFlag = 0; //Clear flag 
       ADE7953_Read_Reg(RSTIRQSTATA,&sADE.interrup_Status_u32); //Read interrup status register
       //Handle ADE7953 interrup
       if(sADE.interrup_Status_u32&0x00000200)	//Active power changed sign
       {
-        ADE7953_Read_Reg(AENERGYA,&sADE.active_En_u32);
+//        ADE7953_Read_Reg(AENERGYA,&sADE.active_En_u32);
 
 //        if(sADE.active_En_u32&0x80000000)
 //              Save_RV_Active_En(sTariffManage.RateNow);
@@ -103,42 +111,74 @@ static uint8_t fevent_ade_handle(uint8_t event)
           
       }
     }
-
           
+    sMeter_Real_Value.countADE7953++;
     if(sMeter_Real_Value.countADE7953 > 100) // Chu ki` do gia tri, bao nhieu la hop li, ko bi mat data
     {
-            
           ADE7953_Read_Reg(VRMS,&sADE.vRMS_u32);
           ADE7953_Read_Reg(IRMSA,&sADE.i1RMS_u32);
+          ADE7953_Read_Reg(PFA, &sADE.power_Factor_u32);
+          
+          ADE7953_Read_Reg(AWATT, &sADE.instan_ActPw_u32);
+          sADE.instan_ActPw_u32 = 4294967295 - sADE.instan_ActPw_u32;
+          int32_t StampPower = 0;
           
           uint64_t Voltage = 0;
           uint64_t Current = 0;
+          uint64_t Power   = 0;
+          
+          StampPower = (int32_t)sADE.instan_ActPw_u32;
             
-          Voltage = ((sADE.vRMS_u32 * 384)/1000000);
-          Current = (((uint64_t)sADE.i1RMS_u32 * 5661)/10000000);
+          Voltage = (((uint64_t)sADE.vRMS_u32 * 38424)/100000000);
+          Current = (((uint64_t)sADE.i1RMS_u32 * 9088)/1000000);
+          Power   = (((int64_t)StampPower * 5095)/1000000);
+          
+          if(Voltage < 5) Voltage = 0;
           
           sInforElectric.Voltage = Voltage;
           sInforElectric.Current = Current;
+          sInforElectric.Power   = Power;
           
           //sInforElectric.Voltage = (sADE.vRMS_u32 * 257) >> 16;
           //sInforElectric.Current = (sADE.i1RMS_u32 * 64)>>16;
           
-          if(sADE.active_En_u32 != 0)
-          sADE.active_En_Noload_u8 = 0;             // 
           
           if(sADE.active_En_Noload_u8 == 0)
           {
-            ADE7953_Read_Reg(AWATT,&sADE.instan_ActPw_u32);
-            sMeter_Real_Value.instan_ActPw_i32 = (((int32_t)sADE.instan_ActPw_u32)/256)*(sMeter_Constant.W_Var_Constant>>8);
+//            sMeter_Real_Value.instan_ActPw_i32 = (((int32_t)sADE.instan_ActPw_u32)/256)*(sMeter_Constant.W_Var_Constant>>8);
           }
           else
           {
             sInforElectric.Current  = 0;
+            CountPowerOff++;
           }
+          
+
           
           sMeter_Real_Value.countADE7953 = 0;
     }
-  
+    
+//    ADE7953_Read_Reg(AENERGYA, &sADE.active_En_u32);
+//    sADE.active_En_u32 = 4294967295 - sADE.active_En_u32;
+//    
+//    sInforEnergy.Reg_Energy = sInforEnergy.Reg_Energy + sADE.active_En_u32;
+//    sADE.active_En_u32 = 0;
+//    sInforEnergy.Pre_Energy = ((sInforEnergy.Reg_Energy*1000/18879)/1600);
+    
+
+          
+    fevent_enable(sEventAppAde7953, event);
+    return 1;
+}
+
+static uint8_t fevent_ade_save_energy(uint8_t event)
+{
+    sInforElectric.Energy = sInforEnergy.Dis_Energy;
+    FLASH_WritePage(FLASH_ENERGY_METER, sInforElectric.Energy, FLASH_ENERGY_METER);
+    
+    sInforEnergy.Reg_Energy = 0;
+    sInforEnergy.Pre_Energy = 0;
+    
     fevent_enable(sEventAppAde7953, event);
     return 1;
 }
@@ -163,12 +203,21 @@ static uint8_t fevent_ctrl_led_status(uint8_t event)
 
 void Init_Ade7953(void)
 {
-    HAL_GPIO_WritePin(RESET_ADE_GPIO_Port, RESET_ADE_Pin, GPIO_PIN_SET);
-    HAL_Delay(1);
+//    HAL_GPIO_WritePin(RESET_ADE_GPIO_Port, RESET_ADE_Pin, GPIO_PIN_SET);
+//    HAL_Delay(1);
     HAL_GPIO_WritePin(RESET_ADE_GPIO_Port, RESET_ADE_Pin, GPIO_PIN_RESET);
     HAL_Delay(5);
     ADE7953_Init();
     //ADE7953_Read_Reg(RSTIRQSTATA,&sADE.interrup_Status_u32);
+}
+
+void Init_Energy(void)
+{
+  if(FLASH_ReadData32(FLASH_ENERGY_METER) == FLASH_ENERGY_METER) 
+  {
+    sInforElectric.Energy   = FLASH_ReadData32(FLASH_ENERGY_METER+4);
+    sInforEnergy.Dis_Energy = sInforElectric.Energy;
+  }
 }
 
 uint8_t AppAde7953_Task(void)

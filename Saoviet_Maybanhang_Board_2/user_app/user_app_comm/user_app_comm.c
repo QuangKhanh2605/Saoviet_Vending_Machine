@@ -24,7 +24,7 @@ void Main_Task (void)
 {
   SysApp_Init();
   SysApp_Setting();
-  HAL_Delay(50);
+  HAL_Delay(100);
   for(;;)
   {
     #ifdef  USING_APP_SLAVE

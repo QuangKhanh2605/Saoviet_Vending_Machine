@@ -8,6 +8,7 @@
 #include "user_util.h"
 #include "user_uart.h"
 
+#define FLASH_ENERGY_METER      0x08000000 + 1024*30
 #define FLASH_ID_BAURATE        0x08000000 + 1024*31
 
 #define DEFAUL_READ_FLASH       0xA5A5A5A5
@@ -18,6 +19,8 @@
 
 #define BAUDRATE_DEFAULT        9600
 #define ID_DEFAULT              1
+
+#define NUMBER_REGISTER_SLAVE   16
 
 #define ERROR_CODE_CHECK_CRC            0x01
 #define ERROR_CODE_FUNCTION_CODE        0x02
@@ -48,7 +51,6 @@ extern Struct_Infor_Slave       sInforSlave;
 /*================== Function Handle ===============*/
 uint8_t     AppSlave_Task(void);
 
-void        FLASH_WritePage(uint32_t address_flash, uint32_t data1, uint32_t data2);
 uint32_t    Get_Uint_In_String(uint8_t aData[], uint16_t posStart, uint16_t posEnd);
 void        Send_Data_Terminal(uint8_t data[], uint8_t Length);
 void        Packing_Frame(uint8_t data_frame[], uint16_t addr_register, uint16_t length);

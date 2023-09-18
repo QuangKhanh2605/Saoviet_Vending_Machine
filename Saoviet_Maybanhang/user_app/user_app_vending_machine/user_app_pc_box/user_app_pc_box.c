@@ -500,7 +500,7 @@ uint8_t Log_TSVH(uint8_t *aData)
     aData[length++] = sElectric.Voltage;
     aData[length++] = sElectric.Current >> 8;
     aData[length++] = sElectric.Current;
-    aData[length++] = sElectric.Scale;
+    aData[length++] = sElectric.ScaleVolCur;
     
     aData[1] = length - 2;
     

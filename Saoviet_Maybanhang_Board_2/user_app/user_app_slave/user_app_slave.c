@@ -94,13 +94,12 @@ uint8_t AppSlave_Task(void)
 }
 
 /*================ Function Slave Modbus RTU ===============*/
-
 uint8_t ModbusRTU_Slave(void)
 {
 	uint8_t answer=0;
 	if(sUart485.Data_a8[0] == sInforSlave.ID)
 	{
-		uint8_t frame[25]={0}; 
+		uint8_t frame[50]={0}; 
 		sData sFrame;
 		sFrame.Data_a8 = frame;
 		uint16_t CRC_rx = sUart485.Data_a8[sUart485.Length_u16-1] << 8 | sUart485.Data_a8[sUart485.Length_u16-2];
@@ -110,15 +109,15 @@ uint8_t ModbusRTU_Slave(void)
 		{
 			answer=1;
 			uint16_t addr_data = sUart485.Data_a8[2] << 8 | sUart485.Data_a8[3];
-			uint8_t data_frame[16]={0};
+			uint8_t data_frame[40]={0};
 			if(FunCode == 0x03)
 			{
-				if(sInforElectric.Voltage != 0x7FFF && sInforElectric.Current !=0x7FFF)
-				{
-					if(addr_data <= 0x07)
+//				if(sInforElectric.Voltage != 0x7FFF && sInforElectric.Current !=0x7FFF)
+//				{
+					if(addr_data <= NUMBER_REGISTER_SLAVE -1)
 					{
 						uint16_t length_register = (sUart485.Data_a8[4] << 8 | sUart485.Data_a8[5])*2;
-						uint8_t length_check = (8 - addr_data) * 2;
+						uint8_t length_check = (NUMBER_REGISTER_SLAVE - addr_data) * 2;
 						if(length_register >= 1 && length_register <= length_check)
 						{
 							Packing_Frame(data_frame, addr_data, length_register);
@@ -133,11 +132,11 @@ uint8_t ModbusRTU_Slave(void)
 					{
 						Response_Error(&sFrame, sInforSlave.ID, (uint16_t) (0x80 + FunCode), ERROR_CODE_ADDRESS_OR_QUANTITY);
 					}
-				}
-				else
-				{
-					Response_Error(&sFrame, sInforSlave.ID, (uint16_t) (0x80 + FunCode), ERROR_CODE_I2C_OR_SENSOR);
-				}
+//				}
+//				else
+//				{
+//					Response_Error(&sFrame, sInforSlave.ID, (uint16_t) (0x80 + FunCode), ERROR_CODE_I2C_OR_SENSOR);
+//				}
 			}
 			else if(FunCode == 0x06)
 			{
@@ -426,38 +425,87 @@ void Packing_Frame(uint8_t data_frame[], uint16_t addr_register, uint16_t length
 		data_frame[i++] = 0x00;
 		data_frame[i++] = j;
 	}
-	// temperature value
+	// Voltage value
 	if(addr_register <=2 && i<length)
 	{
 		data_frame[i++] = sInforElectric.Voltage >> 8;
 		data_frame[i++] = sInforElectric.Voltage;
 	}
-	// temperature Unit
+	// Voltage Unit
 	if(addr_register <=3 && i<length)
 	{
 		data_frame[i++] = 0x00;
 		data_frame[i++] = 0x00;
 	}
-	// temperature decimal points
+	// Voltage decimal points
 	if(addr_register <=4 && i<length)
 	{
 		data_frame[i++] = 0x00;
 		data_frame[i++] = 0x01;
 	}
-	// humidity value
+	// Current value
 	if(addr_register <=5 && i<length)
 	{
 		data_frame[i++] = sInforElectric.Current >> 8;
 		data_frame[i++] = sInforElectric.Current;
 	}
-	// humidity Uint
+	// Current Uint
 	if(addr_register <=6 && i<length)
 	{
 		data_frame[i++] = 0x00;
 		data_frame[i++] = 0x00;
 	}
-	// humidity decimal points 
+	// Current decimal points 
 	if(addr_register <=7 && i<length)
+	{
+		data_frame[i++] = 0x00;
+		data_frame[i++] = 0x01;
+	}
+    // power value high
+	if(addr_register <=8 && i<length)
+	{
+		data_frame[i++] = sInforElectric.Power >> 24;
+		data_frame[i++] = sInforElectric.Power >> 16;
+	}
+	// power value low
+	if(addr_register <=9 && i<length)
+	{
+		data_frame[i++] = sInforElectric.Power >> 8;
+		data_frame[i++] = sInforElectric.Power ;
+	}
+	// power unit 
+	if(addr_register <=10 && i<length)
+	{
+		data_frame[i++] = 0x00;
+		data_frame[i++] = 0x00;
+	}
+	// power decimal points 
+	if(addr_register <=11 && i<length)
+	{
+		data_frame[i++] = 0x00;
+		data_frame[i++] = 0x03;
+	}
+    
+    // energy value high
+	if(addr_register <=12 && i<length)
+	{
+		data_frame[i++] = sInforEnergy.Dis_Energy >> 24;
+		data_frame[i++] = sInforEnergy.Dis_Energy >> 16;
+	}
+	// energy value low
+	if(addr_register <=13 && i<length)
+	{
+		data_frame[i++] = sInforEnergy.Dis_Energy >> 8;
+		data_frame[i++] = sInforEnergy.Dis_Energy ;
+	}
+	// energy unit 
+	if(addr_register <=14 && i<length)
+	{
+		data_frame[i++] = 0x00;
+		data_frame[i++] = 0x00;
+	}
+	// energy decimal points 
+	if(addr_register <=15 && i<length)
 	{
 		data_frame[i++] = 0x00;
 		data_frame[i++] = 0x03;

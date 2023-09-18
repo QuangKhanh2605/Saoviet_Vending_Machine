@@ -51,20 +51,22 @@ const uint8_t ADEConfigInfo[40][4] = {
      0X02,    0X96,    0X03,    0XCA,	// 39		   BVAROS	
      0X02,    0X97,    0X03,    0XD0,	// 40		   BVAOS	
 };
-
+//     0X04,    0X00,    0X00,	// 3			PGA_IA
+//     0X00,    0X00,    0X00,	// 2			PGA_V
+//     0X3B,    0X01,    0X00,	// 8			CF1DEN	//defaul: 1600
 uint8_t ADEConfigDefault[40][3] = {
 //    HByte - MByte - LByte
      0X40,    0X00,    0X00,  // 1			LCYCMODE
      0X00,    0X00,    0X00,	// 2			PGA_V
-     0X04,    0X00,    0X00,	// 3			PGA_IA
+     0X00,    0X00,    0X00,	// 3			PGA_IA
      0X00,    0X00,    0X00,	// 4			PGA_IB
      0X00,    0X00,    0X00,	// 5			EX_REF
      0XFF,    0XFF,    0X00,	// 6			ZXTOUT
      0XA0,    0X04,    0X00,	// 7			CONFIG
-     0X3B,    0X01,    0X00,	// 8			CF1DEN	//defaul: 1600
+     0X49,    0XBF,    0X00,	// 8			CF1DEN	//defaul: 1600
      0X3B,    0X01,    0X00,	// 9			CF2DEN	//defaul: 1600
      0X00,    0X10,    0X00,	// 10		   CFMODE
-     0X00,    0X00,    0X00,	// 11		   PHCALA
+     0X00,    0X70,    0X00,	// 11		   PHCALA
      0X00,    0X00,    0X00,	// 12		   PHCALB
      0X00,    0X00,    0X00,	// 13		   ALT_Output
      0X00,    0X00,    0X00,	// 14		   ACCMODE

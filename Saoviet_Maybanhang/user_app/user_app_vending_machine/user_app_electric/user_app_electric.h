@@ -40,7 +40,11 @@ typedef struct
     uint8_t  ID;
     uint16_t Voltage;
     uint16_t Current;
-    uint8_t  Scale;
+    int32_t  Power;
+    uint32_t Energy;
+    
+    uint8_t  ScaleVolCur;   //Scale Votage Current
+    uint8_t  ScalePowEne;   //Scale Power Energy
     uint8_t  PowerPresent;
     uint8_t  PowerBefore;
 }Struct_Electric_Current;
