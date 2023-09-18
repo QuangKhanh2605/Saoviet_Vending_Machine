@@ -170,7 +170,11 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
     else if(sTemperature.Value <= sTemp_Crtl_Fridge.TempSetup - sTemp_Crtl_Fridge.Threshold)
     {
         if(sStatusRelay.FridgeHeat == ON_RELAY)
-        ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+        {
+            ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+            OnRelay_Warm(TIME_RL_WARM_1);
+        }
+        
         
         fevent_enable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
     }

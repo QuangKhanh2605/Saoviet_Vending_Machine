@@ -32,7 +32,8 @@
 #define OBIS_COMPLETE_PUSH          0x41
 
 #define OBIS_TSVH_PC_BOX            0x0A
-#define OBIS_PING_PC_BOX            0x0B
+#define OBIS_PC_BOX_PING_DCU        0x0B
+#define OBIS_DCU_PING_PC_BOX        0x1B
 
 #define OBIS_GET_DCU_ID             0x0C
 #define OBIS_SET_DCU_ID             0x0D
@@ -57,7 +58,13 @@
 #define TIME_SEND_TSVH              60000
 #define TIME_RESET_WDG              1000
 
-#define TIME_RESPOND_PC_BOX         2000    
+
+#define TIME_RESPOND_PC_BOX         2000  
+
+#define TIME_PING_PCBOX             60000
+#define TIME_RESET_PC_BOX           2000
+#define TIME_WAIT_RESET_PC_BOX      15*60*1000
+
 #define TIME_REFRESH_DCU            2*86400*TIME_ONE_SECOND
 
 #define BEFORE_RESET_DCU            0

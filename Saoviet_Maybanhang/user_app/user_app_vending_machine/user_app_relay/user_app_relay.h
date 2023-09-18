@@ -12,7 +12,7 @@
 #define  TIME_LED_PCBOX         80
 #define  TIME_LED_SLAVE         1000
 
-#define  TIME_RL_WARM_DELAY     30*TIME_ONE_SECOND
+//#define  USING_REFRESH_WARM    
 
 #define  TIME_RL_WARM_1         5*TIME_ONE_MINUTES
 #define  TIME_RL_WARM_2         15*TIME_ONE_MINUTES

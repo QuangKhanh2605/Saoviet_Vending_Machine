@@ -21,7 +21,7 @@ sEvent_struct               sEventAppElectric[] =
   {_EVENT_ELECTRIC_RECEIVE_485,     0, 0, 5,                fevent_electric_receive_485},
   {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 500,              fevent_electric_handle_485},
   
-  {_EVENT_ELECTRIC_SEND_METER,      1, 5, TIME_SEND_METER,  fevent_electric_send_meter}, //TIME_SEND_METER
+  {_EVENT_ELECTRIC_SEND_METER,      1, 5, 10000,  fevent_electric_send_meter}, //TIME_SEND_METER
   
   {_EVENT_ELECTRIC_OFF_POWER,       0, 5, 3000,             fevent_electric_off_power},
   
@@ -114,7 +114,7 @@ static uint8_t fevent_electric_handle_485(uint8_t event)
             
             sElectric.Energy  = sUart485.Data_a8[23]<<24 | sUart485.Data_a8[24]<<16 
                               | sUart485.Data_a8[25]<<8  | sUart485.Data_a8[26];
-            
+
             ConnectSlave = CONNECT_SLAVE;
             if(CountStateConnect > 0) CountStateConnect--;
             else CountStateConnect=0;
@@ -124,6 +124,7 @@ static uint8_t fevent_electric_handle_485(uint8_t event)
     {
         sElectric.Voltage = 0xFFFF;
         sElectric.Current = 0xFFFF;
+        sElectric.Power   = 0xFFFF;
         ConnectSlave = DISCONNECT_SLAVE;
         CountStateConnect++;
         
@@ -132,6 +133,7 @@ static uint8_t fevent_electric_handle_485(uint8_t event)
     {
         sElectric.Voltage = 0xFFFF;
         sElectric.Current = 0xFFFF;
+        sElectric.Power   = 0xFFFF;
         ConnectSlave = DISCONNECT_SLAVE;
         CountStateConnect++;
     }
@@ -331,15 +333,26 @@ void Init_AppElectric(void)
 void AppElectric_Debug(void)
 {
 #ifdef USING_APP_ELECTRIC_DEBUG
-    char cData[5]={0};
+    char cData[12]={0};
     uint8_t length = 0;
     length = Convert_Int_To_String_Scale(cData, (int)sElectric.Voltage, sElectric.ScaleVolCur);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_electric: V: ", sizeof("app_electric: V: "));
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    
     UTIL_Printf(DBLEVEL_M, (uint8_t*)" A: ", sizeof(" A: "));
     length = Convert_Int_To_String_Scale(cData, (int)sElectric.Current , sElectric.ScaleVolCur);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" P: ", sizeof(" P: "));
+    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Power , sElectric.ScalePowEne);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" E: ", sizeof(" E: "));
+    length = Convert_Int_To_String_Scale(cData, (int)sElectric.Energy , sElectric.ScalePowEne);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+    
+    
 #endif
 }
 

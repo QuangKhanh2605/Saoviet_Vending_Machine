@@ -12,6 +12,7 @@ void SysApp_Init (void)
 
 void SysApp_Setting (void)
 {
+    Init_Energy();
     AppComm_Init();
     Init_Ade7953();
 }

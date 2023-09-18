@@ -93,7 +93,7 @@ uint8_t Convert_Int_To_String(char cData[], int var)
 {
     uint8_t length = 0;
     uint32_t stamp = 0;
-    uint32_t division = 10;
+    uint64_t division = 10;
     if(var < 0)
     {
         stamp = 0 - var;

@@ -20,7 +20,7 @@
         <stlinkResetStrategy>2</stlinkResetStrategy>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>4073190542</Checksum>
+        <Checksum>170329701</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -57,19 +57,20 @@
         <ITMlogFile>$PROJ_DIR$\ITM.log</ITMlogFile>
     </SWOTraceHWSettings>
     <struct_types>
-        <Fmt0>struct &lt;Unnamed 122&gt;-Current	4	0</Fmt0>
-        <Fmt1>struct &lt;Unnamed 122&gt;-Energy	4	0</Fmt1>
-        <Fmt2>struct &lt;Unnamed 122&gt;-Power	4	0</Fmt2>
-        <Fmt3>struct &lt;Unnamed 122&gt;-Voltage	4	0</Fmt3>
+        <Fmt0>struct &lt;Unnamed 122&gt;-Current	3	0</Fmt0>
+        <Fmt1>struct &lt;Unnamed 122&gt;-Power	3	0</Fmt1>
+        <Fmt2>struct &lt;Unnamed 122&gt;-Voltage	3	0</Fmt2>
     </struct_types>
     <watch_formats>
-        <Fmt0>{W}1:size_cData	3	0</Fmt0>
-        <Fmt1>{W}42:ConnectSlave	3	0</Fmt1>
-        <Fmt2>{W}42:Crc_Check	4	0</Fmt2>
-        <Fmt3>{W}42:Crc_Recv	4	0</Fmt3>
-        <Fmt4>{W}42:PulseCount	3	0</Fmt4>
-        <Fmt5>{W}42:check	3	0</Fmt5>
-        <Fmt6>{W}42:temp	4	0</Fmt6>
+        <Fmt0>{W}1:length	3	0</Fmt0>
+        <Fmt1>{W}1:size_cData	3	0</Fmt1>
+        <Fmt2>{W}42:ConnectSlave	3	0</Fmt2>
+        <Fmt3>{W}42:CountResetPcBox	3	0</Fmt3>
+        <Fmt4>{W}42:Crc_Check	4	0</Fmt4>
+        <Fmt5>{W}42:Crc_Recv	4	0</Fmt5>
+        <Fmt6>{W}42:PulseCount	3	0</Fmt6>
+        <Fmt7>{W}42:check	3	0</Fmt7>
+        <Fmt8>{W}42:temp	4	0</Fmt8>
     </watch_formats>
     <Trace2>
         <Enabled>0</Enabled>

@@ -33,7 +33,7 @@ static uint8_t fevent_ade_check_source(uint8_t event)
 {
     static uint8_t once_handle = 0;
     ADE7953_Read_Reg(VRMS,&sADE.vRMS_u32);
-    sInforElectric.Voltage = ((sADE.vRMS_u32 * 384)/1000000);
+    sInforElectric.Voltage = ((sADE.vRMS_u32 * 384)/10000000);
     if(sInforElectric.Voltage > VOLTAGE_ACTIVE_ADE)
     {
         if(once_handle != 0)
@@ -50,11 +50,10 @@ static uint8_t fevent_ade_check_source(uint8_t event)
     fevent_enable(sEventAppAde7953, event);
     return 1;
 }
-
+    
 static uint8_t fevent_ade_handle(uint8_t event)
 {
     static uint32_t CountPowerOff = 0;
-    
     ADE7953_Read_Reg(AENERGYA, &sADE.active_En_u32);
     if(sADE.active_En_u32 > 2000000000)
     {
@@ -120,7 +119,7 @@ static uint8_t fevent_ade_handle(uint8_t event)
           ADE7953_Read_Reg(PFA, &sADE.power_Factor_u32);
           
           ADE7953_Read_Reg(AWATT, &sADE.instan_ActPw_u32);
-          sADE.instan_ActPw_u32 = 4294967295 - sADE.instan_ActPw_u32;
+          sADE.instan_ActPw_u32 = 4294967296 - sADE.instan_ActPw_u32;
           int32_t StampPower = 0;
           
           uint64_t Voltage = 0;
@@ -146,11 +145,17 @@ static uint8_t fevent_ade_handle(uint8_t event)
           if(sADE.active_En_Noload_u8 == 0)
           {
 //            sMeter_Real_Value.instan_ActPw_i32 = (((int32_t)sADE.instan_ActPw_u32)/256)*(sMeter_Constant.W_Var_Constant>>8);
+            CountPowerOff = 0;
           }
           else
           {
             sInforElectric.Current  = 0;
             CountPowerOff++;
+          }
+          
+          if(CountPowerOff == NUMBER_SAVE_ENERGY)
+          {
+            fevent_active(sEventAppAde7953, _EVENT_ADE_SAVE_ENERGY);
           }
           
 
@@ -174,7 +179,7 @@ static uint8_t fevent_ade_handle(uint8_t event)
 static uint8_t fevent_ade_save_energy(uint8_t event)
 {
     sInforElectric.Energy = sInforEnergy.Dis_Energy;
-    FLASH_WritePage(FLASH_ENERGY_METER, sInforElectric.Energy, FLASH_ENERGY_METER);
+    FLASH_WritePage(FLASH_ENERGY_METER, sInforElectric.Energy, DEFAUL_READ_FLASH);
     
     sInforEnergy.Reg_Energy = 0;
     sInforEnergy.Pre_Energy = 0;
@@ -213,7 +218,7 @@ void Init_Ade7953(void)
 
 void Init_Energy(void)
 {
-  if(FLASH_ReadData32(FLASH_ENERGY_METER) == FLASH_ENERGY_METER) 
+  if(FLASH_ReadData32(FLASH_ENERGY_METER) == DEFAUL_READ_FLASH) 
   {
     sInforElectric.Energy   = FLASH_ReadData32(FLASH_ENERGY_METER+4);
     sInforEnergy.Dis_Energy = sInforElectric.Energy;

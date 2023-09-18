@@ -15,7 +15,7 @@ typedef enum
     _EVENT_PC_BOX_RECEIVE_HANDLE,
     _EVENT_PC_BOX_COMPLETE_RECEIVE,
     _EVENT_PC_BOX_LOG_TSVH,
-    _EVENT_PC_BOX_PING,
+    _EVENT_PC_BOX_PING_DCU,
     _EVENT_PC_BOX_SET_DCU_ID,
     _EVENT_PC_BOX_GET_DCU_ID,
     _EVENT_WDG_STM32F4,
@@ -23,6 +23,10 @@ typedef enum
     
     _EVENT_QUEUE_RESPOND_IMMEDIATELY,
     _EVENT_QUEUE_RESPOND_TIME,
+    
+    _EVENT_DCU_PING_PC_BOX,
+    _EVENT_RESET_PC_BOX,
+    _EVENT_WAIT_RESET_PC_BOX,
     
     _EVENT_REFRESH_DCU,
 
@@ -48,11 +52,12 @@ typedef struct
     uint8_t Temperature;
     uint8_t Electric;
     uint8_t RL_Warm;
+    uint8_t Pcbox;
 }StructStatusApp;
 
 typedef struct 
 {
-    uint8_t aData_u8[20];
+    uint8_t aData_u8[30];
     uint8_t Length;
 }sDataQueueRespondPcBox;
 

@@ -20,7 +20,7 @@ sEvent_struct               sEventAppRelay[] =
   {_EVENT_RELAY_ENTRY,              1, 0, 5,                    fevent_relay_entry},
   
   {_EVENT_RELAY_WARM_REFRESH,       1, 5, TIME_RL_WARM_REFRESH, fevent_relay_warm_refresh},
-  {_EVENT_RELAY_WARM_ON,            0, 5, TIME_RL_WARM_DELAY,   fevent_relay_warm_on},
+  {_EVENT_RELAY_WARM_ON,            0, 5, 5,                    fevent_relay_warm_on},
   {_EVENT_RELAY_WARM_OFF,           0, 0, 5,                    fevent_relay_warm_off},
   
   {_EVENT_CONTROL_LED_STATUS,       0, 5, TIME_LED_STATUS,      fevent_control_led_status},
@@ -72,9 +72,11 @@ static uint8_t fevent_relay_entry(uint8_t event)
 
 static uint8_t fevent_relay_warm_refresh(uint8_t event)
 {
+#ifdef USING_REFRESH_WARM
     if(sElectric.PowerPresent != POWER_OFF) 
     OnRelay_Warm(TIME_RL_WARM_1);
-    else    fevent_enable(sEventAppRelay, event);
+#endif
+    fevent_enable(sEventAppRelay, event);
     return 1;
 }
 
@@ -275,7 +277,7 @@ void OnRelay_Warm(uint32_t time)
 {
     sStatusApp.RL_Warm = BUSY;
     sEventAppRelay[_EVENT_RELAY_WARM_OFF].e_period = time;
-    fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_ON);
+    fevent_active(sEventAppRelay,_EVENT_RELAY_WARM_ON);
     fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_REFRESH);
 }
 

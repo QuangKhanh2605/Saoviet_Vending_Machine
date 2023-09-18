@@ -13,6 +13,7 @@
 #define TIME_LED_STATUS     2000
 #define VOLTAGE_ACTIVE_ADE  25
 #define TIME_SAVE_ENERGY    2*60*60*1000
+#define NUMBER_SAVE_ENERGY  15
 
 typedef enum
 {
@@ -49,6 +50,7 @@ extern Struct_Infor_Energy         sInforEnergy;
 uint8_t     AppAde7953_Task(void);
 
 void        Init_Ade7953(void);
+void        Init_Energy(void);
 
 #endif
 

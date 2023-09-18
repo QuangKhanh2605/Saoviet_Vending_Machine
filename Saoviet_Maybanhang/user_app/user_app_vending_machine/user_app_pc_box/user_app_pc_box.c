@@ -7,34 +7,42 @@ static uint8_t fevent_pcbox_entry(uint8_t event);
 static uint8_t fevent_pcbox_receive_handle(uint8_t event);
 static uint8_t fevent_pcbox_complete_receive(uint8_t event);
 static uint8_t fevent_pcbox_log_tsvh(uint8_t event);
-static uint8_t fevent_pcbox_ping(uint8_t event);
+static uint8_t fevent_pcbox_ping_dcu(uint8_t event);
 static uint8_t fevent_pcbox_set_dcu_ID(uint8_t event);
 static uint8_t fevent_pcbox_get_dcu_ID(uint8_t event);
 static uint8_t fevent_wdg_stm32f4(uint8_t event);
 static uint8_t fevent_reset_dcu(uint8_t event);
 static uint8_t fevent_queue_respond_immediately(uint8_t event);
 static uint8_t fevent_queue_respond_time(uint8_t event);
+static uint8_t fevent_dcu_ping_pc_box(uint8_t event);
+static uint8_t fevent_reset_pc_box(uint8_t event);
+static uint8_t fevent_wait_reset_pc_box(uint8_t event);
 static uint8_t fevent_refresh_dcu(uint8_t event);
 /*=============== Struct =================*/
 sEvent_struct               sEventAppPcBox[]=
 {
-  {_EVENT_PC_BOX_ENTRY,                 1, 5, TIME_ON_DCU,          fevent_pcbox_entry},
-  {_EVENT_PC_BOX_RECEIVE_HANDLE,        0, 0, 5,                    fevent_pcbox_receive_handle},
-  {_EVENT_PC_BOX_COMPLETE_RECEIVE,      0, 0, 5,                    fevent_pcbox_complete_receive},
-  {_EVENT_PC_BOX_LOG_TSVH,              1, 5, TIME_ENTRY,           fevent_pcbox_log_tsvh},
+  {_EVENT_PC_BOX_ENTRY,                 1, 5, TIME_ON_DCU,              fevent_pcbox_entry},
+  {_EVENT_PC_BOX_RECEIVE_HANDLE,        0, 0, 5,                        fevent_pcbox_receive_handle},
+  {_EVENT_PC_BOX_COMPLETE_RECEIVE,      0, 0, 5,                        fevent_pcbox_complete_receive},
+  {_EVENT_PC_BOX_LOG_TSVH,              1, 5, TIME_ENTRY,               fevent_pcbox_log_tsvh},
   
-  {_EVENT_PC_BOX_PING,                  0, 0, 5,                    fevent_pcbox_ping},
+  {_EVENT_PC_BOX_PING_DCU,              0, 0, 5,                        fevent_pcbox_ping_dcu},
   
-  {_EVENT_PC_BOX_SET_DCU_ID,            0, 0, 5,                    fevent_pcbox_set_dcu_ID},
-  {_EVENT_PC_BOX_GET_DCU_ID,            0, 0, 5,                    fevent_pcbox_get_dcu_ID},
+  {_EVENT_PC_BOX_SET_DCU_ID,            0, 0, 5,                        fevent_pcbox_set_dcu_ID},
+  {_EVENT_PC_BOX_GET_DCU_ID,            0, 0, 5,                        fevent_pcbox_get_dcu_ID},
   
-  {_EVENT_WDG_STM32F4,                  1, 0, TIME_RESET_WDG,       fevent_wdg_stm32f4},
-  {_EVENT_RESET_DCU,                    0, 5, 2000,                 fevent_reset_dcu},
+  {_EVENT_WDG_STM32F4,                  1, 0, TIME_RESET_WDG,           fevent_wdg_stm32f4},
+  {_EVENT_RESET_DCU,                    0, 5, 2000,                     fevent_reset_dcu},
   
-  {_EVENT_QUEUE_RESPOND_IMMEDIATELY,    1, 0, 5,                    fevent_queue_respond_immediately},
-  {_EVENT_QUEUE_RESPOND_TIME,           0, 0, TIME_RESPOND_PC_BOX,  fevent_queue_respond_time},
+  {_EVENT_QUEUE_RESPOND_IMMEDIATELY,    1, 0, 5,                        fevent_queue_respond_immediately},
+  {_EVENT_QUEUE_RESPOND_TIME,           0, 0, TIME_RESPOND_PC_BOX,      fevent_queue_respond_time},
   
-  {_EVENT_REFRESH_DCU,                  1, 5, 15*60000,     fevent_refresh_dcu},
+  {_EVENT_DCU_PING_PC_BOX,              0, 5, TIME_PING_PCBOX,          fevent_dcu_ping_pc_box},
+  {_EVENT_RESET_PC_BOX,                 0, 5, TIME_RESET_PC_BOX,        fevent_reset_pc_box},
+  {_EVENT_WAIT_RESET_PC_BOX,            0, 5, TIME_WAIT_RESET_PC_BOX,   fevent_wait_reset_pc_box},
+  
+  
+  {_EVENT_REFRESH_DCU,                  1, 5, 15*60000,                 fevent_refresh_dcu},
 };
 
 uint8_t     aBuffer_Ping[20];
@@ -54,6 +62,7 @@ sDataQueueRespondPcBox          sQueueReadData;
 Struct_Queue_Type               qRespondPcBox;
 
 StructStatusApp                 sStatusApp = {FREE};
+uint8_t CountResetPcBox;
 /*============== Function Static ===========*/
 static uint8_t fevent_pcbox_entry(uint8_t event)
 {
@@ -74,7 +83,9 @@ static uint8_t fevent_pcbox_entry(uint8_t event)
     UTIL_MEM_set(sUartPcBox.Data_a8 , 0x00, sUartPcBox.Length_u16);
     sUartPcBox.Length_u16 = 0;
     fevent_active(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
+    fevent_active(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
     fevent_enable(sEventAppPcBox, _EVENT_REFRESH_DCU);
+    
     return 1;
 }
 
@@ -247,19 +258,19 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   }
                   break;
                   
-                case OBIS_PING_PC_BOX:
+                case OBIS_PC_BOX_PING_DCU:
                   Length_Data = sUartPcBox.Data_a8[pos++];
                   if((pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
                   {
                         sBuffer_Ping.Length_u16 = 0;
-                        sBuffer_Ping.Data_a8[sBuffer_Ping.Length_u16++] = OBIS_PING_PC_BOX;
+                        sBuffer_Ping.Data_a8[sBuffer_Ping.Length_u16++] = OBIS_PC_BOX_PING_DCU;
                         sBuffer_Ping.Data_a8[sBuffer_Ping.Length_u16++] = Length_Data;
                         while(Length_Data > 0)
                         {
                             sBuffer_Ping.Data_a8[sBuffer_Ping.Length_u16++] = sUartPcBox.Data_a8[pos++];
                             Length_Data--;
                         }
-                        fevent_active(sEventAppPcBox, _EVENT_PC_BOX_PING);
+                        fevent_active(sEventAppPcBox, _EVENT_PC_BOX_PING_DCU);
                   }
                   break;
                   
@@ -289,6 +300,17 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   }
                   break;
                   
+                case OBIS_DCU_PING_PC_BOX:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] <= 0x01)
+                      {
+                        CountResetPcBox = 0;
+                        pos += 1;
+                      }
+                  }
+                  
                 default:
                   break;
             }
@@ -317,14 +339,14 @@ static uint8_t fevent_pcbox_log_tsvh(uint8_t event)
 {
     sEventAppPcBox[_EVENT_PC_BOX_LOG_TSVH].e_period = TIME_SEND_TSVH;
     uint8_t length=0;
-    uint8_t aData[25]={0};
+    uint8_t aData[35]={0};
     length = Log_TSVH(aData);
     Write_Queue_Repond_PcBox(aData, length);
     fevent_enable(sEventAppPcBox, event);
     return 1;
 }
 
-static uint8_t fevent_pcbox_ping(uint8_t event)
+static uint8_t fevent_pcbox_ping_dcu(uint8_t event)
 {
     uint16_t TempCrc = 0;
     Calculator_Crc_U16(&TempCrc, sBuffer_Ping.Data_a8, sBuffer_Ping.Length_u16);
@@ -437,11 +459,64 @@ static uint8_t fevent_queue_respond_time(uint8_t event)
     return 1;
 }
 
+static uint8_t fevent_dcu_ping_pc_box(uint8_t event)
+{
+  if(CountResetPcBox > 5)
+  {
+    CountResetPcBox = 0;
+    sStatusApp.Pcbox = BUSY;
+    fevent_active(sEventAppPcBox, _EVENT_RESET_PC_BOX);
+  }
+  else
+  {
+    uint8_t aData[5]={0};
+    uint8_t length = 0;
+    uint16_t TempCrc = 0;
+    aData[length++] = OBIS_DCU_PING_PC_BOX;
+    aData[length++] = 0x01;
+    aData[length++] = 0x01;
+    
+    Calculator_Crc_U16(&TempCrc, aData, length);
+    aData[length++] = TempCrc;
+    aData[length++] = TempCrc << 8;
+    Write_Queue_Repond_PcBox(aData, length);
+    CountResetPcBox++;
+    fevent_enable(sEventAppPcBox, event);
+  }
+    return 1;
+}
+
+static uint8_t fevent_reset_pc_box(uint8_t event)
+{
+    static uint8_t state_reset = 0;
+    if(state_reset == 0)
+    {
+        state_reset = 1;
+        HAL_GPIO_WritePin(ON_OFF_IR_GPIO_Port, ON_OFF_IR_Pin, GPIO_PIN_SET);
+        fevent_enable(sEventAppPcBox, event);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_pc_box: Reset Pc Box", sizeof("app_pc_box: Reset Pc Box"));
+    }
+    else
+    {   
+        state_reset = 0;
+        HAL_GPIO_WritePin(ON_OFF_IR_GPIO_Port, ON_OFF_IR_Pin, GPIO_PIN_RESET);
+        fevent_enable(sEventAppPcBox, _EVENT_WAIT_RESET_PC_BOX);
+    }
+    return 1;
+}
+
+static uint8_t fevent_wait_reset_pc_box(uint8_t event)
+{
+    fevent_active(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
+    sStatusApp.Pcbox = FREE;
+    return 1;
+}
+
 static uint8_t fevent_refresh_dcu(uint8_t event)
 {
     if(sStatusApp.Motor == FREE && sStatusApp.Door == FREE 
        && sStatusApp.Electric == FREE && sStatusApp.Temperature == FREE
-       && sStatusApp.RL_Warm == FREE)
+       && sStatusApp.RL_Warm == FREE && sStatusApp.Pcbox == FREE)
     {
       if(HAL_GetTick() - sEventAppPcBox[_EVENT_PC_BOX_LOG_TSVH].e_systick >=  TIME_SEND_TSVH - TIME_ENTRY)
       {
@@ -501,6 +576,14 @@ uint8_t Log_TSVH(uint8_t *aData)
     aData[length++] = sElectric.Current >> 8;
     aData[length++] = sElectric.Current;
     aData[length++] = sElectric.ScaleVolCur;
+    
+    aData[length++] = sElectric.Power >> 8;
+    aData[length++] = sElectric.Power;
+    aData[length++] = sElectric.Energy >> 24;
+    aData[length++] = sElectric.Energy >> 16;
+    aData[length++] = sElectric.Energy >> 8;
+    aData[length++] = sElectric.Energy;
+    aData[length++] = sElectric.ScalePowEne;
     
     aData[1] = length - 2;
     
@@ -568,7 +651,7 @@ void AppPcBox_Debug(uint8_t aData[], uint8_t length, uint8_t TransRecv)
         .Data_a8 = array,
     };
     
-    if(sArray.Length_u16 < 25)
+    if(sArray.Length_u16 < 50)
     {
         Convert_Hex_To_String_Hex(&sSource, &sArray);
         UTIL_Printf(DBLEVEL_M, (uint8_t*)sSource.Data_a8, sSource.Length_u16);
