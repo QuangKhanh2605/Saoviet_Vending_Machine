@@ -61,6 +61,11 @@ static const uint16_t LED_PIN[3] = {Led_1_Pin, Led_2_Pin, Led_3_Pin};
 
 uint8_t LedRecvPcBox = 0;
 uint8_t ConnectSlave = 0;
+Struct_TimeCycleWarm    sTimeCycleWarm=
+{
+    .Run  = TIME_RL_WARM,
+    .Wait = TIME_RL_WARM_REFRESH,
+};
 /*================= Function Handle ==============*/
 static uint8_t fevent_relay_entry(uint8_t event)
 {
@@ -74,7 +79,7 @@ static uint8_t fevent_relay_warm_refresh(uint8_t event)
 {
 #ifdef USING_REFRESH_WARM
     if(sElectric.PowerPresent != POWER_OFF) 
-    OnRelay_Warm(TIME_RL_WARM_1);
+    OnRelay_Warm(sTimeCycleWarm.Run);
 #endif
     fevent_enable(sEventAppRelay, event);
     return 1;
@@ -82,6 +87,8 @@ static uint8_t fevent_relay_warm_refresh(uint8_t event)
 
 static uint8_t fevent_relay_warm_on(uint8_t event)
 {
+/*---------------ON relay warm--------------*/
+    fevent_disable(sEventAppRelay,_EVENT_RELAY_WARM_REFRESH);
     fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_OFF);
     ControlRelay(RELAY_WARM, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
     return 1;
@@ -89,13 +96,16 @@ static uint8_t fevent_relay_warm_on(uint8_t event)
 
 static uint8_t fevent_relay_warm_off(uint8_t event)
 {
+/*--------------OFF relay warm--------------*/
     ControlRelay(RELAY_WARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
     sStatusApp.RL_Warm = FREE;
+    fevent_enable(sEventAppRelay, _EVENT_RELAY_WARM_REFRESH);
     return 1;
 }
 
 static uint8_t fevent_control_led_status(uint8_t event)
 {
+/*-----------------Dieu khien led Status----------------*/
     if(sEventAppRelay[_EVENT_CONTROL_LED_STATUS].e_period == TIME_LED_STATUS)
     {
         LED_On(_LED_STATUS);
@@ -113,6 +123,7 @@ static uint8_t fevent_control_led_status(uint8_t event)
 
 static uint8_t fevent_control_led_pcbox(uint8_t event)
 {
+/*--------------------Dieu khien led PcBox----------------*/
     if(LedRecvPcBox > 0)
     {
         if(sEventAppRelay[_EVENT_CONTROL_LED_PCBOX].e_period == TIME_LED_PCBOX)
@@ -134,6 +145,7 @@ static uint8_t fevent_control_led_pcbox(uint8_t event)
 
 static uint8_t fevent_control_led_slave(uint8_t event)
 {
+/*------------------Dieu khien led Slave---------------------*/
     if(ConnectSlave == CONNECT_SLAVE)
     {
         LED_Toggle(_LED_SLAVE);
@@ -148,6 +160,87 @@ static uint8_t fevent_control_led_slave(uint8_t event)
 }
 
 /*========== Function Handle ============*/
+void PcBox_Setup_Time_Warm_Run(uint8_t TimeRunWarm)
+{
+    if(TimeRunWarm == 0) TimeRunWarm = 1;
+    else if(TimeRunWarm >30) TimeRunWarm=30;
+    Setup_TimeCycle_Relay_Warm(TimeRunWarm, sTimeCycleWarm.Wait);
+    
+    uint8_t aData[5];
+    uint8_t length = 0;
+    uint16_t TempCrc = 0;
+    aData[length++] = OBIS_TIME_WARM_RUN;
+    aData[length++] = 0x01;
+    aData[length++] = sTimeCycleWarm.Run ;
+
+    Calculator_Crc_U16(&TempCrc, aData, length);
+
+    aData[length++] = TempCrc;
+    aData[length++] = TempCrc >> 8;
+
+    Write_Queue_Repond_PcBox(aData, length);
+}
+
+void PcBox_Setup_Time_Warm_Wait(uint8_t TimeWaitWarm)
+{
+    if(TimeWaitWarm == 0) TimeWaitWarm = 1;
+    else if(TimeWaitWarm < 5) TimeWaitWarm=5;
+    Setup_TimeCycle_Relay_Warm(sTimeCycleWarm.Run, TimeWaitWarm);
+    
+    uint8_t aData[5];
+    uint8_t length = 0;
+    uint16_t TempCrc = 0;
+    aData[length++] = OBIS_TIME_WARM_WAIT;
+    aData[length++] = 0x01;
+    aData[length++] = sTimeCycleWarm.Wait ;
+
+    Calculator_Crc_U16(&TempCrc, aData, length);
+
+    aData[length++] = TempCrc;
+    aData[length++] = TempCrc >> 8;
+
+    Write_Queue_Repond_PcBox(aData, length);
+}
+
+
+void Setup_TimeCycle_Relay_Warm(uint8_t TimeRunMin, uint8_t TimeWaitMin)
+{
+    sTimeCycleWarm.Run  = TimeRunMin;
+    sTimeCycleWarm.Wait = TimeWaitMin;
+    sEventAppRelay[_EVENT_RELAY_WARM_REFRESH].e_period = sTimeCycleWarm.Wait * TIME_ONE_MINUTES;
+}
+
+void Write_Flash_Time_Relay_Warm(void)
+{
+    uint8_t write[3] = {0};
+    uint8_t length = 0;
+    write[length++]= DEFAULT_READ_EXFLASH;
+    write[length++]= sTimeCycleWarm.Run;
+    write[length++]= sTimeCycleWarm.Wait;
+   
+    eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TIME_RELAY_WARM);
+    eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TIME_RELAY_WARM, length);
+}
+
+void Init_Time_Relay_Warm(void)
+{
+    uint8_t aRead[4] = {0};
+    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_TIME_RELAY_WARM, 3);
+    if(aRead[0] == DEFAULT_READ_EXFLASH )
+    {
+        sTimeCycleWarm.Run  = aRead[1];
+        sTimeCycleWarm.Wait = aRead[2];
+    }
+    sEventAppRelay[_EVENT_RELAY_WARM_REFRESH].e_period = sTimeCycleWarm.Wait * TIME_ONE_MINUTES;
+}
+
+/*
+    @brief  Dieu khien Relay 
+    @param  Relay: Loai relay
+    @param  State: Trang thai dong hoac mo
+    @param  StateRespond: Co phan hoi ve PcBox hay k
+    @param  RelayDebug: Co hien thi Debug hay k 
+*/
 void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug)
 {
   if(State == OFF_RELAY || State == ON_RELAY)
@@ -162,6 +255,7 @@ void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t Re
           case RELAY_SCREEN: 
             OnOff_Relay(RELAY_SCREEN, State);
             sStatusRelay.Screen = State;
+            Write_Status_Relay_ExFlash();
             break;
             
           case RELAY_FRIDGE_COOL: 
@@ -182,6 +276,7 @@ void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t Re
           case RELAY_LAMP: 
             OnOff_Relay(RELAY_LAMP, State);
             sStatusRelay.Lamp = State;
+            Write_Status_Relay_ExFlash();
             break;
             
           case RELAY_WARM: 
@@ -197,6 +292,11 @@ void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t Re
   }
 }
 
+/*
+    @brief  ON/OFF Relay
+    @param  Relay: Loai relay
+    @param  State: Trang thai ON hoac OFF
+*/
 void OnOff_Relay(Relay_TypeDef Relay, uint8_t State)
 {
     if(State == ON_RELAY)
@@ -214,8 +314,12 @@ void Init_AppRelay(void)
 {
     Read_Status_Relay_ExFlash();
     Init_StatusRelay();
+    Init_Time_Relay_Warm();
 }
 
+/*
+    @brief  Luu trang thai relay vao flash
+*/
 void Write_Status_Relay_ExFlash(void)
 {
     uint8_t aWrite[9]={0};
@@ -233,6 +337,9 @@ void Write_Status_Relay_ExFlash(void)
     eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_STATUS_RELAY, 9);
 }
 
+/*
+    @brief  Doc trang thai relay tu flash
+*/
 void Read_Status_Relay_ExFlash(void)
 {
     uint8_t aRead[9] = {0};
@@ -273,15 +380,24 @@ void Init_StatusRelay(void)
   else                              HAL_GPIO_WritePin(RELAY_PORT[6], RELAY_PIN[6], GPIO_PIN_OFF_RELAY);
 }
 
-void OnRelay_Warm(uint32_t time)
+/*
+    @brief  Bat relay warm
+    @param  time: Thoi gian bat
+*/
+void OnRelay_Warm(uint32_t time_min)
 {
     sStatusApp.RL_Warm = BUSY;
-    sEventAppRelay[_EVENT_RELAY_WARM_OFF].e_period = time;
+    sEventAppRelay[_EVENT_RELAY_WARM_OFF].e_period = time_min * TIME_ONE_MINUTES;
     fevent_active(sEventAppRelay,_EVENT_RELAY_WARM_ON);
-    fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_REFRESH);
 }
 
-void Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Data)
+/*
+    @brief  Phan hoi On/Off relay ve PcBox
+    @param  State: Co gui du lieu ve PcBox hay khong
+    @param  KindRelay: Loai relay
+    @param  Status: Trang thai dang bat hay tat
+*/
+void Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Status)
 {
   if(State == _RL_RESPOND)
   {
@@ -294,7 +410,7 @@ void Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Data)
     aData[length++] = OBIS_RESPOND_HANDLE_RELAY;
     aData[length++] = 0x02;
     aData[length++] = KindRelay ;
-    aData[length++] = Data;
+    aData[length++] = Status;
     
     Calculator_Crc_U16(&TempCrc, aData, length);
     
@@ -322,7 +438,13 @@ void LED_Off (Led_TypeDef Led)
     HAL_GPIO_WritePin(LED_PORT[Led], LED_PIN[Led], GPIO_PIN_RESET);
 }
 
-void Relay_Debug(uint8_t State_Debug, uint8_t Relay, uint8_t Status)
+/*
+    @brief  Hien thi debug bat tat relay
+    @param  State_Debug: Co thuc hien hien thi debug khong
+    @param  KindRelay: Loai relay 
+    @param  Status: Trang thai relay hien tai
+*/
+void Relay_Debug(uint8_t State_Debug, uint8_t KindRelay, uint8_t Status)
 {
     if(State_Debug == _RL_DEBUG)
     {
@@ -336,7 +458,7 @@ void Relay_Debug(uint8_t State_Debug, uint8_t Relay, uint8_t Status)
       UTIL_Printf(DBLEVEL_M, (uint8_t*)"user_app_relay: OFF Relay: ", sizeof("user_app_relay: OFF Relay: "));
     }
     
-    switch(Relay)
+    switch(KindRelay)
     {
         case RELAY_ELEVATOR:
            UTIL_Printf(DBLEVEL_M, (uint8_t*)"ELEVATOR ", sizeof("ELEVATOR ")); 

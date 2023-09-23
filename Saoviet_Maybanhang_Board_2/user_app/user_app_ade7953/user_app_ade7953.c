@@ -55,19 +55,25 @@ static uint8_t fevent_ade_handle(uint8_t event)
 {
     static uint32_t CountPowerOff = 0;
     ADE7953_Read_Reg(AENERGYA, &sADE.active_En_u32);
-    if(sADE.active_En_u32 > 2000000000)
+    if(sADE.active_En_u32 > 4294967296 - 100000000)
     {
         sADE.active_En_u32 = 4294967296 - sADE.active_En_u32;
-
-        if(sADE.active_En_u32 != 0)
-        sADE.active_En_Noload_u8 = 0;
-
-        sInforEnergy.Reg_Energy = sInforEnergy.Reg_Energy + sADE.active_En_u32;
-
-        sInforEnergy.Pre_Energy = ((sInforEnergy.Reg_Energy*1000/18879)/1600);
-
-        sInforEnergy.Dis_Energy = sInforElectric.Energy + sInforEnergy.Pre_Energy;
     }
+    else if(sADE.active_En_u32 < 100000000)
+    {
+        sADE.active_En_u32 = sADE.active_En_u32;
+    }
+    else sADE.active_En_u32 = 0;
+    
+    if(sADE.active_En_u32 != 0)
+    sADE.active_En_Noload_u8 = 0;
+
+    sInforEnergy.Reg_Energy = sInforEnergy.Reg_Energy + sADE.active_En_u32;
+
+    sInforEnergy.Pre_Energy = ((sInforEnergy.Reg_Energy*1000/(18879-1))/1600);
+
+    sInforEnergy.Dis_Energy = sInforElectric.Energy + sInforEnergy.Pre_Energy;
+    
     sADE.active_En_u32 = 0;
 
     if(sMeter_Status.adeIntFlag == 1)
@@ -130,7 +136,7 @@ static uint8_t fevent_ade_handle(uint8_t event)
             
           Voltage = (((uint64_t)sADE.vRMS_u32 * 38424)/100000000);
           Current = (((uint64_t)sADE.i1RMS_u32 * 9088)/1000000);
-          Power   = (((int64_t)StampPower * 5095)/1000000);
+          Power   = (((int64_t)StampPower * 5085)/1000000);
           
           if(Voltage < 5) Voltage = 0;
           
@@ -169,9 +175,7 @@ static uint8_t fevent_ade_handle(uint8_t event)
 //    sInforEnergy.Reg_Energy = sInforEnergy.Reg_Energy + sADE.active_En_u32;
 //    sADE.active_En_u32 = 0;
 //    sInforEnergy.Pre_Energy = ((sInforEnergy.Reg_Energy*1000/18879)/1600);
-    
 
-          
     fevent_enable(sEventAppAde7953, event);
     return 1;
 }
@@ -181,7 +185,7 @@ static uint8_t fevent_ade_save_energy(uint8_t event)
     sInforElectric.Energy = sInforEnergy.Dis_Energy;
     FLASH_WritePage(FLASH_ENERGY_METER, sInforElectric.Energy, DEFAUL_READ_FLASH);
     
-    sInforEnergy.Reg_Energy = 0;
+    sInforEnergy.Reg_Energy = sInforEnergy.Reg_Energy % (18879-1);
     sInforEnergy.Pre_Energy = 0;
     
     fevent_enable(sEventAppAde7953, event);

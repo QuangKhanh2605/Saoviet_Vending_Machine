@@ -14,6 +14,8 @@ void SysApp_Init (void)
 void SysApp_Setting (void)
 {
     Init_DCU_ID();
+    Init_PcBox();
+    Init_Using_Crc();
     AppComm_Init();
 }
 

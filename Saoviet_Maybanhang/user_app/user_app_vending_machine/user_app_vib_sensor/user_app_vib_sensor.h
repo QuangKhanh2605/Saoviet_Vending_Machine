@@ -8,10 +8,6 @@
 #include "event_driven.h"
 #include "user_util.h"
 
-#define TIME_LEVEL_ALARM    60000
-
-#define TIME_ON_ALARM_1     5000
-#define TIME_ON_ALARM_2     10000
 #define TIME_LED_TOGGLE     150
 #define NUMBER_LED_TOGGLE   1
 

@@ -79,7 +79,7 @@ uint8_t ADEConfigDefault[40][3] = {
      0X00,    0X00,    0X00,	// 21		   IRQENB
      0X40,    0X00,    0X00,	// 22		   AIGAIN
      0X40,    0X00,    0X00,	// 23		   AVGAIN
-     0X40,    0X00,    0X00,	// 24		   AWGAIN 
+     0X49,    0XB9,    0XDB,	// 24		   AWGAIN 
      0X40,    0X00,    0X00,	// 25		   AVARGAIN
      0X40,    0X00,    0X00,	// 26		   AVAGAIN
      0X00,    0X00,    0X00,	// 27		   AIRMSOS

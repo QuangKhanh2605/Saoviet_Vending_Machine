@@ -14,6 +14,7 @@
 #define DEFAUL_READ_FLASH       0xA5A5A5A5
 
 #define TIME_WDG_RESET_MCU      60*60000
+#define TIME_INIT_UART          15*60000
 
 #define ASCII_NUMBER_VALUE      48
 
@@ -35,6 +36,7 @@ typedef enum
     _EVENT_SLAVE_ENTRY = 0,
     _EVENT_SLAVE_RECEIVE_HANDLE,
     _EVENT_SLAVE_COMPLETE_RECEIVE,
+    _EVENT_INIT_UART,
 
     _EVENT_SLAVE_END,
 }eKindEventSlave;

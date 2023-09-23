@@ -65,4 +65,7 @@ void        Off_Motor_Push(void);
 void        On_Motor_Push(uint8_t Pos);
 void        AppMotor_Debug(void);
 
+void        Fix_Motor(uint8_t Pos);
+void        Push_Motor(uint8_t Pos, uint8_t Number);
+
 #endif

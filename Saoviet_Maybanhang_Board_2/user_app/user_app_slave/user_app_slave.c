@@ -5,12 +5,15 @@
 static uint8_t fevent_slave_entry(uint8_t event);
 static uint8_t fevent_slave_receive_handle(uint8_t event);
 static uint8_t fevent_slave_complete_receive(uint8_t event);
+static uint8_t fevent_init_uart(uint8_t event);
 /*=============== Struct =================*/
 sEvent_struct               sEventAppSlave[]=
 {
-  {_EVENT_SLAVE_ENTRY,                 0, 5, 0,           fevent_slave_entry},
-  {_EVENT_SLAVE_RECEIVE_HANDLE,        1, 0, 5,           fevent_slave_receive_handle},
-  {_EVENT_SLAVE_COMPLETE_RECEIVE,      0, 0, 5,           fevent_slave_complete_receive},
+  {_EVENT_SLAVE_ENTRY,                 0, 5, 0,                 fevent_slave_entry},
+  {_EVENT_SLAVE_RECEIVE_HANDLE,        1, 0, 5,                 fevent_slave_receive_handle},
+  {_EVENT_SLAVE_COMPLETE_RECEIVE,      0, 0, 5,                 fevent_slave_complete_receive},
+  
+  {_EVENT_INIT_UART,                   1, 5, TIME_INIT_UART,    fevent_init_uart},
 };
 
 Struct_Infor_Slave          sInforSlave = {ID_DEFAULT, BAUDRATE_DEFAULT};
@@ -54,6 +57,12 @@ static uint8_t fevent_slave_complete_receive(uint8_t event)
     UTIL_MEM_set(sUart485.Data_a8 , 0x00, sUart485.Length_u16);
     sUart485.Length_u16 = 0;
     fevent_active(sEventAppSlave, _EVENT_SLAVE_RECEIVE_HANDLE);
+    return 1;
+}
+
+static uint8_t fevent_init_uart(uint8_t event)
+{
+    Init_AppSlave();
     return 1;
 }
 
@@ -107,6 +116,7 @@ uint8_t ModbusRTU_Slave(void)
 		uint8_t FunCode = sUart485.Data_a8[1];
 		if(CRC_check == CRC_rx)
 		{
+            fevent_enable(sEventAppSlave, _EVENT_INIT_UART);
 			answer=1;
 			uint16_t addr_data = sUart485.Data_a8[2] << 8 | sUart485.Data_a8[3];
 			uint8_t data_frame[40]={0};

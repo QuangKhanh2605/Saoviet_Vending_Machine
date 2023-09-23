@@ -12,13 +12,6 @@
 #define  TIME_LED_PCBOX         80
 #define  TIME_LED_SLAVE         1000
 
-//#define  USING_REFRESH_WARM    
-
-#define  TIME_RL_WARM_1         5*TIME_ONE_MINUTES
-#define  TIME_RL_WARM_2         15*TIME_ONE_MINUTES
-
-#define  TIME_RL_WARM_REFRESH   60*TIME_ONE_MINUTES
-
 typedef enum
 {
     _EVENT_RELAY_ENTRY,
@@ -82,6 +75,12 @@ typedef enum
     RELAY_WARM,
 }Relay_TypeDef;
 
+typedef struct
+{
+    uint8_t Run;    //Thoi gian nghi relay warm
+    uint8_t Wait;   //Thoi gian chay relay warm
+}Struct_TimeCycleWarm;
+
 typedef enum
 {
     OFF_RELAY=0,
@@ -92,6 +91,7 @@ extern sEvent_struct        sEventAppRelay[];
 extern Struct_StatusRelay         sStatusRelay;
 extern uint8_t                    LedRecvPcBox;
 extern uint8_t                    ConnectSlave;
+extern Struct_TimeCycleWarm       sTimeCycleWarm;
 /*=============== Function handle ================*/
 
 uint8_t     AppRelay_Task(void);
@@ -106,10 +106,15 @@ void        LED_On (Led_TypeDef Led);
 void        LED_Off (Led_TypeDef Led);
 
 void        OnOff_Relay(Relay_TypeDef Relay, uint8_t State);
-void        Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Data);
-void        Relay_Debug(uint8_t State_Debug, uint8_t Relay, uint8_t Status);
+void        Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Status);
+void        Relay_Debug(uint8_t State_Debug, uint8_t KindRelay, uint8_t Status);
 void        ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug);
 
-void        OnRelay_Warm(uint32_t time);
+void        OnRelay_Warm(uint32_t time_min);
+void        Init_Time_Relay_Warm(void);
+void        Write_Flash_Time_Relay_Warm(void);
+void        Setup_TimeCycle_Relay_Warm(uint8_t TimeRunMin, uint8_t TimeWaitMin);
 
+void        PcBox_Setup_Time_Warm_Run(uint8_t TimeRunWarm);
+void        PcBox_Setup_Time_Warm_Wait(uint8_t TimeWaitWarm);
 #endif

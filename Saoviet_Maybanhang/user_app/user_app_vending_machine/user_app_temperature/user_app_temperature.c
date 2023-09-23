@@ -23,6 +23,7 @@ static uint8_t fevent_temp_read_setuptemp(uint8_t event);
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event);
 static uint8_t fevent_temp_time_get(uint8_t event);
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event);
+static uint8_t fevent_temp_respond_error(uint8_t event);
 /*=================== Struct ====================*/
 sEvent_struct                   sEventAppTemperature[] =
 {
@@ -37,6 +38,8 @@ sEvent_struct                   sEventAppTemperature[] =
   
   {_EVENT_TEMP_TIME_GET,        0, 0, TIME_GET_TEMP,        fevent_temp_time_get},
   {_EVENT_TEMP_OFF_FRIGE_FROZEN,0, 0, TIME_OFF_FROZEN,      fevent_temp_off_fridge_frozen},
+  
+  {_EVENT_TEMP_RESPOND_ERROR,   0, 0, TIME_ERROR_TEMP,      fevent_temp_respond_error},
 };
 
 uint32_t ADC_Temp[3]={0};
@@ -52,6 +55,7 @@ Struct_Control_Fridge   sTemp_Crtl_Fridge=
 /*=================== Function Handle ============*/
 static uint8_t fevent_temp_entry(uint8_t event)
 {
+/*----------------Lay ADC lan dau----------------*/
     sEventAppTemperature[_EVENT_TEMP_ENTRY].e_period = 20;
     static uint8_t once = 0;
     once++;
@@ -67,6 +71,7 @@ static uint8_t fevent_temp_entry(uint8_t event)
 
 static uint8_t fevent_temp_get_adc(uint8_t event)
 {
+/*----------------Get ADC-----------------*/
     static uint8_t count = 0;
     uint8_t status = HAL_ERROR; 
     status = HAL_ADC_Start_DMA(&ADC_TEMPERATURE, (uint32_t*)ADC_Temp, 3);
@@ -91,6 +96,7 @@ static uint8_t fevent_temp_get_adc(uint8_t event)
 
 static uint8_t fevent_temp_calculator(uint8_t event)
 {
+/*------------------Calculator Temperature----------------*/
     float Resistor = 0;
     float Vpower = 0;
     float Vcc = 0;
@@ -121,27 +127,37 @@ static uint8_t fevent_temp_calculator(uint8_t event)
     sTemperature.Value  =  (int16_t)( (param1 + (Resistor)* ( param2 + (Resistor)* (param3 + param4 * (Resistor))))*10);
     sTemperature.Value  = sTemperature.Value - CALIB_TEMP;
     sTemperature.Scale  = DEFAULT_TEMP_SCALE;
-
+    
     ADC_Avg[0] = 0;
     ADC_Avg[1] = 0;
     ADC_Avg[2] = 0;
     
-    if(sElectric.PowerPresent != POWER_OFF)
+
+    fevent_active(sEventAppTemperature, _EVENT_TEMP_CTRL_FRIDGE);
+
+    
+    if(sTemperature.Value >500 || sTemperature.Value < -300)
     {
-        fevent_active(sEventAppTemperature, _EVENT_TEMP_CTRL_FRIDGE);
+        fevent_active(sEventAppTemperature, _EVENT_TEMP_RESPOND_ERROR);
+    }
+    else
+    {
+        fevent_disable(sEventAppTemperature, _EVENT_TEMP_RESPOND_ERROR);
     }
     return 1;
 }
-
+    
 static uint8_t fevent_temp_set_setuptemp(uint8_t event)
 {
+/*-----------------Cai dat nhiet do---------------*/
     Set_Threshold_Temperature(sTemp_Thresh_Recv.Value, sTemp_Thresh_Recv.Scale);
-    Threshold_Respond_Pc_Box_Setup();
+    SetupTemp_Respond_Pc_Box_Setup();
     return 1;
 }
 
 static uint8_t fevent_temp_read_setuptemp(uint8_t event)
 {
+/*-----------------Doc nhiet do duoc cai dat tu Flash---------------*/
     uint8_t read[4] = {0};
     eFlash_S25FL_BufferRead(read, EX_FLASH_ADDR_TEMP_SET_THRESH , 4);
     if( read[0] == DEFAULT_READ_EXFLASH)
@@ -155,30 +171,31 @@ static uint8_t fevent_temp_read_setuptemp(uint8_t event)
 
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
 {
-    if(sTemperature.Value >= sTemp_Crtl_Fridge.TempSetup + sTemp_Crtl_Fridge.Threshold)
+/*---------------------Dieu khien dan nong va dan lanh theo nhiet do cai dat-----------------*/
+    if(sElectric.PowerPresent != POWER_OFF)     //Neu khong mat dien cho pheo dieu khien dieu hoa
     {
-        if(sStatusRelay.FridgeHeat == OFF_RELAY)
-        ControlRelay(RELAY_FRIDGE_HEAT, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
-        
-        if(sStatusRelay.FridgeCool == OFF_RELAY)
-        ControlRelay(RELAY_FRIDGE_COOL, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
-        
-        fevent_disable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
-        
-        sStatusApp.Temperature = BUSY;
-    }
-    else if(sTemperature.Value <= sTemp_Crtl_Fridge.TempSetup - sTemp_Crtl_Fridge.Threshold)
-    {
-        if(sStatusRelay.FridgeHeat == ON_RELAY)
+        if(sTemperature.Value >= sTemp_Crtl_Fridge.TempSetup + sTemp_Crtl_Fridge.Threshold)
         {
-            ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
-            OnRelay_Warm(TIME_RL_WARM_1);
+            if(sStatusRelay.FridgeHeat == OFF_RELAY)
+            ControlRelay(RELAY_FRIDGE_HEAT, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+            
+            if(sStatusRelay.FridgeCool == OFF_RELAY)
+            ControlRelay(RELAY_FRIDGE_COOL, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+            
+            fevent_disable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
+            
+            sStatusApp.Temperature = BUSY;
         }
-        
-        
-        fevent_enable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
+        else if(sTemperature.Value <= sTemp_Crtl_Fridge.TempSetup - sTemp_Crtl_Fridge.Threshold)
+        {
+            if(sStatusRelay.FridgeHeat == ON_RELAY)
+            {
+                ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+            }
+
+            fevent_enable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
+        }
     }
-    
     AppTemperature_Debug();
     fevent_enable(sEventAppTemperature, _EVENT_TEMP_TIME_GET);
     return 1;
@@ -192,6 +209,7 @@ static uint8_t fevent_temp_time_get(uint8_t event)
 
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 {
+/*---------------------Tat relay cuc nong---------------------*/
     if(sStatusRelay.FridgeCool == ON_RELAY)
     ControlRelay(RELAY_FRIDGE_COOL, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
     
@@ -199,7 +217,46 @@ static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
     return 1;
 }
 
+static uint8_t fevent_temp_respond_error(uint8_t event)
+{
+    uint8_t aData[5];
+    uint8_t length = 0;
+    
+    length = Respond_Error_Temp(aData);
+    Write_Queue_Repond_PcBox(aData, length); 
+      
+    fevent_enable(sEventAppTemperature, event);
+    return 1;
+}
+
+/*
+    @brief  Phan hoi canh bao rung len PcBox
+*/
+uint8_t Respond_Error_Temp(uint8_t *aData)
+{
+    uint8_t length = 0;
+    uint16_t TempCrc = 0;
+    
+/*=============== Log ===============*/
+    
+    aData[length++] = OBIS_WARNING_ERROR_TEMP;
+    aData[length++] = 0x01;
+    aData[length++] = 0x01;
+    
+    Calculator_Crc_U16(&TempCrc, aData, length);
+    
+    aData[length++] = TempCrc;
+    aData[length++] = TempCrc >> 8;
+
+    return length;
+}
+
 /*=============== Function Handle ============== */
+/*
+    @brief  Cai dat nhiet do va luu vao Flash
+    @param  temp: Nhiet do cai dat
+    @param  scale: Scale nhiet do cai dat
+*/
 void Set_Threshold_Temperature(int16_t temp, uint8_t scale)
 {
     uint8_t write[4]={0x00};
@@ -214,7 +271,10 @@ void Set_Threshold_Temperature(int16_t temp, uint8_t scale)
     eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TEMP_SET_THRESH, 4);
 }
 
-void Threshold_Respond_Pc_Box_Setup(void)
+/*
+    @brief  Phan hoi lai PcBox nhiet do cai dat
+*/
+void SetupTemp_Respond_Pc_Box_Setup(void)
 {
     uint8_t aData[5];
     uint8_t length = 0;
@@ -223,10 +283,10 @@ void Threshold_Respond_Pc_Box_Setup(void)
 /*=============== Log ===============*/
     
     aData[length++] = OBIS_SETUP_TEMP;
-    aData[length++] = 0x01;
-    aData[length++] = sTemp_Thresh_Recv.Value >> 8;
-    aData[length++] = sTemp_Thresh_Recv.Value;
-    aData[length++] = sTemp_Thresh_Recv.Scale;
+    aData[length++] = 0x03;
+    aData[length++] = sTemp_Crtl_Fridge.TempSetup >> 8;
+    aData[length++] = sTemp_Crtl_Fridge.TempSetup;
+    aData[length++] = sTemp_Crtl_Fridge.Scale;
     
     Calculator_Crc_U16(&TempCrc, aData, length);
     
@@ -236,6 +296,9 @@ void Threshold_Respond_Pc_Box_Setup(void)
     Write_Queue_Repond_PcBox(aData, length);
 }
 
+/*
+    @brief  Debug
+*/
 void AppTemperature_Debug(void)
 {
 #ifdef  USING_APP_TEMPERATURE_DEBUG
@@ -296,6 +359,9 @@ uint8_t AppTemperature_Task(void)
     return Result;
 }
 
+/*
+    @brief  Init ADC
+*/
 void ADC_Init(void)
 {
 	HAL_ADC_Start_DMA(&ADC_TEMPERATURE, (uint32_t*) ADC_Temp,2);

@@ -4,26 +4,45 @@
 #include "user_inc_vending_machine.h"
 #include "user_external_flash.h"
 /*================ Struct Var =============*/
-
 const struct_CheckList_AT CheckList_AT_CONFIG[] =
 {
-    {_RESET_DCU,            _fRESET_DCU,                {(uint8_t*)"at+resetdcu",11}},
+    {_RESET_DCU,            _fRESET_DCU,                {(uint8_t*)"at+resetdcu",11}},      //Ex: "at+resetdcu"
+    
+    {_RESET_PCBOX,          _fRESET_PCBOX,              {(uint8_t*)"at+resetpcbox",13}},    //Ex: "at+resetpcbox"
+    
+    {_APP_FIX_MOTOR,        _fAPP_FIX_MOTOR,            {(uint8_t*)"at+fixmotor=",12}},     //Ex: "at+fixmotor=1"
+    {_APP_PUSH_MOTOR,       _fAPP_PUSH_MOTOR,           {(uint8_t*)"at+pushmotor=",13}},    //Ex: "at+pushmotor=1 1"
   
-    {_GET_SERI_DCU,		    _fGET_SERI_DCU,		        {(uint8_t*)"at+seri?",8}},
-    {_SET_SERI_DCU,         _fSET_SERI_DCU,             {(uint8_t*)"at+seri=",8}},
+    {_GET_SERI_DCU,		    _fGET_SERI_DCU,		        {(uint8_t*)"at+seri?",8}},          //Ex: "at+seri?"
+    {_SET_SERI_DCU,         _fSET_SERI_DCU,             {(uint8_t*)"at+seri=",8}},          //Ex: "at+seri=SVVDMC23000001"
     
-    {_GET_SETUP_TEMP,       _fGET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp?",13}},
-    {_SET_SETUP_TEMP,       _fSET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp=",13}},
+    {_GET_TIME_TSVH,		_fGET_TIME_TSVH,		    {(uint8_t*)"at+timetsvh?",12}},     //Ex: "at+timetsvh?"
+    {_SET_TIME_TSVH,        _fSET_TIME_TSVH,            {(uint8_t*)"at+timetsvh=",12}},     //Ex: "at+timetsvh=1" (min)
     
-    {_GET_THRESH_TEMP,      _fGET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp?",14}},
-    {_SET_THRESH_TEMP,      _fSET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp=",14}},
+    {_GET_TIME_PCBOX_RESET,	_fGET_TIME_PCBOX_RESET,		{(uint8_t*)"at+timepcboxreset?",18}},//Ex: "at+timepcboxreset?"
+    {_SET_TIME_PCBOX_RESET, _fSET_TIME_PCBOX_RESET,     {(uint8_t*)"at+timepcboxreset=",18}},//Ex: "at+timepcboxreset=15" (min)
     
-    {_GET_ID_SLAVE,         _fGET_ID_SLAVE,             {(uint8_t*)"at+slaveid?",11}},
-    {_SET_ID_SLAVE,         _fSET_ID_SLAVE,             {(uint8_t*)"at+slaveid=",11}},
+    {_GET_SETUP_TEMP,       _fGET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp?",13}},    //Ex: "at+setuptemp?"        
+    {_SET_SETUP_TEMP,       _fSET_SETUP_TEMP,           {(uint8_t*)"at+setuptemp=",13}},    //Ex: "at+setuptemp=50"(Scale 0x00)
     
-    {_CTRL_RELAY_SCREEN,    _fCTRL_RELAY_SCREEN,        {(uint8_t*)"at+rlscreen=",12}},
-    {_CTRL_RELAY_LAMP,      _fCTRL_RELAY_LAMP,          {(uint8_t*)"at+rllamp=",10}},
-    {_CTRL_RELAY_WARM,      _fCTRL_RELAY_WARM,          {(uint8_t*)"at+rlwarm=",10}},
+    {_GET_THRESH_TEMP,      _fGET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp?",14}},   //Ex: "at+threshtemp?"
+    {_SET_THRESH_TEMP,      _fSET_THRESH_TEMP,          {(uint8_t*)"at+threshtemp=",14}},   //Ex: "at+threshtemp=25"(Scale 0x00)
+    
+    {_GET_ID_SLAVE,         _fGET_ID_SLAVE,             {(uint8_t*)"at+slaveid?",11}},      //Ex: "at+slaveid?"
+    {_SET_ID_SLAVE,         _fSET_ID_SLAVE,             {(uint8_t*)"at+slaveid=",11}},      //Ex: "at+slaveid=1"
+    
+    {_CTRL_RELAY_SCREEN,    _fCTRL_RELAY_SCREEN,        {(uint8_t*)"at+rlscreen=",12}},     //Ex: "at+rlscreen=1" (0:Off, 1:On)
+    {_CTRL_RELAY_LAMP,      _fCTRL_RELAY_LAMP,          {(uint8_t*)"at+rllamp=",10}},       //Ex: "at+rllamp=1" (0:Off, 1:On)
+    {_CTRL_RELAY_WARM,      _fCTRL_RELAY_WARM,          {(uint8_t*)"at+rlwarm=",10}},       //Ex: "at+rlwarm=1" (0:Off, 1:On)
+    
+    {_GET_TIME_WARM_RUN,    _fGET_TIME_WARM_RUN,        {(uint8_t*)"at+timewarmrun?",15}},  //Ex: "at+timewarmrun?"
+    {_SET_TIME_WARM_RUN,    _fSET_TIME_WARM_RUN,        {(uint8_t*)"at+timewarmrun=",15}},  //Ex: "at+timewarmrun=5" (Min)
+    
+    {_GET_TIME_WARM_WAIT,   _fGET_TIME_WARM_WAIT,       {(uint8_t*)"at+timewarmwait?",16}}, //Ex: "at+timewarmwait?"
+    {_SET_TIME_WARM_WAIT,   _fSET_TIME_WARM_WAIT,       {(uint8_t*)"at+timewarmwait=",16}}, //Ex: "at+timewarmwait=15" (Min)
+    
+    {_GET_USING_CRC,        _fGET_USING_CRC,            {(uint8_t*)"at+usingcrc?",12}}, //Ex: "at+usingcrc?"
+    {_SET_USING_CRC,        _fSET_USING_CRC,            {(uint8_t*)"at+usingcrc=",12}}, //Ex: "at+usingcrc=1" (Using: 1; UnUsing = 0);s
     
     {_END_AT_CMD,	        NULL,	                    {(uint8_t*)"at+end",6}},
 };
@@ -31,20 +50,180 @@ const struct_CheckList_AT CheckList_AT_CONFIG[] =
 uint8_t 		aDATA_CONFIG[128];
 
 /*=============== Function Handle Receive =============*/
+
+/*
+    @brief  Reset DCU
+*/
 void        _fRESET_DCU (sData *strRecei, uint16_t Pos)
 {
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
-    Write_Status_Relay_ExFlash();
-    Reset_Chip();
+//    Reset_Chip();
+    
+    fevent_enable(sEventAppPcBox, _EVENT_RESET_DCU);
+    fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
+    fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_COMPLETE_RECEIVE);
 }
 
+/*
+    @brief  Reset PcBox
+*/
+void        _fRESET_PCBOX (sData *strRecei, uint16_t Pos)
+{
+    fevent_active(sEventAppPcBox, _EVENT_RESET_PC_BOX);
+}
+
+/*
+    @brief  Fix Motor
+*/
+void        _fAPP_FIX_MOTOR (sData *strRecei, uint16_t Pos)
+{
+    int16_t temp = 0;
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+        uint8_t length = 0;
+        for(uint8_t i = 0; i < strRecei->Length_u16; i++)
+        {
+            if( strRecei->Data_a8[i] < '0' || strRecei->Data_a8[i]>'9') break;
+            else length++;
+        }
+        temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
+        Fix_Motor(temp);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
+
+/*
+    @brief  Push motor
+*/
+void        _fAPP_PUSH_MOTOR (sData *strRecei, uint16_t Pos)
+{
+    int16_t temp1 = 0;
+    int16_t temp2 = 0;
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+        uint8_t length = 0;
+        for(uint8_t i = 0; i < strRecei->Length_u16; i++)
+        {
+            if( strRecei->Data_a8[i] < '0' || strRecei->Data_a8[i]>'9') 
+            {
+              temp2 = strRecei->Data_a8[i+1] - 0x30;
+              break;
+            }
+            else length++;
+        }
+        temp1 = Convert_String_To_Dec(strRecei->Data_a8 , length);
+        Push_Motor(temp1, temp2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
+
+/*
+    @brief  Doc thoi gian gui thong so van hanh
+*/
+void        _fGET_TIME_TSVH (sData *strRecei, uint16_t Pos)
+{
+    char cData[5]={0};
+    uint8_t length = 0;
+ 
+    length = Convert_Int_To_String_Scale(cData, (int)sParamPcBox.TimeTSVH , 0x00);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time TSVH: ", sizeof("Time TSVH: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+}
+
+/*
+    @brief  Cai dat thoi gian gui thong so van hanh 
+*/
+void        _fSET_TIME_TSVH (sData *strRecei, uint16_t Pos)
+{
+    uint8_t temp = 0;
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+        uint8_t length = 0;
+        for(uint8_t i = 0; i < strRecei->Length_u16; i++)
+        {
+            if( strRecei->Data_a8[i] < '0' || strRecei->Data_a8[i]>'9') break;
+            else length++;
+        }
+        temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
+        Set_TimeTSVH(temp);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
+
+/*
+    @brief  Doc thoi gian cho reset PcBox
+*/
+void        _fGET_TIME_PCBOX_RESET (sData *strRecei, uint16_t Pos)
+{
+    char cData[5]={0};
+    uint8_t length = 0;
+ 
+    length = Convert_Int_To_String_Scale(cData, (int)sParamPcBox.TimeResetPcBox , 0x00);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time TSVH: ", sizeof("Time TSVH: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+}
+
+/*
+    @brief  Cai dat thoi gian cho reset PcBox
+*/
+void        _fSET_TIME_PCBOX_RESET (sData *strRecei, uint16_t Pos)
+{
+    uint8_t temp = 0;
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+        uint8_t length = 0;
+        for(uint8_t i = 0; i < strRecei->Length_u16; i++)
+        {
+            if( strRecei->Data_a8[i] < '0' || strRecei->Data_a8[i]>'9') break;
+            else length++;
+        }
+        temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
+        Set_TimeResetPcBox(temp);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
+
+/*
+    @brief  Doc Seri DCU
+*/
 void        _fGET_SERI_DCU (sData *strRecei, uint16_t Pos)
 {
     UTIL_Printf(DBLEVEL_L, sDCU_ID.Data_a8, sDCU_ID.Length_u16);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
 }
 
+/*
+    @brief  Cai dat seri DCU
+*/
 void        _fSET_SERI_DCU (sData *strRecei, uint16_t Pos)
 {
     uint8_t write[MAX_LENGTH_DCU_ID+2] = {0};
@@ -70,6 +249,9 @@ void        _fSET_SERI_DCU (sData *strRecei, uint16_t Pos)
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
 }
 
+/*
+    @brief  Doc nhiet do cai dat tu lanh
+*/
 void        _fGET_SETUP_TEMP (sData *strRecei, uint16_t Pos)
 {
     char cData[5]={0};
@@ -81,6 +263,9 @@ void        _fGET_SETUP_TEMP (sData *strRecei, uint16_t Pos)
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
 }
     
+/*
+    @brief Cai dat nhiet do tu lanh 
+*/
 void        _fSET_SETUP_TEMP (sData *strRecei, uint16_t Pos)
 {
     int16_t temp = 0;
@@ -123,6 +308,9 @@ void        _fSET_SETUP_TEMP (sData *strRecei, uint16_t Pos)
 
 }
 
+/*
+    @brief  Doc gia tri nguong nhieu do dieu chinh
+*/
 void        _fGET_THRESH_TEMP (sData *strRecei, uint16_t Pos)
 {
     char cData[5]={0};
@@ -133,7 +321,10 @@ void        _fGET_THRESH_TEMP (sData *strRecei, uint16_t Pos)
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
 }
-    
+
+/*
+    @brief  Cai dat nguong dieu chinh nhiet do 
+*/
 void        _fSET_THRESH_TEMP (sData *strRecei, uint16_t Pos)
 {
     int16_t temp = 0;
@@ -158,6 +349,9 @@ void        _fSET_THRESH_TEMP (sData *strRecei, uint16_t Pos)
     }
 }
 
+/*
+    @brief  Doc ID Slave Electric
+*/
 void        _fGET_ID_SLAVE (sData *strRecei, uint16_t Pos)
 {
     char cData[5]={0};
@@ -168,6 +362,10 @@ void        _fGET_ID_SLAVE (sData *strRecei, uint16_t Pos)
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
 }
+
+/*
+    @brief cai dat ID Slave Electric
+*/
 void        _fSET_ID_SLAVE (sData *strRecei, uint16_t Pos)
 {
     int16_t temp = 0;
@@ -200,6 +398,9 @@ void        _fSET_ID_SLAVE (sData *strRecei, uint16_t Pos)
     }
 }
 
+/*
+    @brief  Dieu khien relay man hinh
+*/
 void        _fCTRL_RELAY_SCREEN (sData *strRecei, uint16_t Pos)
 {
     if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
@@ -210,9 +411,11 @@ void        _fCTRL_RELAY_SCREEN (sData *strRecei, uint16_t Pos)
     {
         ControlRelay(RELAY_SCREEN, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
     }
-    Write_Status_Relay_ExFlash();
 }
 
+/*
+    @brief  Dieu khien relay den
+*/
 void        _fCTRL_RELAY_LAMP (sData *strRecei, uint16_t Pos)
 {
     if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
@@ -223,9 +426,11 @@ void        _fCTRL_RELAY_LAMP (sData *strRecei, uint16_t Pos)
     {
         ControlRelay(RELAY_LAMP, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
     }
-    Write_Status_Relay_ExFlash();
 }
 
+/*
+    @brief  Dieu khien relay warm 
+*/
 void        _fCTRL_RELAY_WARM (sData *strRecei, uint16_t Pos)
 {
     if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
@@ -236,12 +441,120 @@ void        _fCTRL_RELAY_WARM (sData *strRecei, uint16_t Pos)
     {
         if(sElectric.PowerPresent != POWER_OFF)
         {
-            OnRelay_Warm(TIME_RL_WARM_2);
+            OnRelay_Warm(sTimeCycleWarm.Run);
             fevent_active(sEventAppRelay,_EVENT_RELAY_WARM_ON);
         }
     }
 }
 
+
+void        _fGET_TIME_WARM_RUN (sData *strRecei, uint16_t Pos)
+{
+    char cData[5]={0};
+    uint8_t length = 0;
+ 
+    length = Convert_Int_To_String_Scale(cData, (int)sTimeCycleWarm.Run , 0x00);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time Warm Run: ", sizeof("Time Warm Run: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+}
+
+void        _fSET_TIME_WARM_RUN (sData *strRecei, uint16_t Pos)
+{
+    uint8_t temp = 0;
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+        uint8_t length = 0;
+        for(uint8_t i = 0; i < strRecei->Length_u16; i++)
+        {
+            if( strRecei->Data_a8[i] < '0' || strRecei->Data_a8[i]>'9') break;
+            else length++;
+        }
+        temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
+        Setup_TimeCycle_Relay_Warm(temp, sTimeCycleWarm.Wait);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
+
+void        _fGET_TIME_WARM_WAIT (sData *strRecei, uint16_t Pos)
+{
+    char cData[5]={0};
+    uint8_t length = 0;
+ 
+    length = Convert_Int_To_String_Scale(cData, (int)sTimeCycleWarm.Wait , 0x00);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time Warm Wait: ", sizeof("Time Warm Wait: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+}
+
+void        _fSET_TIME_WARM_WAIT (sData *strRecei, uint16_t Pos)
+{
+    uint8_t temp = 0;
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+        uint8_t length = 0;
+        for(uint8_t i = 0; i < strRecei->Length_u16; i++)
+        {
+            if( strRecei->Data_a8[i] < '0' || strRecei->Data_a8[i]>'9') break;
+            else length++;
+        }
+        temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
+        Setup_TimeCycle_Relay_Warm(sTimeCycleWarm.Run, temp);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
+
+void        _fGET_USING_CRC (sData *strRecei, uint16_t Pos)
+{
+    if(sParamPcBox.UsingCrc == _USING_CRC)
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox Using CRC", sizeof("PcBox Using CRC"));
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox NO CRC", sizeof("PcBox NO CRC"));
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    }
+}
+
+void        _fSET_USING_CRC (sData *strRecei, uint16_t Pos)
+{
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+      if(strRecei->Data_a8[0] == '0')
+      {
+        sParamPcBox.UsingCrc = _UNUSING_CRC;
+      }
+      else if(strRecei->Data_a8[0] == '1')
+      {
+        sParamPcBox.UsingCrc = _USING_CRC;
+      }
+      Write_Flash_Using_Crc();
+    
+      UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+      UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+    else
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"ERROR", 5);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
+}
 /*================== Function Handle ====================*/
 uint8_t Check_AT_User(sData *StrUartRecei, uint8_t Type)
 {

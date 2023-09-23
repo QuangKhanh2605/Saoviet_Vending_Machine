@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.general.xcl" --backend -f "D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.general.xcl" --backend -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.general.xcl" --debug_file=$debugfile --backend -f "D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.general.xcl" --debug_file=$debugfile --backend -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\settings\Saoviet_Maybanhang_Board_2.Saoviet_Maybanhang_Board_2.driver.xcl" 
 }

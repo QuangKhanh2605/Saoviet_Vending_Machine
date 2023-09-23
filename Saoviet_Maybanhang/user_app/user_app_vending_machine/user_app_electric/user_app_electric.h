@@ -10,6 +10,7 @@
 #include "user_uart.h"
 
 #define TIME_SEND_METER     60000
+#define TIME_INIT_UART      15*60000
 
 #define NUMBER_POWER_ON_OFF    3   //So lan dem xac nhan loi power
 
@@ -22,8 +23,9 @@ typedef enum
     _EVENT_ELECTRIC_RECEIVE_485,
     _EVENT_ELECTRIC_HANDLE_485,
     _EVENT_ELECTRIC_SEND_METER,
-    _EVENT_ELECTRIC_OFF_POWER,
+    _EVENT_ELECTRIC_CHANGE_STATUS_POWER,
     _EVENT_ELECTRIC_HANDLE_POWER,
+    _EVENT_ELECTRIC_INIT_UART,
     
     _EVENT_ELECTRIC_END,
 }eKindEventElectric;

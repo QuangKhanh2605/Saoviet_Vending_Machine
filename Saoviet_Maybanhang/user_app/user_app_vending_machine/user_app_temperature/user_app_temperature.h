@@ -10,6 +10,7 @@
 #include "string.h"
 
 #define ADC_TEMPERATURE     hadc1
+#define TIME_ERROR_TEMP     60000
 
 #if defined (STM32F405xx) 
     #define VREFINT_CAL         ((uint16_t*) ((uint32_t)  0x1FFF7A2A))  
@@ -17,13 +18,6 @@
 
 #define VDDA_VREFINT_CAL        ((uint32_t) 3300)  
 #define NUM_SAMPLING_ADC        100
-
-#define DEFAULT_SETUP_TEMP      50
-#define DEFAULT_THRESH_TEMP     25
-
-#define TIME_OFF_FROZEN         5*TIME_ONE_MINUTES
-
-#define TIME_GET_TEMP           30000
 
 typedef enum
 {
@@ -37,6 +31,7 @@ typedef enum
     _EVENT_TEMP_CTRL_FRIDGE,
     _EVENT_TEMP_TIME_GET,
     _EVENT_TEMP_OFF_FRIGE_FROZEN,
+    _EVENT_TEMP_RESPOND_ERROR,
     
     _EVENT_TEMPERATURE_END,
 }eKindEventTemperature;
@@ -62,7 +57,8 @@ extern  Struct_Control_Fridge   sTemp_Crtl_Fridge;
 uint8_t     AppTemperature_Task(void);
 void        ADC_Init(void);
 void        AppTemperature_Debug(void);
-void        Threshold_Respond_Pc_Box_Setup(void);
+void        SetupTemp_Respond_Pc_Box_Setup(void);
 void        Set_Threshold_Temperature(int16_t temp, uint8_t scale);
+uint8_t     Respond_Error_Temp(uint8_t *aData);
 #endif
 

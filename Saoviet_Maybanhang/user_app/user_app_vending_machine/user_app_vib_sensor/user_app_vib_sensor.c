@@ -29,8 +29,13 @@ static uint8_t fevent_vib_sensor_entry(uint8_t event)
     fevent_active(sEventAppVibSensor, _EVENT_VIB_SENSOR);
     return 1;
 }
+
 static uint8_t fevent_vib_sensor_scan(uint8_t event)
 {
+  /*
+    Quet de xac nhan muc do rung cua sensor 
+    va chon muc rung lon nhat
+  */
     if(sStatusVib_Scan.Sensor1 > sStatusVib.Sensor1)
     {
         sStatusVib.Sensor1 = sStatusVib_Scan.Sensor1;
@@ -56,18 +61,19 @@ static uint8_t fevent_vib_sensor_scan(uint8_t event)
 
 static uint8_t fevent_vib_sensor(uint8_t event)
 {
+/*---------------Kiem tra tung sensor vib va muc do rung--------------*/
     static uint32_t GetTickLevelAlarm = 0;
-    if(sStatusVib.Sensor1 > 0)
+    if(sStatusVib.Sensor1 > 0)  
     {
         sStatusVib.LevelWarning++;
     }
     
-    if(sStatusVib.Sensor2 > 80)
+    if(sStatusVib.Sensor2 > 60)
     {
         sStatusVib.LevelWarning++;
     }
     
-    if(sStatusVib.Sensor3 > 160)
+    if(sStatusVib.Sensor3 > 60)
     {
         sStatusVib.LevelWarning++;
     }
@@ -116,12 +122,14 @@ static uint8_t fevent_vib_sensor(uint8_t event)
 
 static uint8_t fevent_vib_off_alarm(uint8_t event)
 {
+/*------------------Tat relay canh bao--------------*/
     ControlRelay(RELAY_ALARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
     return 1;
 }
 
 static uint8_t fevent_vib_led_warning(uint8_t event)
 {
+/*-----------Canh bao rung nhap nhay led-----------*/
     static uint8_t Count_Toggle = 0;
     static uint8_t Count_Morse  = 0;
     
@@ -172,6 +180,10 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
     return 1;
 }
 /*============== Function Handle ==============*/
+
+/*
+    @brief  Phan hoi canh bao rung len PcBox
+*/
 uint8_t Log_Data_Vib(uint8_t *aData)
 {
     uint8_t length = 0;
@@ -192,6 +204,9 @@ uint8_t Log_Data_Vib(uint8_t *aData)
     return length;
 }
 
+/*
+    @brief  Debug
+*/
 void AppVibSensor_Debug(void)
 {
 #ifdef USING_APP_VIB_SENSOR_DEBUG

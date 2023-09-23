@@ -18,7 +18,7 @@ sEvent_struct         sEventAppMotor[] =
   { _EVENT_INPUT_MOTOR_PUSH,          0, 0, 5,                          fevent_input_motor_push},
   { _EVENT_MOTOR_PUSH_OFF_ERROR,      0, 0, TIME_MOTOR_PUSH_LATE,       fevent_motor_push_off_error},
   { _EVENT_RESPOND_PCBOX,             0, 0, TIME_MOTOR_RESPOND_PC_BOX,  fevent_respond_pcbox},
-};  
+};
 
 static GPIO_TypeDef*  LAYER_PORT[7] = {Layer_1_GPIO_Port, Layer_2_GPIO_Port, Layer_3_GPIO_Port,
                                        Layer_4_GPIO_Port, Layer_5_GPIO_Port, Layer_6_GPIO_Port,
@@ -39,16 +39,16 @@ struct_InforMotor           sInforPush = {0};
 /*================ Function Handler =================*/
 static uint8_t fevent_motor_entry(uint8_t event)
 {   
-    if(sPushMotor.Pos > 0 && sPushMotor.Pos <= NUMBER_MAX_MOTOR)
-    {
-        sInforPush.NumEarly = 0;
-        sInforPush.NumLate  = 0;
-        sInforPush.IrSensor = 0;
-        
-        sPushMotor.NumHandle = 0;
-        fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
-        sPushMotor.StatePush = ON_GOING_PUSH;
-    }
+    //Thuc hien reset thong so truoc khi push motor
+    sInforPush.NumEarly = 0;
+    sInforPush.NumLate  = 0;
+    sInforPush.IrSensor = 0;
+    
+    sPushMotor.NumHandle = 0;
+    
+    fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
+    sPushMotor.StatePush = ON_GOING_PUSH;
+    
     return 1;
 }
 
@@ -70,11 +70,11 @@ static uint8_t fevent_control_motor_push(uint8_t event)
 
 static uint8_t fevent_input_motor_push(uint8_t event)
 {
-    if(sPushMotor.PulseCount == 3)
+    if(sPushMotor.PulseCount == 3)  //Ket thuc sau khi nhan duoc 3 xung (Hoan thanh 1 vong motor)
     {
-        if(HAL_GetTick() - sEventAppMotor[_EVENT_MOTOR_PUSH_OFF_ERROR].e_systick < TIME_MOTOR_PUSH_EARLY)
+        if(HAL_GetTick() - sEventAppMotor[_EVENT_MOTOR_PUSH_OFF_ERROR].e_systick < TIME_MOTOR_PUSH_EARLY)   
         {
-            sInforPush.NumEarly++;
+            sInforPush.NumEarly++;  //Loi ket thuc som thoi gian cho truoc
             sPushMotor.PulseCount = 2;
         }
         else
@@ -94,24 +94,25 @@ static uint8_t fevent_motor_push_off_error(uint8_t event)
 {
     Off_Motor_Push();
     sPushMotor.PulseCount = 0;
-    sInforPush.NumLate++;
+    sInforPush.NumLate++;   //Loi ket thuc muon thoi gian cho truoc
     
     return 1;
 }
 
 static uint8_t fevent_respond_pcbox(uint8_t event)
 {
+/*-------------------Respond PcBox------------------*/
     uint8_t aData[10];
     uint8_t length = 0;
     uint16_t TempCrc = 0;
-  
-    if(sPushMotor.State == PUSH_MOTOR)
+    
+    if(sPushMotor.State == PUSH_MOTOR)  //Xac nhan trang thai push hoac fix motor
     {
         sInforPush.IrSensor += sPushMotor.IrSensor;
 
         
-    /*=============== Log ===============*/
-        if(sPushMotor.NumHandle < sPushMotor.SumHandle)
+        /*=============== Log ===============*/
+        if(sPushMotor.NumHandle < sPushMotor.SumHandle) //Xac nhan dang push hoac da hoan thanh
         {
             aData[length++] = OBIS_ON_GOING_PUSH;
             aData[length++] = 0x04;
@@ -152,6 +153,58 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
 }
 
 /*================ Function Handle =================*/
+/*
+    @brief  Fix motor
+    @param  Pos: Vi tri can Fix
+*/
+void Fix_Motor(uint8_t Pos)
+{
+    if(Pos > 0 && Pos <= NUMBER_MAX_MOTOR)
+    {
+        if(sPushMotor.StatePush == COMPLETE_PUSH)
+        {
+            sStatusApp.Motor      = BUSY;
+              
+            sPushMotor.State      = FIX_MOTOR;
+            sPushMotor.StatePush  = ON_GOING_PUSH;
+            sPushMotor.Pos        = Pos;
+            sPushMotor.SumHandle  = 1;
+            sPushMotor.PulseCount = 1;
+            fevent_active(sEventAppMotor, _EVENT_MOTOR_ENTRY);
+        } 
+    }
+}
+
+/*
+    @brief  Push motor
+    @param  Pos: Vi tri Push
+    @param  Number: So luong Push
+*/
+void Push_Motor(uint8_t Pos, uint8_t Number)
+{
+    if(Pos > 0 && Pos <= NUMBER_MAX_MOTOR)
+    {
+        if(Number > 0 && Number <= NUMBER_MAX_PUSH)
+        {
+            if(sPushMotor.StatePush == COMPLETE_PUSH)
+            {
+                sStatusApp.Motor      = BUSY;
+                
+                sPushMotor.State      = PUSH_MOTOR;
+                sPushMotor.StatePush  = ON_GOING_PUSH;
+                sPushMotor.Pos        = Pos;
+                sPushMotor.SumHandle  = Number;
+                sPushMotor.PulseCount = 0;
+                fevent_active(sEventAppMotor, _EVENT_MOTOR_ENTRY);
+            } 
+        }
+    }
+}
+
+/*
+	@brief  ON motor tai vi tri Pos
+	@param  Pos vi tri motor muon chay
+*/
 void On_Motor_Push(uint8_t Pos)
 {
     uint8_t Pos_Push = 0;
@@ -161,6 +214,9 @@ void On_Motor_Push(uint8_t Pos)
     HAL_GPIO_WritePin(SLOT_PORT[Pos_Push%10], SLOT_PIN[Pos_Push%10], GPIO_PIN_SET);
 }
 
+/*
+    @brief  OFF toan bo motor
+*/
 void Off_Motor_Push(void)
 {
     uint8_t i = 0;
@@ -174,6 +230,10 @@ void Off_Motor_Push(void)
     }
 }
 
+
+/*
+    @brief  Debug trang thai push
+*/
 void AppMotor_Debug(void)
 {
 #ifdef USING_APP_CTRL_MOTOR_DEBUG

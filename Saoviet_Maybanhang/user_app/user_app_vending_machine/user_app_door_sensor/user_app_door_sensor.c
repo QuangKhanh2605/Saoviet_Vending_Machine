@@ -29,7 +29,8 @@ static uint8_t fevent_door_entry(uint8_t event)
 
 static uint8_t fevent_door_sensor(uint8_t event)
 { 
-    if(HAL_GPIO_ReadPin(Door_Sensor_1_GPIO_Port, Door_Sensor_1_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT)
+/*---------------------Kiem tra trang thai Door-------------------*/
+    if(HAL_GPIO_ReadPin(Door_Sensor_1_GPIO_Port, Door_Sensor_1_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT_1)
     {
         sStatusDoor.Sensor1 = DOOR_OPEN;
     }
@@ -38,7 +39,7 @@ static uint8_t fevent_door_sensor(uint8_t event)
         sStatusDoor.Sensor1 = DOOR_CLOSE;
     }
     
-    if(HAL_GPIO_ReadPin(Door_Sensor_2_GPIO_Port, Door_Sensor_2_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT)
+    if(HAL_GPIO_ReadPin(Door_Sensor_2_GPIO_Port, Door_Sensor_2_Pin) == INIT_STATUS_DOOR_SENSOR_INPUT_2)
     {
         sStatusDoor.Sensor2 = DOOR_OPEN;
     }
@@ -46,7 +47,7 @@ static uint8_t fevent_door_sensor(uint8_t event)
     {
         sStatusDoor.Sensor2 = DOOR_CLOSE;
     }
-
+/*---------------------------------------------------------------------*/
     fevent_active(sEventAppDoorSensor, _EVENT_DOOR_CTRL_RESPOND);
     fevent_enable(sEventAppDoorSensor, event);
     
@@ -55,6 +56,7 @@ static uint8_t fevent_door_sensor(uint8_t event)
 
 static uint8_t fevent_door_ctrl_respond(uint8_t event)
 {
+/*----------------------Kiem tra trang thai 2 Door de canh bao---------------------*/
     static uint8_t status_before = DOOR1_CLOSE_DOOR2_CLOSE;
     static uint8_t status = DOOR1_CLOSE_DOOR2_CLOSE;
     static uint8_t On_RL_Warm = 0;
@@ -94,7 +96,7 @@ static uint8_t fevent_door_ctrl_respond(uint8_t event)
         {
             On_RL_Warm = 0;
             if(sElectric.PowerPresent != POWER_OFF)
-            OnRelay_Warm(TIME_RL_WARM_2);
+            OnRelay_Warm(sTimeCycleWarm.Run);
         }
     }
         
@@ -104,6 +106,7 @@ static uint8_t fevent_door_ctrl_respond(uint8_t event)
 
 static uint8_t fevent_door_respond_pc_box(uint8_t event)
 {
+/*--------------Phan hoi canh bao len PcBox-------------*/
     if(sStatusDoor.Sensor1 == DOOR_OPEN || sStatusDoor.Sensor2 == DOOR_OPEN || sStatusDoor.Handle_Respond == 1)
     {
         sStatusDoor.Handle_Respond = 0;
@@ -121,6 +124,9 @@ static uint8_t fevent_door_respond_pc_box(uint8_t event)
 }
 
 /*============= Function Handle ===========*/
+/*
+    @brief  Log trang thai canh bao mo cua
+*/
 uint8_t Log_Data_Door(uint8_t *aData)
 {
     uint8_t length = 0;
@@ -143,10 +149,15 @@ uint8_t Log_Data_Door(uint8_t *aData)
 }
 
 /*============== Function Handle ==============*/
+
+/*
+    @brief  Debug trang thai canh bao cua
+*/
 void AppDoorSensor_Debug(void)
 {
 #ifdef USING_APP_DOOR_SENSOR_DEBUG
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_door_sensor: Door1: ", sizeof("app_door_sensor: Door1: "));
+    
     if(sStatusDoor.Sensor1 == 1)
     {
         UTIL_Printf(DBLEVEL_M, (uint8_t*)"OPEN", sizeof("OPEN"));
@@ -165,9 +176,11 @@ void AppDoorSensor_Debug(void)
     {
         UTIL_Printf(DBLEVEL_M, (uint8_t*)"CLOSE", sizeof("CLOSE"));
     }
+    
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
 #endif
 }
+
 uint8_t AppDoorSensor_Task(void)
 {
     uint8_t i = 0;

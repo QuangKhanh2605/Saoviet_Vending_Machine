@@ -8,6 +8,7 @@
 #include "event_driven.h"
 #include "user_util.h"
 #include "user_uart.h"
+#include "user_comm_vending_machine.h"
 
 typedef enum
 {
@@ -45,25 +46,46 @@ typedef enum
     _TRANS_PCBOX,
 }eKindTranRecvPcBox;
 
+typedef enum
+{
+    _DISCONNECT_PCBOX = 0,
+    _CONNECT_PCBOX,
+}eKindStatusPcBox;
+
+typedef enum
+{
+    _UNUSING_CRC,
+    _USING_CRC,
+}eKindStatusCrcPcBox;
+
 typedef struct
 {
     uint8_t Motor;
     uint8_t Door;
     uint8_t Temperature;
-    uint8_t Electric;
     uint8_t RL_Warm;
     uint8_t Pcbox;
 }StructStatusApp;
 
+typedef struct
+{
+    uint8_t CountResetPcBox;    //Dem so lan mat ket noi reset PcBox
+    uint8_t TimeResetPcBox;     //Thoi gian de PcBox Reset (Phut)
+    uint8_t TimeTSVH;           //Thoi gian gui thong so van hanh (Phut)
+    uint8_t ConnectPcBox;
+    uint8_t UsingCrc;
+}StructParamPcBox;
+
 typedef struct 
 {
-    uint8_t aData_u8[30];
+    uint8_t aData_u8[NUMBER_MAX_BUFFER];
     uint8_t Length;
 }sDataQueueRespondPcBox;
 
 extern sEvent_struct  sEventAppPcBox[];
 extern sData   sDCU_ID;
 extern StructStatusApp  sStatusApp;
+extern StructParamPcBox  sParamPcBox;
 /*================ Function ===================*/
 
 uint8_t     AppPcBox_Task(void);
@@ -73,4 +95,11 @@ uint8_t     Log_TSVH(uint8_t *aData);
 void        AppPcBox_Debug(uint8_t aData[], uint8_t length, uint8_t TransRecv);
 void        Write_Queue_Repond_PcBox(uint8_t aData[], uint8_t Length);
 void        Transmit_PCBOX(uint8_t aData[],uint8_t length);
+
+void        Set_TimeTSVH(uint8_t Time);
+void        Set_TimeResetPcBox(uint8_t Time);
+void        Init_PcBox(void);
+
+void        Write_Flash_Using_Crc(void);
+void        Init_Using_Crc();
 #endif

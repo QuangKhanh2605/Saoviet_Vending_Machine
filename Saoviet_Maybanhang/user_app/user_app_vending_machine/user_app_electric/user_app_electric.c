@@ -11,21 +11,24 @@ static uint8_t fevent_electric_transmit_485(uint8_t event);
 static uint8_t fevent_electric_receive_485(uint8_t event);
 static uint8_t fevent_electric_handle_485(uint8_t event);
 static uint8_t fevent_electric_send_meter(uint8_t event);
-static uint8_t fevent_electric_off_power(uint8_t event);
+static uint8_t fevent_electric_change_status_power(uint8_t event);
 static uint8_t fevent_electric_handle_power(uint8_t event);
+static uint8_t fevent_electric_init_uart(uint8_t event);
 /*============== Struct ===================*/
 sEvent_struct               sEventAppElectric[] = 
 {
-  {_EVENT_ELECTRIC_ENTRY,           1, 5, TIME_ON_DCU,      fevent_electric_entry},
-  {_EVENT_ELECTRIC_TRANSMIT_485,    1, 5, 1000,             fevent_electric_transmit_485},
-  {_EVENT_ELECTRIC_RECEIVE_485,     0, 0, 5,                fevent_electric_receive_485},
-  {_EVENT_ELECTRIC_HANDLE_485,      0, 0, 500,              fevent_electric_handle_485},
+  {_EVENT_ELECTRIC_ENTRY,               1, 5, TIME_ON_DCU,      fevent_electric_entry},
+  {_EVENT_ELECTRIC_TRANSMIT_485,        1, 5, 1000,             fevent_electric_transmit_485},
+  {_EVENT_ELECTRIC_RECEIVE_485,         0, 0, 5,                fevent_electric_receive_485},
+  {_EVENT_ELECTRIC_HANDLE_485,          0, 0, 500,              fevent_electric_handle_485},
   
-  {_EVENT_ELECTRIC_SEND_METER,      1, 5, 10000,  fevent_electric_send_meter}, //TIME_SEND_METER
+  {_EVENT_ELECTRIC_SEND_METER,          1, 5, TIME_SEND_METER,  fevent_electric_send_meter}, //Debug
   
-  {_EVENT_ELECTRIC_OFF_POWER,       0, 5, 3000,             fevent_electric_off_power},
+  {_EVENT_ELECTRIC_CHANGE_STATUS_POWER, 0, 5, 3000,             fevent_electric_change_status_power},
   
-  {_EVENT_ELECTRIC_HANDLE_POWER,    0, 5, 0,                fevent_electric_handle_power},
+  {_EVENT_ELECTRIC_HANDLE_POWER,        0, 5, 0,                fevent_electric_handle_power},
+  
+  {_EVENT_ELECTRIC_INIT_UART,           1, 5, TIME_INIT_UART,   fevent_electric_init_uart},
 };
 
 Struct_Electric_Current         sElectric=
@@ -43,12 +46,13 @@ Struct_Electric_Current         sElectric=
 static uint8_t fevent_electric_entry(uint8_t event)
 {
     fevent_active(sEventAppElectric, _EVENT_ELECTRIC_TRANSMIT_485);
-    fevent_enable(sEventAppElectric, _EVENT_ELECTRIC_OFF_POWER);
+    fevent_enable(sEventAppElectric, _EVENT_ELECTRIC_CHANGE_STATUS_POWER);
     return 1;
 }
 
 static uint8_t fevent_electric_transmit_485(uint8_t event)
 {
+/*--------------------Hoi du lieu tu Slave-------------------*/
     uint8_t Frame[8];
     sData sFrame = {&Frame[0], 0};
     
@@ -70,6 +74,7 @@ static uint8_t fevent_electric_transmit_485(uint8_t event)
 
 static uint8_t fevent_electric_receive_485(uint8_t event)
 {
+/*-----------------Kiem tra da nhan xong tu 485------------*/
     static uint16_t countBuffer_uart = 0;
 
     if(sUart485.Length_u16 != 0)
@@ -92,6 +97,7 @@ static uint8_t fevent_electric_receive_485(uint8_t event)
 
 static uint8_t fevent_electric_handle_485(uint8_t event)
 {
+/*------------------Xu ly chuoi nhan duoc----------------*/
     static uint8_t CountStatePower   = 0;
     static uint8_t CountStateConnect = 0;
   
@@ -103,6 +109,7 @@ static uint8_t fevent_electric_handle_485(uint8_t event)
     Crc_Check = ModRTU_CRC(sUart485.Data_a8, sUart485.Length_u16 - 2);
     if(Crc_Check == Crc_Recv)
     {
+        fevent_enable(sEventAppElectric, _EVENT_ELECTRIC_INIT_UART);
         if(sUart485.Data_a8[0] == sElectric.ID && sUart485.Data_a8[1] == 0x03)
         {
             sElectric.Voltage = sUart485.Data_a8[3]<<8 | sUart485.Data_a8[4];
@@ -173,8 +180,17 @@ static uint8_t fevent_electric_handle_485(uint8_t event)
     return 1;
 }
 
-static uint8_t fevent_electric_off_power(uint8_t event)
+static uint8_t fevent_electric_send_meter(uint8_t event)
 {
+/*-------------Gui debug------------*/
+    AppElectric_Debug();
+    fevent_enable(sEventAppElectric, event);
+    return 1;
+}
+
+static uint8_t fevent_electric_change_status_power(uint8_t event)
+{
+/*------------------Kiem tra thay doi trang thai nguon---------------*/
     if(sElectric.PowerPresent != sElectric.PowerBefore)
     {
         uint8_t aData[5]={0};
@@ -208,6 +224,7 @@ static uint8_t fevent_electric_off_power(uint8_t event)
 
 static uint8_t fevent_electric_handle_power(uint8_t event)
 {
+/*-------------------Xu ly truong hop mat va co dien--------------*/
     if(sElectric.PowerPresent == POWER_OFF)
     {
         if(sStatusRelay.Lamp == ON_RELAY)
@@ -231,14 +248,17 @@ static uint8_t fevent_electric_handle_power(uint8_t event)
     return 1;
 }
 
-static uint8_t fevent_electric_send_meter(uint8_t event)
+static uint8_t fevent_electric_init_uart(uint8_t event)
 {
-    AppElectric_Debug();
-    fevent_enable(sEventAppElectric, event);
+    MX_UART4_Init();
+    Init_Uart_485_Rx_IT();
     return 1;
 }
 
 /*=================== Function Handle =====================*/
+/*
+    @brief  Gui trang thai canh bao nguon len PcBox
+*/
 uint8_t  Status_Power_Respond_PcBox(uint8_t aData[])
 {
     uint8_t length = 0;
@@ -255,13 +275,16 @@ uint8_t  Status_Power_Respond_PcBox(uint8_t aData[])
     return length;
 }
 
+/*
+    @brief  Dong goi lenh gui Slave
+*/
 void Send_Command_IVT (uint8_t SlaveID, uint8_t Func_Code, uint16_t Addr_Register, uint16_t Infor_Register, void (*pFuncResetRecvData) (void)) 
-{
+{   
     uint8_t aFrame[48] = {0};
     sData   strFrame = {(uint8_t *) &aFrame[0], 0};
     
     ModRTU_Master_Read_Frame(&strFrame, SlaveID, Func_Code, Addr_Register, Infor_Register);
-
+    
     HAL_GPIO_WritePin(NET485IO_GPIO_Port, NET485IO_Pin, GPIO_PIN_SET);  
     HAL_Delay(10);
     // Send
@@ -278,49 +301,59 @@ void AppIVT_Clear_Before_Recv (void)
     Reset_Buff(&sUart485);
 }
 
+/*
+    @brief  Luu trang thai nguon vao Flash
+*/
 void Write_Status_Electric_ExFlash(void)
 {
-    uint8_t aWrite[3]={0};
+    uint8_t aWrite[2]={0};
     aWrite[0] = DEFAULT_READ_EXFLASH;
-    aWrite[1] = 0x01;
-    aWrite[2] = sElectric.PowerPresent;
+    aWrite[1] = sElectric.PowerPresent;
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_STATUS_ELECTRIC);
     HAL_Delay(1);
-    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_STATUS_ELECTRIC, 3);
+    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_STATUS_ELECTRIC, 2);
 }
 
+/*
+    @brief  Doc trang thai nguon tu Flash
+*/
 void Read_Status_Electric_ExFlash(void)
 {
-    uint8_t aRead[3] = {0};
-    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_ELECTRIC, 3);
-    if(aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == 0x01)
+    uint8_t aRead[2] = {0};
+    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_ELECTRIC, 2);
+    if(aRead[0] == DEFAULT_READ_EXFLASH)
     {
-        if(aRead[2] <= POWER_ERROR) 
+        if(aRead[1] <= POWER_ERROR) 
         {
-          sElectric.PowerPresent  = aRead[2];
-          sElectric.PowerBefore   = aRead[2];
+          sElectric.PowerPresent  = aRead[1];
+          sElectric.PowerBefore   = aRead[1];
         }
     }
 }
 
+/*
+    @brief  Viet Id Slave vao Flash
+*/
 void Write_IdSlave_Electric_ExFlash(void)
 {
-    uint8_t aWrite[3]={0};
+    uint8_t aWrite[2]={0};
     aWrite[0] = DEFAULT_READ_EXFLASH;
-    aWrite[1] = 0x01;
-    aWrite[2] = sElectric.ID;
+    aWrite[1] = sElectric.ID;
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_IDSLAVE_ELECTRIC);
     HAL_Delay(1);
-    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_IDSLAVE_ELECTRIC, 3);
+    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_IDSLAVE_ELECTRIC, 2);
 }
 
+/*
+    @brief  Doc ID slave tu Flash
+*/
 void Read_IdSlave_Electric_ExFlash(void)
 {
-    uint8_t aRead[3] = {0};
-    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_IDSLAVE_ELECTRIC, 3);
-    if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == 0x01)
+    uint8_t aRead[2] = {0};
+    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_IDSLAVE_ELECTRIC, 2);
+    if( aRead[0] == DEFAULT_READ_EXFLASH )
     {
-        sElectric.ID  = aRead[2];
+        sElectric.ID  = aRead[1];
     }
 }
 
@@ -330,6 +363,9 @@ void Init_AppElectric(void)
     Read_Status_Electric_ExFlash();
 }
 
+/*
+    @brief Debug app Electric
+*/
 void AppElectric_Debug(void)
 {
 #ifdef USING_APP_ELECTRIC_DEBUG
