@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.2.214/W32 for ARM                  21/Sep/2023  13:41:23
+# IAR ELF Linker V8.40.2.214/W32 for ARM                  25/Sep/2023  15:36:01
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =
@@ -8,7 +8,7 @@
 #    Map file     =
 #        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\List\Saoviet_Maybanhang_Board_2.map
 #    Command line =
-#        -f C:\Users\PC\AppData\Local\Temp\EW6E27.tmp
+#        -f C:\Users\PC\AppData\Local\Temp\EWAEAB.tmp
 #        (D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\Obj\ade7953.o
 #        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\Obj\event_driven.o
 #        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\Obj\gpio.o

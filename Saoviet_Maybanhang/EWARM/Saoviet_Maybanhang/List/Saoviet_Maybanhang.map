@@ -1,73 +1,73 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.2.214/W32 for ARM                  23/Sep/2023  11:26:50
+# IAR ELF Linker V8.40.2.214/W32 for ARM                  26/Sep/2023  08:52:01
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
 #    Map file     =
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
 #    Command line =
-#        -f C:\Users\PC\AppData\Local\Temp\EW426.tmp
-#        (D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\adc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\dma.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\event_driven.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\gpio.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\main.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\onchipflash.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\queue_p.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\S25FL216K.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\spi.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\startup_stm32f405xx.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_it.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\system_stm32f4xx.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\usart.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_at_debug.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_comm.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_door_sensor.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_electric.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_pc_box.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_relay.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_temperature.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_vib_sensor.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_at_serial.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_comm_vending_machine.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_external_flash.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_internal_mem.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_irq_input.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_modbus_rtu.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_string.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_uart.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_util.o
+#        -f C:\Users\PC\AppData\Local\Temp\EWDA5A.tmp
+#        (D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\adc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\dma.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\event_driven.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\gpio.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\main.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\onchipflash.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\queue_p.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\S25FL216K.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\spi.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\startup_stm32f405xx.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_it.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\system_stm32f4xx.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\usart.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_at_debug.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_comm.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_door_sensor.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_electric.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_pc_box.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_relay.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_temperature.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_vib_sensor.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_at_serial.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_comm_vending_machine.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_external_flash.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_internal_mem.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_irq_input.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_modbus_rtu.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_string.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_uart.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_util.o
 #        --no_out_extension -o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
 #        --redirect _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb
 #        --map
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
 #        --config
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM/stm32f405xx_flash.icf
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM/stm32f405xx_flash.icf
 #        --semihosting --entry __iar_program_start --vfe --text_out locale)
 #
 ###############################################################################
@@ -109,7 +109,7 @@ initialize by copy { rw };
   .intvec            ro code   0x800'0000   0x188  startup_stm32f405xx.o [1]
                              - 0x800'0188   0x188
 
-"P1":                                      0x61c2
+"P1":                                      0x620a
   .text              ro code   0x800'0188   0xbd4  user_app_pc_box.o [1]
   .text              ro code   0x800'0d5c    0xe8  user_util.o [1]
   .text              ro code   0x800'0e44    0x30  event_driven.o [1]
@@ -156,74 +156,56 @@ initialize by copy { rw };
   .text              ro code   0x800'4358   0x544  user_app_electric.o [1]
   .text              ro code   0x800'489c    0xb4  user_app_at_debug.o [1]
   .text              ro code   0x800'4950   0x218  user_app_door_sensor.o [1]
-  .text              ro code   0x800'4b68   0x530  user_app_temperature.o [1]
-  .text              ro code   0x800'5098   0x248  user_app_vib_sensor.o [1]
-  .text              ro code   0x800'52e0     0x2  stm32f4xx_hal_adc.o [1]
-  .text              ro code   0x800'52e2     0x2  stm32f4xx_hal_adc.o [1]
-  .text              ro code   0x800'52e4     0x2  stm32f4xx_hal_adc.o [1]
-  .text              ro code   0x800'52e6    0x6c  user_modbus_rtu.o [1]
-  .text              ro code   0x800'5354   0x62c  user_at_serial.o [1]
-  .text              ro code   0x800'5980   0x136  user_string.o [1]
-  .rodata            const     0x800'5ab8   0x1a0  user_at_serial.o [1]
-  .text              ro code   0x800'5c58    0x7c  stm32f4xx_it.o [1]
-  .text              ro code   0x800'5cd4    0x10  stm32f4xx_hal.o [1]
-  .text              ro code   0x800'5ce4    0x78  lz77_init_single.o [4]
-  .text              ro code   0x800'5d5c    0x28  data_init.o [4]
-  .text              ro code   0x800'5d84    0x22  fpinit_M.o [3]
-  .iar.init_table    const     0x800'5da8    0x20  - Linker created -
-  .text              ro code   0x800'5dc8    0x20  system_stm32f4xx.o [1]
-  .text              ro code   0x800'5de8    0x1e  cmain.o [4]
-  .text              ro code   0x800'5e06     0x4  low_level_init.o [2]
-  .text              ro code   0x800'5e0a     0x4  exit.o [2]
-  .text              ro code   0x800'5e10     0xa  cexit.o [4]
-  .text              ro code   0x800'5e1c    0x14  exit.o [5]
-  .rodata            const     0x800'5e30    0x14  user_at_serial.o [1]
-  .rodata            const     0x800'5e44    0x14  user_at_serial.o [1]
-  .rodata            const     0x800'5e58    0x14  user_at_serial.o [1]
-  .rodata            const     0x800'5e6c    0x14  user_at_serial.o [1]
-  .rodata            const     0x800'5e80    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5e90    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5ea0    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5eb0    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5ec0    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5ed0    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5ee0    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5ef0    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5f00    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5f10    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5f20    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5f30    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5f40    0x10  user_at_serial.o [1]
-  .rodata            const     0x800'5f50    0x10  user_at_serial.o [1]
-  .text              ro code   0x800'5f60    0x10  startup_stm32f405xx.o [1]
-  .rodata            const     0x800'5f70     0xc  user_at_serial.o [1]
-  .rodata            const     0x800'5f7c     0xc  user_at_serial.o [1]
-  .rodata            const     0x800'5f88     0xc  user_at_serial.o [1]
-  .rodata            const     0x800'5f94     0xc  user_at_serial.o [1]
-  .rodata            const     0x800'5fa0     0xc  user_at_serial.o [1]
-  .rodata            const     0x800'5fac     0xc  user_at_serial.o [1]
+  .text              ro code   0x800'4b68   0x56c  user_app_temperature.o [1]
+  .text              ro code   0x800'50d4   0x248  user_app_vib_sensor.o [1]
+  .text              ro code   0x800'531c     0x2  stm32f4xx_hal_adc.o [1]
+  .text              ro code   0x800'531e     0x2  stm32f4xx_hal_adc.o [1]
+  .text              ro code   0x800'5320     0x2  stm32f4xx_hal_adc.o [1]
+  .text              ro code   0x800'5322    0x6c  user_modbus_rtu.o [1]
+  .text              ro code   0x800'5390   0x638  user_at_serial.o [1]
+  .text              ro code   0x800'59c8   0x136  user_string.o [1]
+  .rodata            const     0x800'5b00   0x1a0  user_at_serial.o [1]
+  .text              ro code   0x800'5ca0    0x7c  stm32f4xx_it.o [1]
+  .text              ro code   0x800'5d1c    0x10  stm32f4xx_hal.o [1]
+  .text              ro code   0x800'5d2c    0x78  lz77_init_single.o [4]
+  .text              ro code   0x800'5da4    0x28  data_init.o [4]
+  .text              ro code   0x800'5dcc    0x22  fpinit_M.o [3]
+  .iar.init_table    const     0x800'5df0    0x20  - Linker created -
+  .text              ro code   0x800'5e10    0x20  system_stm32f4xx.o [1]
+  .text              ro code   0x800'5e30    0x1e  cmain.o [4]
+  .text              ro code   0x800'5e4e     0x4  low_level_init.o [2]
+  .text              ro code   0x800'5e52     0x4  exit.o [2]
+  .text              ro code   0x800'5e58     0xa  cexit.o [4]
+  .text              ro code   0x800'5e64    0x14  exit.o [5]
+  .rodata            const     0x800'5e78    0x14  user_at_serial.o [1]
+  .rodata            const     0x800'5e8c    0x14  user_at_serial.o [1]
+  .rodata            const     0x800'5ea0    0x14  user_at_serial.o [1]
+  .rodata            const     0x800'5eb4    0x14  user_at_serial.o [1]
+  .rodata            const     0x800'5ec8    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5ed8    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5ee8    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5ef8    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f08    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f18    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f28    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f38    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f48    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f58    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f68    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f78    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f88    0x10  user_at_serial.o [1]
+  .rodata            const     0x800'5f98    0x10  user_at_serial.o [1]
+  .text              ro code   0x800'5fa8    0x10  startup_stm32f405xx.o [1]
   .rodata            const     0x800'5fb8     0xc  user_at_serial.o [1]
-  .text              ro code   0x800'5fc4     0xc  cstartup_M.o [4]
-  .rodata            const     0x800'5fd0     0x8  system_stm32f4xx.o [1]
-  .rodata            const     0x800'5fd8     0x8  user_at_serial.o [1]
-  .text              ro code   0x800'5fe0     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'5fe4     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'5fe8     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'5fec     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'5ff0     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'5ff4     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'5ff8     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'5ffc     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6000     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6004     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6008     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'600c     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6010     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6014     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6018     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'601c     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6020     0x4  startup_stm32f405xx.o [1]
-  .text              ro code   0x800'6024     0x4  startup_stm32f405xx.o [1]
+  .rodata            const     0x800'5fc4     0xc  user_at_serial.o [1]
+  .rodata            const     0x800'5fd0     0xc  user_at_serial.o [1]
+  .rodata            const     0x800'5fdc     0xc  user_at_serial.o [1]
+  .rodata            const     0x800'5fe8     0xc  user_at_serial.o [1]
+  .rodata            const     0x800'5ff4     0xc  user_at_serial.o [1]
+  .rodata            const     0x800'6000     0xc  user_at_serial.o [1]
+  .text              ro code   0x800'600c     0xc  cstartup_M.o [4]
+  .rodata            const     0x800'6018     0x8  system_stm32f4xx.o [1]
+  .rodata            const     0x800'6020     0x8  user_at_serial.o [1]
   .text              ro code   0x800'6028     0x4  startup_stm32f405xx.o [1]
   .text              ro code   0x800'602c     0x4  startup_stm32f405xx.o [1]
   .text              ro code   0x800'6030     0x4  startup_stm32f405xx.o [1]
@@ -275,10 +257,28 @@ initialize by copy { rw };
   .text              ro code   0x800'60e8     0x4  startup_stm32f405xx.o [1]
   .text              ro code   0x800'60ec     0x4  startup_stm32f405xx.o [1]
   .text              ro code   0x800'60f0     0x4  startup_stm32f405xx.o [1]
-  .rodata            const     0x800'60f4     0x0  zero_init3.o [4]
-  .rodata            const     0x800'60f4     0x0  lz77_init_single.o [4]
-  Initializer bytes  const     0x800'60f4   0x256  <for P2-1>
-                             - 0x800'634a  0x61c2
+  .text              ro code   0x800'60f4     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'60f8     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'60fc     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6100     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6104     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6108     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'610c     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6110     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6114     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6118     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'611c     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6120     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6124     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6128     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'612c     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6130     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6134     0x4  startup_stm32f405xx.o [1]
+  .text              ro code   0x800'6138     0x4  startup_stm32f405xx.o [1]
+  .rodata            const     0x800'613c     0x0  zero_init3.o [4]
+  .rodata            const     0x800'613c     0x0  lz77_init_single.o [4]
+  Initializer bytes  const     0x800'613c   0x256  <for P2-1>
+                             - 0x800'6392  0x620a
 
 "P2", part 1 of 3:                         0x1314
   P2-1                        0x2000'0000  0x1314  <Init block>
@@ -338,7 +338,7 @@ Unused ranges:
 
          From           To      Size
          ----           --      ----
-   0x800'634a   0x80f'ffff  0xf'9cb6
+   0x800'6392   0x80f'ffff  0xf'9c6e
   0x2000'1ae0  0x2001'ffff  0x1'e520
 
 
@@ -354,7 +354,7 @@ Zero (__iar_zero_init3)
 
 Copy/lz77 (__iar_lz77_init_single3)
     1 source range, total size 0x256 (12% of destination):
-           0x800'60f4   0x256
+           0x800'613c   0x256
     1 destination range, total size 0x1314:
           0x2000'0000  0x1314
 
@@ -370,7 +370,7 @@ command line/config:
     ------------------------------------------------------
     Total:
 
-D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj: [1]
+D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj: [1]
     S25FL216K.o                       64
     adc.o                            312               168
     dma.o                             52
@@ -399,9 +399,9 @@ D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanha
     user_app_electric.o            1'348       18      152
     user_app_pc_box.o              3'028      485    3'978
     user_app_relay.o               1'532       21      180
-    user_app_temperature.o         1'328       22      184
+    user_app_temperature.o         1'388       22      184
     user_app_vib_sensor.o            584       15      118
-    user_at_serial.o               1'580      812      128
+    user_at_serial.o               1'592      812      128
     user_comm_vending_machine.o      436
     user_external_flash.o            552
     user_irq_input.o                  80
@@ -410,7 +410,7 @@ D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanha
     user_uart.o                      216        3      281
     user_util.o                      232                 4
     ------------------------------------------------------
-    Total:                        23'210    1'418    5'851
+    Total:                        23'282    1'418    5'851
 
 dl7M_tlf.a: [2]
     exit.o                             4
@@ -449,7 +449,7 @@ shb_l.a: [5]
     Gaps                              20        4        5
     Linker created                             32    1'024
 ----------------------------------------------------------
-    Grand Total:                  23'964    1'454    6'880
+    Grand Total:                  24'036    1'454    6'880
 
 
 *******************************************************************************
@@ -458,17 +458,17 @@ shb_l.a: [5]
 
 Entry                       Address   Size  Type      Object
 -----                       -------   ----  ----      ------
-.iar.init_table$$Base    0x800'5da8          --   Gb  - Linker created -
-.iar.init_table$$Limit   0x800'5dc8          --   Gb  - Linker created -
-?main                    0x800'5de9         Code  Gb  cmain.o [4]
+.iar.init_table$$Base    0x800'5df0          --   Gb  - Linker created -
+.iar.init_table$$Limit   0x800'5e10          --   Gb  - Linker created -
+?main                    0x800'5e31         Code  Gb  cmain.o [4]
 ADC_Avg                 0x2000'1274    0xc  Data  Gb  user_app_temperature.o [1]
 ADC_DMAConvCplt          0x800'42d5   0x66  Code  Lc  stm32f4xx_hal_adc.o [1]
 ADC_DMAError             0x800'4345   0x12  Code  Lc  stm32f4xx_hal_adc.o [1]
 ADC_DMAHalfConvCplt      0x800'433d    0x6  Code  Lc  stm32f4xx_hal_adc.o [1]
-ADC_Init                 0x800'4ff9    0xa  Code  Gb  user_app_temperature.o [1]
+ADC_Init                 0x800'5025    0xa  Code  Gb  user_app_temperature.o [1]
 ADC_Temp                0x2000'1268    0xc  Data  Gb  user_app_temperature.o [1]
-AHBPrescTable            0x800'5dd8   0x10  Data  Gb  system_stm32f4xx.o [1]
-APBPrescTable            0x800'5fd0    0x8  Data  Gb  system_stm32f4xx.o [1]
+AHBPrescTable            0x800'5e20   0x10  Data  Gb  system_stm32f4xx.o [1]
+APBPrescTable            0x800'6018    0x8  Data  Gb  system_stm32f4xx.o [1]
 AppAtDebug_Task          0x800'4907   0x40  Code  Gb  user_app_at_debug.o [1]
 AppDoorSensor_Debug      0x800'4a81   0x4e  Code  Gb  user_app_door_sensor.o [1]
 AppDoorSensor_Task       0x800'4ad5   0x40  Code  Gb  user_app_door_sensor.o [1]
@@ -479,18 +479,18 @@ AppMotor_Task            0x800'152d   0x40  Code  Gb  user_app_ctrl_motor.o [1]
 AppPcBox_Debug           0x800'0c01   0x62  Code  Gb  user_app_pc_box.o [1]
 AppPcBox_Task            0x800'0c63   0x40  Code  Gb  user_app_pc_box.o [1]
 AppRelay_Task            0x800'1ad1   0x40  Code  Gb  user_app_relay.o [1]
-AppTemperature_Debug     0x800'4f0d   0x86  Code  Gb  user_app_temperature.o [1]
-AppTemperature_Task      0x800'4fb5   0x40  Code  Gb  user_app_temperature.o [1]
-AppVibSensor_Debug       0x800'5245   0x2e  Code  Gb  user_app_vib_sensor.o [1]
-AppVibSensor_Task        0x800'5273   0x40  Code  Gb  user_app_vib_sensor.o [1]
-BusFault_Handler         0x800'5c5f    0x2  Code  Gb  stm32f4xx_it.o [1]
+AppTemperature_Debug     0x800'4f15   0x9e  Code  Gb  user_app_temperature.o [1]
+AppTemperature_Task      0x800'4fe5   0x40  Code  Gb  user_app_temperature.o [1]
+AppVibSensor_Debug       0x800'5281   0x2e  Code  Gb  user_app_vib_sensor.o [1]
+AppVibSensor_Task        0x800'52af   0x40  Code  Gb  user_app_vib_sensor.o [1]
+BusFault_Handler         0x800'5ca7    0x2  Code  Gb  stm32f4xx_it.o [1]
 CSTACK$$Base            0x2000'16e0          --   Gb  - Linker created -
 CSTACK$$Limit           0x2000'1ae0          --   Gb  - Linker created -
 Cal_Time                 0x800'0d75   0x12  Code  Gb  user_util.o [1]
 Calculator_Crc_U16       0x800'10c1   0x32  Code  Gb  user_comm_vending_machine.o [1]
 Calculator_Scale         0x800'1135   0x18  Code  Gb  user_comm_vending_machine.o [1]
-CheckList_AT_CONFIG      0x800'5ab8  0x1a0  Data  Gb  user_at_serial.o [1]
-Check_AT_User            0x800'5821   0xa8  Code  Gb  user_at_serial.o [1]
+CheckList_AT_CONFIG      0x800'5b00  0x1a0  Data  Gb  user_at_serial.o [1]
+Check_AT_User            0x800'5869   0xa8  Code  Gb  user_at_serial.o [1]
 Check_Time_Out           0x800'0d5d   0x18  Code  Gb  user_util.o [1]
 ConnectSlave            0x2000'16df    0x1  Data  Gb  user_app_relay.o [1]
 ControlRelay             0x800'17dd   0x88  Code  Gb  user_app_relay.o [1]
@@ -501,20 +501,20 @@ Convert_Int_To_String_Scale
                          0x800'11cf   0x7a  Code  Gb  user_comm_vending_machine.o [1]
 Convert_String_To_Dec    0x800'0d87   0x34  Code  Gb  user_util.o [1]
 DMA2_Stream0_IRQHandler
-                         0x800'5cb1    0x6  Code  Gb  stm32f4xx_it.o [1]
+                         0x800'5cf9    0x6  Code  Gb  stm32f4xx_it.o [1]
 DMA_CalcBaseAndBitshift
                          0x800'32a5   0x26  Code  Lc  stm32f4xx_hal_dma.o [1]
 DMA_CalcBaseAndBitshift::flagBitshiftOffset
                          0x800'32cc    0x8  Data  Lc  stm32f4xx_hal_dma.o [1]
 DMA_SetConfig            0x800'3285   0x20  Code  Lc  stm32f4xx_hal_dma.o [1]
-DebugMon_Handler         0x800'5c65    0x2  Code  Gb  stm32f4xx_it.o [1]
-EXTI15_10_IRQHandler     0x800'5c95   0x16  Code  Gb  stm32f4xx_it.o [1]
-EXTI1_IRQHandler         0x800'5c75    0x6  Code  Gb  stm32f4xx_it.o [1]
-EXTI4_IRQHandler         0x800'5c7b    0x6  Code  Gb  stm32f4xx_it.o [1]
-EXTI9_5_IRQHandler       0x800'5c81    0x8  Code  Gb  stm32f4xx_it.o [1]
+DebugMon_Handler         0x800'5cad    0x2  Code  Gb  stm32f4xx_it.o [1]
+EXTI15_10_IRQHandler     0x800'5cdd   0x16  Code  Gb  stm32f4xx_it.o [1]
+EXTI1_IRQHandler         0x800'5cbd    0x6  Code  Gb  stm32f4xx_it.o [1]
+EXTI4_IRQHandler         0x800'5cc3    0x6  Code  Gb  stm32f4xx_it.o [1]
+EXTI9_5_IRQHandler       0x800'5cc9    0x8  Code  Gb  stm32f4xx_it.o [1]
 Error_Handler            0x800'361d    0x4  Code  Gb  main.o [1]
-Find_String_V2           0x800'5981   0xc6  Code  Gb  user_string.o [1]
-Find_str_fix             0x800'5a57   0x60  Code  Gb  user_string.o [1]
+Find_String_V2           0x800'59c9   0xc6  Code  Gb  user_string.o [1]
+Find_str_fix             0x800'5a9f   0x60  Code  Gb  user_string.o [1]
 Fix_Motor                0x800'13c7   0x28  Code  Gb  user_app_ctrl_motor.o [1]
 HAL_ADC_ConfigChannel    0x800'417b  0x10e  Code  Gb  stm32f4xx_hal_adc.o [1]
 HAL_ADC_Init             0x800'3ec5  0x154  Code  Gb  stm32f4xx_hal_adc.o [1]
@@ -534,7 +534,7 @@ HAL_GPIO_ReadPin         0x800'1035    0xc  Code  Gb  stm32f4xx_hal_gpio.o [1]
 HAL_GPIO_TogglePin       0x800'1049   0x10  Code  Gb  stm32f4xx_hal_gpio.o [1]
 HAL_GPIO_WritePin        0x800'1041    0x8  Code  Gb  stm32f4xx_hal_gpio.o [1]
 HAL_GetTick              0x800'1fd9    0xc  Code  Wk  stm32f4xx_hal.o [1]
-HAL_IncTick              0x800'5cd5   0x10  Code  Wk  stm32f4xx_hal.o [1]
+HAL_IncTick              0x800'5d1d   0x10  Code  Wk  stm32f4xx_hal.o [1]
 HAL_Init                 0x800'3725   0x30  Code  Gb  stm32f4xx_hal.o [1]
 HAL_InitTick             0x800'36e5   0x40  Code  Wk  stm32f4xx_hal.o [1]
 HAL_MspInit              0x800'3e8d   0x38  Code  Gb  stm32f4xx_hal_msp.o [1]
@@ -558,7 +558,7 @@ HAL_UART_Receive_IT      0x800'211f   0x30  Code  Gb  stm32f4xx_hal_uart.o [1]
 HAL_UART_RxCpltCallback
                          0x800'1c13   0x78  Code  Gb  user_uart.o [1]
 HAL_UART_Transmit        0x800'206f   0xb0  Code  Gb  stm32f4xx_hal_uart.o [1]
-HardFault_Handler        0x800'5c5b    0x2  Code  Gb  stm32f4xx_it.o [1]
+HardFault_Handler        0x800'5ca3    0x2  Code  Gb  stm32f4xx_it.o [1]
 Init_AppElectric         0x800'4711    0xc  Code  Gb  user_app_electric.o [1]
 Init_AppRelay            0x800'1881   0x10  Code  Gb  user_app_relay.o [1]
 Init_DCU_ID              0x800'0a27   0x82  Code  Gb  user_app_pc_box.o [1]
@@ -578,7 +578,7 @@ LED_PORT                0x2000'11c0    0xc  Data  Lc  user_app_relay.o [1]
 LED_Toggle               0x800'1a19   0x10  Code  Gb  user_app_relay.o [1]
 LedRecvPcBox            0x2000'16de    0x1  Data  Gb  user_app_relay.o [1]
 Log_Data_Door            0x800'4a47   0x38  Code  Gb  user_app_door_sensor.o [1]
-Log_Data_Vib             0x800'520f   0x34  Code  Gb  user_app_vib_sensor.o [1]
+Log_Data_Vib             0x800'524b   0x34  Code  Gb  user_app_vib_sensor.o [1]
 Log_TSVH                 0x800'0963   0xb2  Code  Gb  user_app_pc_box.o [1]
 MX_ADC1_Init             0x800'39a9   0x7e  Code  Gb  adc.o [1]
 MX_DMA_Init              0x800'3975   0x34  Code  Gb  dma.o [1]
@@ -589,11 +589,11 @@ MX_USART2_UART_Init      0x800'2ce7   0x10  Code  Gb  usart.o [1]
 MX_USART3_UART_Init      0x800'2cff   0x10  Code  Gb  usart.o [1]
 MX_USART6_UART_Init      0x800'2d2b   0x10  Code  Gb  usart.o [1]
 Main_Task                0x800'3af1   0x5c  Code  Gb  user_app_comm.o [1]
-MemManage_Handler        0x800'5c5d    0x2  Code  Gb  stm32f4xx_it.o [1]
-ModRTU_CRC               0x800'52e7   0x30  Code  Gb  user_modbus_rtu.o [1]
+MemManage_Handler        0x800'5ca5    0x2  Code  Gb  stm32f4xx_it.o [1]
+ModRTU_CRC               0x800'5323   0x30  Code  Gb  user_modbus_rtu.o [1]
 ModRTU_Master_Read_Frame
-                         0x800'5317   0x3c  Code  Gb  user_modbus_rtu.o [1]
-NMI_Handler              0x800'5c59    0x2  Code  Gb  stm32f4xx_it.o [1]
+                         0x800'5353   0x3c  Code  Gb  user_modbus_rtu.o [1]
+NMI_Handler              0x800'5ca1    0x2  Code  Gb  stm32f4xx_it.o [1]
 Off_Motor_Push           0x800'1471   0x3c  Code  Gb  user_app_ctrl_motor.o [1]
 OnOff_Relay              0x800'1865   0x1c  Code  Gb  user_app_relay.o [1]
 OnRelay_Warm             0x800'19c1   0x18  Code  Gb  user_app_relay.o [1]
@@ -603,9 +603,9 @@ PcBox_Setup_Time_Warm_Run
 PcBox_Setup_Time_Warm_Wait
                          0x800'172f   0x36  Code  Gb  user_app_relay.o [1]
 Pc_Box_Init              0x800'0a15   0x12  Code  Gb  user_app_pc_box.o [1]
-PendSV_Handler           0x800'5c67    0x2  Code  Gb  stm32f4xx_it.o [1]
+PendSV_Handler           0x800'5caf    0x2  Code  Gb  stm32f4xx_it.o [1]
 Push_Motor               0x800'13ef   0x30  Code  Gb  user_app_ctrl_motor.o [1]
-RC                       0x800'5a47   0x10  Code  Gb  user_string.o [1]
+RC                       0x800'5a8f   0x10  Code  Gb  user_string.o [1]
 RELAY_PIN               0x2000'1194   0x10  Data  Lc  user_app_relay.o [1]
 RELAY_PORT              0x2000'11a4   0x1c  Data  Lc  user_app_relay.o [1]
 Read_IdSlave_Electric_ExFlash
@@ -614,8 +614,8 @@ Read_Status_Electric_ExFlash
                          0x800'4691   0x2a  Code  Gb  user_app_electric.o [1]
 Read_Status_Relay_ExFlash
                          0x800'18f5   0x3a  Code  Gb  user_app_relay.o [1]
-Region$$Table$$Base      0x800'5da8          --   Gb  - Linker created -
-Region$$Table$$Limit     0x800'5dc8          --   Gb  - Linker created -
+Region$$Table$$Base      0x800'5df0          --   Gb  - Linker created -
+Region$$Table$$Limit     0x800'5e10          --   Gb  - Linker created -
 Relay_Debug              0x800'1a59   0x78  Code  Gb  user_app_relay.o [1]
 Relay_Respond_Pc_Box     0x800'19d9   0x40  Code  Gb  user_app_relay.o [1]
 Reset_Chip               0x800'1249   0x1c  Code  Gb  user_comm_vending_machine.o [1]
@@ -629,7 +629,7 @@ SLOT_PORT               0x2000'00b0   0x28  Data  Lc  user_app_ctrl_motor.o [1]
 SPI_EndRxTxTransaction   0x800'2c53   0x50  Code  Lc  stm32f4xx_hal_spi.o [1]
 SPI_WaitFlagStateUntilTimeout
                          0x800'2b93   0xb4  Code  Lc  stm32f4xx_hal_spi.o [1]
-SVC_Handler              0x800'5c63    0x2  Code  Gb  stm32f4xx_it.o [1]
+SVC_Handler              0x800'5cab    0x2  Code  Gb  stm32f4xx_it.o [1]
 Scale_To_Int             0x800'1101   0x34  Code  Gb  user_comm_vending_machine.o [1]
 Set_Threshold_Temperature
                          0x800'4e6b   0x3a  Code  Gb  user_app_temperature.o [1]
@@ -642,13 +642,13 @@ Setup_TimeCycle_Relay_Warm
 Status_Power_Respond_PcBox
                          0x800'461f   0x34  Code  Gb  user_app_electric.o [1]
 SysApp_Setting           0x800'3ae1   0x10  Code  Gb  user_app_comm.o [1]
-SysTick_Handler          0x800'5c69    0xc  Code  Gb  stm32f4xx_it.o [1]
+SysTick_Handler          0x800'5cb1    0xc  Code  Gb  stm32f4xx_it.o [1]
 SystemClock_Config       0x800'3571   0xa4  Code  Gb  main.o [1]
 SystemCoreClock         0x2000'000c    0x4  Data  Gb  system_stm32f4xx.o [1]
-SystemInit               0x800'5dc9    0xc  Code  Gb  system_stm32f4xx.o [1]
+SystemInit               0x800'5e11    0xc  Code  Gb  system_stm32f4xx.o [1]
 TaskStatus_u8           0x2000'16cf    0x1  Data  Gb  user_app_comm.o [1]
 Transmit_PCBOX           0x800'0927   0x16  Code  Gb  user_app_pc_box.o [1]
-UART4_IRQHandler         0x800'5cab    0x6  Code  Gb  stm32f4xx_it.o [1]
+UART4_IRQHandler         0x800'5cf3    0x6  Code  Gb  stm32f4xx_it.o [1]
 UART_DMAAbortOnError     0x800'252d    0xc  Code  Lc  stm32f4xx_hal_uart.o [1]
 UART_EndRxTransfer       0x800'24e3   0x2a  Code  Lc  stm32f4xx_hal_uart.o [1]
 UART_Receive_IT          0x800'2539   0xaa  Code  Lc  stm32f4xx_hal_uart.o [1]
@@ -656,9 +656,9 @@ UART_SetConfig           0x800'260d   0xae  Code  Lc  stm32f4xx_hal_uart.o [1]
 UART_Start_Receive_IT    0x800'2491   0x3a  Code  Gb  stm32f4xx_hal_uart.o [1]
 UART_WaitOnFlagUntilTimeout
                          0x800'23fd   0x5e  Code  Lc  stm32f4xx_hal_uart.o [1]
-USART2_IRQHandler        0x800'5c89    0x6  Code  Gb  stm32f4xx_it.o [1]
-USART3_IRQHandler        0x800'5c8f    0x6  Code  Gb  stm32f4xx_it.o [1]
-USART6_IRQHandler        0x800'5cb7    0x6  Code  Gb  stm32f4xx_it.o [1]
+USART2_IRQHandler        0x800'5cd1    0x6  Code  Gb  stm32f4xx_it.o [1]
+USART3_IRQHandler        0x800'5cd7    0x6  Code  Gb  stm32f4xx_it.o [1]
+USART6_IRQHandler        0x800'5cff    0x6  Code  Gb  stm32f4xx_it.o [1]
 UTIL_MEM_set             0x800'0dff    0xe  Code  Gb  user_util.o [1]
 UTIL_Printf              0x800'0e0d   0x10  Code  Gb  user_util.o [1]
 UTIL_Printf_Str          0x800'0e1d   0x12  Code  Gb  user_util.o [1]
@@ -669,7 +669,7 @@ UartDebugRxByte         0x2000'12f4    0x1  Data  Gb  user_uart.o [1]
 UartPcBoxBuff           0x2000'13f8   0x64  Data  Gb  user_uart.o [1]
 UartPcBoxRxByte         0x2000'12f6    0x1  Data  Gb  user_uart.o [1]
 UartSimRxByte           0x2000'1310    0x1  Data  Gb  user_uart.o [1]
-UsageFault_Handler       0x800'5c61    0x2  Code  Gb  stm32f4xx_it.o [1]
+UsageFault_Handler       0x800'5ca9    0x2  Code  Gb  stm32f4xx_it.o [1]
 Write_Flash_Using_Crc    0x800'0b49   0x2a  Code  Gb  user_app_pc_box.o [1]
 Write_IdSlave_Electric_ExFlash
                          0x800'46bb   0x2a  Code  Gb  user_app_electric.o [1]
@@ -682,15 +682,15 @@ Write_Status_Relay_ExFlash
 __NVIC_SetPriority       0x800'3621   0x1a  Code  Lc  stm32f4xx_hal_cortex.o [1]
 __aeabi_ldiv0            0x800'3489         Code  Gb  I64DivZer.o [4]
 __aeabi_memclr4          0x800'1ca9         Code  Gb  ABImemclr4.o [4]
-__cmain                  0x800'5de9         Code  Gb  cmain.o [4]
-__exit                   0x800'5e1d   0x14  Code  Gb  exit.o [5]
+__cmain                  0x800'5e31         Code  Gb  cmain.o [4]
+__exit                   0x800'5e65   0x14  Code  Gb  exit.o [5]
 __iar_Memset4_word       0x800'2855         Code  Gb  ABImemset48.o [4]
 __iar_Memset8_word       0x800'2855         Code  Gb  ABImemset48.o [4]
-__iar_data_init3         0x800'5d5d   0x28  Code  Gb  data_init.o [4]
-__iar_init_vfp           0x800'5d85         Code  Gb  fpinit_M.o [3]
+__iar_data_init3         0x800'5da5   0x28  Code  Gb  data_init.o [4]
+__iar_init_vfp           0x800'5dcd         Code  Gb  fpinit_M.o [3]
 __iar_lz77_init_single3
-                         0x800'5ce5   0x78  Code  Gb  lz77_init_single.o [4]
-__iar_program_start      0x800'5fc5         Code  Gb  cstartup_M.o [4]
+                         0x800'5d2d   0x78  Code  Gb  lz77_init_single.o [4]
+__iar_program_start      0x800'600d         Code  Gb  cstartup_M.o [4]
 __iar_small_Memcpy       0x800'2cbd         Code  Gb  ABImemcpy_small.o [4]
 __iar_small_Memset       0x800'1fe5         Code  Gb  ABImemset_small.o [4]
 __iar_small_Memset_word
@@ -702,36 +702,36 @@ __iar_small_memset       0x800'1fe5         Code  Gb  ABImemset_small.o [4]
 __iar_small_strlen       0x800'26d5         Code  Gb  strlen_small.o [4]
 __iar_small_uldivmod     0x800'2739         Code  Gb  I64DivMod_small.o [4]
 __iar_zero_init3         0x800'1caf   0x3a  Code  Gb  zero_init3.o [4]
-__low_level_init         0x800'5e07    0x4  Code  Gb  low_level_init.o [2]
+__low_level_init         0x800'5e4f    0x4  Code  Gb  low_level_init.o [2]
 __vector_table           0x800'0000         Data  Gb  startup_stm32f405xx.o [1]
-_call_main               0x800'5df5         Code  Gb  cmain.o [4]
-_exit                    0x800'5e11         Code  Gb  cexit.o [4]
-_fAPP_FIX_MOTOR          0x800'538d   0x1e  Code  Gb  user_at_serial.o [1]
-_fAPP_PUSH_MOTOR         0x800'53ab   0x56  Code  Gb  user_at_serial.o [1]
-_fCTRL_RELAY_LAMP        0x800'56f7   0x22  Code  Gb  user_at_serial.o [1]
-_fCTRL_RELAY_SCREEN      0x800'56d5   0x22  Code  Gb  user_at_serial.o [1]
-_fCTRL_RELAY_WARM        0x800'5719   0x30  Code  Gb  user_at_serial.o [1]
-_fGET_ID_SLAVE           0x800'5661   0x22  Code  Gb  user_at_serial.o [1]
-_fGET_SERI_DCU           0x800'54a5   0x18  Code  Gb  user_at_serial.o [1]
-_fGET_SETUP_TEMP         0x800'553d   0x26  Code  Gb  user_at_serial.o [1]
-_fGET_THRESH_TEMP        0x800'55d3   0x22  Code  Gb  user_at_serial.o [1]
-_fGET_TIME_PCBOX_RESET   0x800'543f    0xc  Code  Gb  user_at_serial.o [1]
-_fGET_TIME_TSVH          0x800'5401    0xe  Code  Gb  user_at_serial.o [1]
-_fGET_TIME_WARM_RUN      0x800'5749   0x18  Code  Gb  user_at_serial.o [1]
-_fGET_TIME_WARM_WAIT     0x800'5785   0x18  Code  Gb  user_at_serial.o [1]
-_fGET_USING_CRC          0x800'57bf   0x26  Code  Gb  user_at_serial.o [1]
-_fRESET_DCU              0x800'5355   0x2e  Code  Gb  user_at_serial.o [1]
-_fRESET_PCBOX            0x800'5383    0xa  Code  Gb  user_at_serial.o [1]
-_fSET_ID_SLAVE           0x800'5689   0x28  Code  Gb  user_at_serial.o [1]
-_fSET_SERI_DCU           0x800'54bd   0x80  Code  Gb  user_at_serial.o [1]
-_fSET_SETUP_TEMP         0x800'5563   0x46  Code  Gb  user_at_serial.o [1]
-_fSET_THRESH_TEMP        0x800'560b   0x42  Code  Gb  user_at_serial.o [1]
-_fSET_TIME_PCBOX_RESET   0x800'5487   0x1e  Code  Gb  user_at_serial.o [1]
-_fSET_TIME_TSVH          0x800'540f   0x1c  Code  Gb  user_at_serial.o [1]
-_fSET_TIME_WARM_RUN      0x800'5761   0x22  Code  Gb  user_at_serial.o [1]
-_fSET_TIME_WARM_WAIT     0x800'579d   0x22  Code  Gb  user_at_serial.o [1]
-_fSET_USING_CRC          0x800'57e5   0x3c  Code  Gb  user_at_serial.o [1]
-_main                    0x800'5e03         Code  Gb  cmain.o [4]
+_call_main               0x800'5e3d         Code  Gb  cmain.o [4]
+_exit                    0x800'5e59         Code  Gb  cexit.o [4]
+_fAPP_FIX_MOTOR          0x800'53c9   0x1e  Code  Gb  user_at_serial.o [1]
+_fAPP_PUSH_MOTOR         0x800'53e7   0x56  Code  Gb  user_at_serial.o [1]
+_fCTRL_RELAY_LAMP        0x800'573b   0x22  Code  Gb  user_at_serial.o [1]
+_fCTRL_RELAY_SCREEN      0x800'5719   0x22  Code  Gb  user_at_serial.o [1]
+_fCTRL_RELAY_WARM        0x800'575d   0x30  Code  Gb  user_at_serial.o [1]
+_fGET_ID_SLAVE           0x800'56a5   0x22  Code  Gb  user_at_serial.o [1]
+_fGET_SERI_DCU           0x800'54e1   0x18  Code  Gb  user_at_serial.o [1]
+_fGET_SETUP_TEMP         0x800'5579   0x2a  Code  Gb  user_at_serial.o [1]
+_fGET_THRESH_TEMP        0x800'5613   0x26  Code  Gb  user_at_serial.o [1]
+_fGET_TIME_PCBOX_RESET   0x800'547b    0xc  Code  Gb  user_at_serial.o [1]
+_fGET_TIME_TSVH          0x800'543d    0xe  Code  Gb  user_at_serial.o [1]
+_fGET_TIME_WARM_RUN      0x800'578d   0x18  Code  Gb  user_at_serial.o [1]
+_fGET_TIME_WARM_WAIT     0x800'57c9   0x18  Code  Gb  user_at_serial.o [1]
+_fGET_USING_CRC          0x800'5803   0x26  Code  Gb  user_at_serial.o [1]
+_fRESET_DCU              0x800'5391   0x2e  Code  Gb  user_at_serial.o [1]
+_fRESET_PCBOX            0x800'53bf    0xa  Code  Gb  user_at_serial.o [1]
+_fSET_ID_SLAVE           0x800'56cd   0x28  Code  Gb  user_at_serial.o [1]
+_fSET_SERI_DCU           0x800'54f9   0x80  Code  Gb  user_at_serial.o [1]
+_fSET_SETUP_TEMP         0x800'55a3   0x46  Code  Gb  user_at_serial.o [1]
+_fSET_THRESH_TEMP        0x800'564f   0x42  Code  Gb  user_at_serial.o [1]
+_fSET_TIME_PCBOX_RESET   0x800'54c3   0x1e  Code  Gb  user_at_serial.o [1]
+_fSET_TIME_TSVH          0x800'544b   0x1c  Code  Gb  user_at_serial.o [1]
+_fSET_TIME_WARM_RUN      0x800'57a5   0x22  Code  Gb  user_at_serial.o [1]
+_fSET_TIME_WARM_WAIT     0x800'57e1   0x22  Code  Gb  user_at_serial.o [1]
+_fSET_USING_CRC          0x800'5829   0x3c  Code  Gb  user_at_serial.o [1]
+_main                    0x800'5e4b         Code  Gb  cmain.o [4]
 aBuffer_Ping            0x2000'16a0   0x14  Data  Gb  user_app_pc_box.o [1]
 aDATA_CONFIG            0x2000'1314   0x80  Data  Gb  user_at_serial.o [1]
 aDCU_ID                 0x2000'1110   0x14  Data  Gb  user_app_pc_box.o [1]
@@ -747,7 +747,7 @@ eFlash_S25FL_Erase_Sector
 eFlash_S25FL_PageWrite   0x800'1dc7   0x5c  Code  Gb  user_external_flash.o [1]
 eFlash_S25FL_WaitForWriteEnd
                          0x800'1d55   0x2a  Code  Gb  user_external_flash.o [1]
-exit                     0x800'5e0b    0x4  Code  Gb  exit.o [2]
+exit                     0x800'5e53    0x4  Code  Gb  exit.o [2]
 fevent_active            0x800'0e45   0x10  Code  Gb  event_driven.o [1]
 fevent_at_debug_complete_receive
                          0x800'48dd   0x20  Code  Lc  user_app_at_debug.o [1]
@@ -851,18 +851,18 @@ fevent_temp_respond_error
 fevent_temp_set_setuptemp
                          0x800'4d27   0x16  Code  Lc  user_app_temperature.o [1]
 fevent_temp_time_get     0x800'4def    0xe  Code  Lc  user_app_temperature.o [1]
-fevent_vib_led_warning   0x800'518f   0x76  Code  Lc  user_app_vib_sensor.o [1]
+fevent_vib_led_warning   0x800'51cb   0x76  Code  Lc  user_app_vib_sensor.o [1]
 fevent_vib_led_warning::Count_Morse
                         0x2000'16dd    0x1  Data  Lc  user_app_vib_sensor.o [1]
 fevent_vib_led_warning::Count_Toggle
                         0x2000'16dc    0x1  Data  Lc  user_app_vib_sensor.o [1]
-fevent_vib_off_alarm     0x800'517d   0x12  Code  Lc  user_app_vib_sensor.o [1]
-fevent_vib_sensor        0x800'50dd   0x94  Code  Lc  user_app_vib_sensor.o [1]
+fevent_vib_off_alarm     0x800'51b9   0x12  Code  Lc  user_app_vib_sensor.o [1]
+fevent_vib_sensor        0x800'5119   0x94  Code  Lc  user_app_vib_sensor.o [1]
 fevent_vib_sensor::GetTickLevelAlarm
                         0x2000'12f0    0x4  Data  Lc  user_app_vib_sensor.o [1]
 fevent_vib_sensor_entry
-                         0x800'5099    0xe  Code  Lc  user_app_vib_sensor.o [1]
-fevent_vib_sensor_scan   0x800'50a7   0x36  Code  Lc  user_app_vib_sensor.o [1]
+                         0x800'50d5    0xe  Code  Lc  user_app_vib_sensor.o [1]
+fevent_vib_sensor_scan   0x800'50e3   0x36  Code  Lc  user_app_vib_sensor.o [1]
 fevent_wait_reset_pc_box
                          0x800'08ad   0x1c  Code  Lc  user_app_pc_box.o [1]
 fevent_wdg_stm32f4       0x800'01ef   0x30  Code  Lc  user_app_pc_box.o [1]
@@ -913,13 +913,13 @@ uwTickFreq              0x2000'0000    0x1  Data  Gb  stm32f4xx_hal.o [1]
 uwTickPrio              0x2000'0008    0x4  Data  Gb  stm32f4xx_hal.o [1]
 
 
-[1] = D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj
+[1] = D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj
 [2] = dl7M_tlf.a
 [3] = m7M_tls.a
 [4] = rt7M_tl.a
 [5] = shb_l.a
 
-  23'964 bytes of readonly  code memory
+  24'036 bytes of readonly  code memory
    1'454 bytes of readonly  data memory
    6'880 bytes of readwrite data memory
 

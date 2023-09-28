@@ -41,8 +41,8 @@ const struct_CheckList_AT CheckList_AT_CONFIG[] =
     {_GET_TIME_WARM_WAIT,   _fGET_TIME_WARM_WAIT,       {(uint8_t*)"at+timewarmwait?",16}}, //Ex: "at+timewarmwait?"
     {_SET_TIME_WARM_WAIT,   _fSET_TIME_WARM_WAIT,       {(uint8_t*)"at+timewarmwait=",16}}, //Ex: "at+timewarmwait=15" (Min)
     
-    {_GET_USING_CRC,        _fGET_USING_CRC,            {(uint8_t*)"at+usingcrc?",12}}, //Ex: "at+usingcrc?"
-    {_SET_USING_CRC,        _fSET_USING_CRC,            {(uint8_t*)"at+usingcrc=",12}}, //Ex: "at+usingcrc=1" (Using: 1; UnUsing = 0);s
+    {_GET_USING_CRC,        _fGET_USING_CRC,            {(uint8_t*)"at+usingcrc?",12}},     //Ex: "at+usingcrc?"
+    {_SET_USING_CRC,        _fSET_USING_CRC,            {(uint8_t*)"at+usingcrc=",12}},     //Ex: "at+usingcrc=1" (Using: 1; UnUsing = 0)
     
     {_END_AT_CMD,	        NULL,	                    {(uint8_t*)"at+end",6}},
 };
@@ -260,6 +260,7 @@ void        _fGET_SETUP_TEMP (sData *strRecei, uint16_t Pos)
     length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.TempSetup , sTemp_Crtl_Fridge.Scale);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"SetupTemp: ", sizeof("SetupTemp: "));
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"°C", sizeof("°C"));
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
 }
     
@@ -319,6 +320,7 @@ void        _fGET_THRESH_TEMP (sData *strRecei, uint16_t Pos)
     length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.Threshold , sTemp_Crtl_Fridge.Scale);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"ThreshTemp: ", sizeof("ThreshTemp: "));
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"°C", sizeof("°C"));
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
 }
 

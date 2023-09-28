@@ -5,1063 +5,356 @@
     <configuration>
         <name>Saoviet_Maybanhang</name>
         <outputs>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c</file>
-            <file>$PROJ_DIR$\..\Core\Src\system_stm32f4xx.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_adc.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_exti.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr_ex.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</file>
+            <file>$PROJ_DIR$\..\Core\Src\adc.c</file>
+            <file>$PROJ_DIR$\startup_stm32f405xx.s</file>
             <file>$PROJ_DIR$\..\Core\Src\main.c</file>
             <file>$PROJ_DIR$\..\Core\Src\gpio.c</file>
-            <file>$PROJ_DIR$\..\Core\Src\usart.c</file>
             <file>$PROJ_DIR$\..\Core\Src\dma.c</file>
-            <file>$PROJ_DIR$\..\Core\Src\adc.c</file>
-            <file>$PROJ_DIR$\..\Core\Src\stm32f4xx_it.c</file>
             <file>$PROJ_DIR$\..\Core\Src\spi.c</file>
+            <file>$PROJ_DIR$\..\Core\Src\usart.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_adc.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</file>
+            <file>$PROJ_DIR$\..\Core\Src\stm32f4xx_it.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_exti.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c</file>
             <file>$PROJ_DIR$\..\Core\Src\stm32f4xx_hal_msp.c</file>
-            <file>$PROJ_DIR$\startup_stm32f405xx.s</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_debug.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\gpio.xcl</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_fridge_lamp\user_app_fridge_lamp.c</file>
-            <file>$TOOLKIT_DIR$\lib\dl7M_tlf.a</file>
-            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_util.o</file>
-            <file>$PROJ_DIR$\..\user_component\user_uart\user_uart.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_relay.xcl</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\core_cm4.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_adc.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.__cstat.et</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ir_sensor\user_app_ir_sensor.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio_ex.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_util.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.xcl</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_temperature.xcl</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_fridge_lamp\user_app_fridge_lamp.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_float_setup.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_at_serial\user_at_serial.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_comm.xcl</file>
-            <file>$PROJ_DIR$\..\user_util\user_adc.c</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_uart.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_obis.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_comm_vending_machine.__cstat.et</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.xcl</file>
-            <file>$PROJ_DIR$\..\user_define\user_define.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_comm_vending_machine.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.o</file>
-            <file>$PROJ_DIR$\..\Core\Inc\stm32f4xx_hal_conf.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_uart.xcl</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_pc_box\user_app_pc_box.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_external_flash.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.xcl</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_it.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_string.xcl</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driven.o</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\system_stm32f4xx.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ir_sensor.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driver.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driver.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_relay.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_util.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_modbus_rtu.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_fridge_lamp.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\system_stm32f4xx.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\Saoviet_Maybanhang.pbd</file>
-            <file>$PROJ_DIR$\stm32f405xx_flash.icf</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.c</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_internal_mem.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.xcl</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_exti.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\usart.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_temperature.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_pc_box.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_adc.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.xcl</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ex.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\startup_stm32f405xx.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_irq_input.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Core\Inc\dma.h</file>
-            <file>$PROJ_DIR$\..\Core\Inc\adc.h</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_iccarm.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.o</file>
-            <file>$PROJ_DIR$\..\user_util\user_obis.c</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.h</file>
-            <file>$PROJ_DIR$\..\user_event_driven\event_driver.c</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ir_sensor.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\main.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_pc_box.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_serial.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\adc.xcl</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.c</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_vib_sensor.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.__cstat.et</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_at_serial\user_at_serial.c</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\S25FL216K.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_temperature.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_obis.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_internal_mem.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_debug.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_at_serial.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\onchipflash.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma_ex.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_door_sensor.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\dma.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\spi.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</file>
+            <file>$PROJ_DIR$\..\Core\Src\system_stm32f4xx.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c</file>
             <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\queue_p.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_door_sensor.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_relay.o</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_app_at_serial.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_electric.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
-            <file>$PROJ_DIR$\..\Core\Inc\spi.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_external_flash.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_irq_input.o</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_external_flash.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_comm.o</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_electric\user_app_electric.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_vib_sensor.xcl</file>
-            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Core\Inc\stm32f4xx_it.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driver.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\dma.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_comm_vending_machine.xcl</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc_ex.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.xcl</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_electric\user_app_electric.c</file>
-            <file>$PROJ_DIR$\..\user_util\user_adc.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.c</file>
-            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_comm.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.xcl</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.c</file>
-            <file>$PROJ_DIR$\..\Core\Inc\gpio.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.xcl</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_version.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash.h</file>
-            <file>$PROJ_DIR$\..\Core\Inc\main.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_at_serial.__cstat.et</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_fridge_lamp.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\queue_p.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_serial.o</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h</file>
-            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\spi.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_comm.o</file>
+            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_version.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ex.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_external_flash.__cstat.et</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_electric\user_app_electric.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\usart.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\S25FL216K.xcl</file>
+            <file>$PROJ_DIR$\..\Core\Inc\stm32f4xx_hal_conf.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
             <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\usart.o</file>
-            <file>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.h</file>
-            <file>$PROJ_DIR$\..\user_eventdriven\event_driven.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.h</file>
-            <file>$PROJ_DIR$\..\user_eventdriven\event_driven.h</file>
-            <file>$PROJ_DIR$\..\user_queue\queue_p.h</file>
-            <file>$PROJ_DIR$\..\user_util\onchipflash.c</file>
-            <file>$PROJ_DIR$\..\user_util\onchipflash.h</file>
-            <file>$PROJ_DIR$\..\user_util\user_modbus_rtu.c</file>
-            <file>$PROJ_DIR$\..\user_util\user_modbus_rtu.h</file>
-            <file>$PROJ_DIR$\..\user_queue\queue_p.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.h</file>
-            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.h</file>
-            <file>$PROJ_DIR$\..\user_util\user_string.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_uart\user_uart.h</file>
-            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.h</file>
-            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.c</file>
-            <file>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.c</file>
-            <file>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.h</file>
-            <file>$PROJ_DIR$\..\user_component\user_mem\user_mem_comm.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_inc_vending_machine.h</file>
-            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.h</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_uart\user_uart.c</file>
-            <file>$PROJ_DIR$\..\user_util\user_obis.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h</file>
-            <file>$PROJ_DIR$\..\user_component\user_uart\user_uart.c</file>
-            <file>$PROJ_DIR$\..\user_event_driven\event_driver.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.__cstat.et</file>
-            <file>$PROJ_DIR$\..\user_util\user_string.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_door_sensor.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_electric.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\spi.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.__cstat.et</file>
-            <file>$PROJ_DIR$\..\user_util\user_util.c</file>
-            <file>$PROJ_DIR$\..\user_util\user_util.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_modbus_rtu.xcl</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f405xx.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_modbus_rtu.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\S25FL216K.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\dma.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_it.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Core\Inc\usart.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\gpio.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\gpio.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_string.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_electric.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cortex.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\adc.o</file>
-            <file>$TOOLKIT_DIR$\inc\c\iccarm_builtin.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\system_stm32f4xx.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_at_serial.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\queue_p.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\S25FL216K.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\main.xcl</file>
-            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\onchipflash.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_irq_input.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\adc.__cstat.et</file>
-            <file>$TOOLKIT_DIR$\lib\m7M_tls.a</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_pc_box.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\main.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_obis.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driven.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_vib_sensor.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\mpu_armv7.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.__cstat.et</file>
-            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_compiler.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_string.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\dma.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_comm_vending_machine.xcl</file>
             <file>$PROJ_DIR$\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map</file>
             <file>$PROJ_DIR$\..\user_app\user_app_pc_box\user_app_pc_box.c</file>
-            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_app_at_serial.c</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driven.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\usart.__cstat.et</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_adc.xcl</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_internal_mem.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ir_sensor.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_debug.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_uart.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.hex</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.__cstat.et</file>
-            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\onchipflash.o</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_it.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_door_sensor.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h</file>
+            <file>$PROJ_DIR$\..\Core\Inc\adc.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.o</file>
+            <file>$PROJ_DIR$\..\Core\Inc\dma.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\dma.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_fridge_lamp.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driver.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_internal_mem.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f405xx.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_modbus_rtu.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_vib_sensor.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_uart.xcl</file>
             <file>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.c</file>
-            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_adc.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_string.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_internal_mem.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_electric.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\S25FL216K.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_irq_input.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\main.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_at_serial\user_at_serial.c</file>
+            <file>$TOOLKIT_DIR$\lib\dl7M_tlf.a</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\spi.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_temperature.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_door_sensor.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_external_flash.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_vib_sensor.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_exti.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.o</file>
             <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_electric.xcl</file>
+            <file>$PROJ_DIR$\..\user_util\user_adc.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_at_serial.xcl</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driven.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.xcl</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\gpio.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_debug.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cortex.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_irq_input.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_obis.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\queue_p.xcl</file>
+            <file>$PROJ_DIR$\..\user_event_driven\event_driver.c</file>
+            <file>$PROJ_DIR$\..\user_define\user_define.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.xcl</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.h</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\core_cm4.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h</file>
+            <file>$PROJ_DIR$\..\user_util\user_adc.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_vib_sensor.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_debug.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_comm_vending_machine.__cstat.et</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_relay.xcl</file>
+            <file>$PROJ_DIR$\..\user_component\user_uart\user_uart.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\spi.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ir_sensor.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\math.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_serial.xcl</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_comm_vending_machine.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\usart.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_string.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driven.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_pc_box.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.xcl</file>
+            <file>$PROJ_DIR$\..\user_component\user_uart\user_uart.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\spi.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_util.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma_ex.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_fridge_lamp\user_app_fridge_lamp.h</file>
+            <file>$PROJ_DIR$\..\user_util\user_obis.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_fridge_lamp.xcl</file>
+            <file>$PROJ_DIR$\..\user_util\user_obis.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\queue_p.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_door_sensor.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_iccarm.h</file>
+            <file>$PROJ_DIR$\..\user_event_driven\event_driver.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_obis.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_float_setup.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_external_flash.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_util.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\startup_stm32f405xx.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_util.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ir_sensor\user_app_ir_sensor.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_uart.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_app_at_serial.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_comm.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.__cstat.et</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_app_at_serial.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.o</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_at_serial\user_at_serial\user_at_serial.h</file>
+            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.xcl</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driver.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.o</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\system_stm32f4xx.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_it.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_uart.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_comm.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ir_sensor.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_at_serial.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_relay.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_adc_ex.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_modbus_rtu.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_modbus_rtu.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_pc_box.__cstat.et</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_electric\user_app_electric.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_temperature.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.xcl</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_pc_box\user_app_pc_box.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_inc_vending_machine.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.h</file>
+            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.c</file>
+            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.h</file>
+            <file>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.c</file>
+            <file>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.h</file>
+            <file>$PROJ_DIR$\..\user_component\user_mem\user_mem_comm.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_uart\user_uart.c</file>
+            <file>$PROJ_DIR$\..\user_eventdriven\event_driven.c</file>
+            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.h</file>
+            <file>$PROJ_DIR$\..\user_eventdriven\event_driven.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.c</file>
+            <file>$PROJ_DIR$\..\user_queue\queue_p.c</file>
+            <file>$PROJ_DIR$\..\user_queue\queue_p.h</file>
+            <file>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.c</file>
+            <file>$PROJ_DIR$\..\user_util\onchipflash.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_uart\user_uart.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.c</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.h</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_relay.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_irq_input.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\onchipflash.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_serial.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_it.__cstat.et</file>
+            <file>$PROJ_DIR$\..\user_util\user_string.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.xcl</file>
+            <file>$PROJ_DIR$\..\user_util\user_modbus_rtu.h</file>
+            <file>$PROJ_DIR$\..\Core\Inc\spi.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\Saoviet_Maybanhang.pbd</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\dma.o</file>
+            <file>$PROJ_DIR$\..\user_util\user_string.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_temperature.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Core\Inc\main.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_adc.__cstat.et</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_relay\user_app_relay.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driver.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Core\Inc\stm32f4xx_it.h</file>
+            <file>$PROJ_DIR$\..\user_util\onchipflash.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.o</file>
+            <file>$PROJ_DIR$\..\user_util\user_util.h</file>
+            <file>$PROJ_DIR$\stm32f405xx_flash.icf</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h</file>
+            <file>$PROJ_DIR$\..\user_util\user_modbus_rtu.c</file>
+            <file>$PROJ_DIR$\..\Core\Inc\gpio.h</file>
+            <file>$PROJ_DIR$\..\user_util\user_util.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\adc.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\onchipflash.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_electric.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\adc.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\adc.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_at_serial.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\onchipflash.xcl</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.xcl</file>
+            <file>$TOOLKIT_DIR$\lib\m7M_tls.a</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.o</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\mpu_armv7.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\event_driven.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\gpio.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\main.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Core\Inc\usart.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_adc.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\system_stm32f4xx.__cstat.et</file>
             <file>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ir_sensor\user_app_ir_sensor.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_ir_sensor.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_obis.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_adc.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\cmsis_compiler.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_adc.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_pc_box.o</file>
+            <file>$PROJ_DIR$\..\user_app\user_app_fridge_lamp\user_app_fridge_lamp.c</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\S25FL216K.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_app_at_debug.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.hex</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_it.xcl</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\system_stm32f4xx.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.xcl</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio_ex.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\iccarm_builtin.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\main.xcl</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_internal_mem.o</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\gpio.__cstat.et</file>
+            <file>$PROJ_DIR$\Saoviet_Maybanhang\Obj\user_string.o</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 120 321</file>
+                    <file> 98 55</file>
                 </tool>
             </outputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 182</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 271</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 292</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 1 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 239 245 250 242 247 184 235 255 244 233 142 183 100</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 307</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 153</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 131</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 250 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 245 256 26 28 1 244 233 142 183 100 241 242 247 184 235 255</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 192</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 74</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 209</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 23 256 26 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 28 1 250 245 244 233 142 183 100 241 19</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 215</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 286</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 110</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 186</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 95</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 93</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 107</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 64</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 140</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 315</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 204</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 122</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 146</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 217</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 197</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 108</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 314</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 78</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 329</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 59</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 165</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 171</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 281</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 272</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 116</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 65</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 333</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\system_stm32f4xx.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 296</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 103</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 115</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 263 90 213 226 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 44</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 83</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 276</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 68</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 126</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 138</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 144</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 51</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 283</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 330</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 42</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 166</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 19 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 230 245</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 273</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 124</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 339</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 129</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 127</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 77</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_adc.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 168</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 134</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 159</file>
-                </tool>
-            </outputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 81</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 123</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 214</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 313</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 86</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 266</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 312</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 43</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 82</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 26 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 245 250 244 1</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 268</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 172</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 179</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 28 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 245 250 244 1</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_exti.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 194</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 210</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 318</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 89</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 133</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 69</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 308</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 274</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 55</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\main.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 152</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 301</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 309</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 142 141 184 288 212 23 237 278 246 242 247 234 235 255</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\gpio.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 290</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 45</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 289</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 212 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\usart.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 229</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 128</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 325</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 288 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\dma.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 285</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 201</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 173</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 141 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
         </file>
         <file>
             <name>$PROJ_DIR$\..\Core\Src\adc.c</name>
@@ -1072,86 +365,17 @@
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 155</file>
+                    <file> 288</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 305</file>
+                    <file> 293</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 142 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\stm32f4xx_it.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 98</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 336</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 287</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 198 278 246 288</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\spi.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 275</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 228</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 175</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 184 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\Core\Src\stm32f4xx_hal_msp.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 299</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 158</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 76</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135</file>
+                    <file> 60 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
                 </tool>
             </inputs>
         </file>
@@ -1160,62 +384,152 @@
             <outputs>
                 <tool>
                     <name>AARM</name>
-                    <file> 137</file>
+                    <file> 182</file>
                 </tool>
             </outputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_fridge_lamp\user_app_fridge_lamp.c</name>
+            <name>$PROJ_DIR$\..\Core\Src\main.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 223</file>
+                    <file> 84</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 114</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 67 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 157</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 195</file>
+                    <file> 336</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 316</file>
+                    <file> 308</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 85 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 220</file>
+                    <file> 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 60 64 269 309 286 31 280 282 254 235 243 244 247 239</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\user_util\user_adc.c</name>
+            <name>$PROJ_DIR$\..\Core\Src\gpio.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 338</file>
+                    <file> 306</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 109</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 339</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 286 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\dma.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 271</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 65</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 53</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 64 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\spi.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 138</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 89</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 153</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 269 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\usart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 52</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 147</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 47</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 309 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_ll_adc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 222</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 326</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 214</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_at_debug\user_app_at_debug.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 328</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 113</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
@@ -1225,20 +539,20 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 206 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 142</file>
+                    <file> 23 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 233 257</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_spi.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 268</file>
+                    <file> 303</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 172</file>
+                    <file> 102</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
@@ -1248,114 +562,559 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 102 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 220</file>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out</name>
-            <outputs>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 321</file>
-                </tool>
-                <tool>
-                    <name>OBJCOPY</name>
-                    <file> 332</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ILINK</name>
-                    <file> 118 294 285 101 290 152 335 298 284 275 137 129 186 81 44 108 146 194 315 215 329 116 299 171 89 273 107 313 68 308 144 98 168 296 229 330 192 312 268 182 307 180 130 157 297 88 191 327 189 113 320 331 49 208 196 306 47</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_util\user_obis.c</name>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 163</file>
+                    <file> 166</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 310</file>
+                    <file> 58</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 80</file>
+                    <file> 92</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 262</file>
+                    <file> 250 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 257 230 238 232</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\user_event_driven\event_driver.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr_ex.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
+                    <file> 181</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 169</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 156</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 164</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 107</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 213</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\stm32f4xx_it.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 208</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 330</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 265</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 279 282 254 309</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 96</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 57</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 79</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_adc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 281</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
                     <file> 200</file>
                 </tool>
                 <tool>
+                    <name>__cstat</name>
+                    <file> 195</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 111</file>
+                </tool>
+                <tool>
                     <name>BICOMP</name>
-                    <file> 106</file>
+                    <file> 267</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
+                    <file> 74</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_cortex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 157</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 48</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 99</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_exti.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 173</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 262</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 334</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 317</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 176</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 110</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\stm32f4xx_hal_msp.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 296</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 151</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 206</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 327</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 123</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 205</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 63</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 223</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 97</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Core\Src\system_stm32f4xx.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 331</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 207</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 313</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 112 50 258 59 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 321</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 128</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 183</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 325</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 300</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 88</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 307</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 273</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 194</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_dma.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 137</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 332</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 117</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_comm\user_app_comm.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 40</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 210</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 192</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 31 228 9 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 250 232 230 257 238 256 60 193 163 253 23</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_tim.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 145</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 175</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 310</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 203</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 90</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 122</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_ctrl_motor\user_app_ctrl_motor.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 292</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 302</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 62</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 9 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 257 230 238 232</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_pwr.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 263</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 124</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 170</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_gpio.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 197</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
                     <file> 105</file>
                 </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 212 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 265</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 130</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 66</file>
-                </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 162</file>
+                    <file> 290</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 149 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 142 220</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_at_serial\user_at_serial\user_at_serial.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 297</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 167</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 73 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 267 63 222</file>
+                    <file> 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191</file>
                 </tool>
             </inputs>
         </file>
@@ -1364,195 +1123,11 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 182</file>
+                    <file> 80</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 271</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 292</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 193 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 50 87 190 220 92 262 102 62 178 149 142 85 288 239</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 312</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 43</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 82</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 190 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 220</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 328</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 104</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 151</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 62 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 220</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_eventdriven\event_driven.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 101</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 324</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 311</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 212 220 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 234 278 246 288</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 180</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 52</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 109</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 244 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 245 250 242 247 184 235 255 1</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_util\onchipflash.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 335</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 303</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 169</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 237 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_util\user_modbus_rtu.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 113</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 279</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 282</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 239 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_queue\queue_p.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 298</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 224</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 176</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 235 227 302 185 334 216 199 278 263 90 213 226 71 280 53 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 269 183 100</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_util\user_string.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 320</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 99</file>
+                    <file> 100</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
@@ -1562,260 +1137,7 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 267 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 63 222</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 191</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 94</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 187</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 242 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 247 184 234 235 255</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 297</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 167</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 221</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 230 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 267 63 222 245 256 26 234 28 1 250 244 233 142 183 100 241 242 247 184 235 255</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 88</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 202</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 84</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 245 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 189</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 139</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 304</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 259 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 256 26 234 28 1 250 245 244 233 142 183 100 241</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 327</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 164</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 121</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 254 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 237 234 235 255</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 284</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 161</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 300</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 247 227 302 185 334 216 199 184 220 263 90 213 226 71 280 53 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 212</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 157</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 195</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 316</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 241 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 245 244 250</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 130</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 66</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 162</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 233 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 142 183 100 245 242 247 184 235 255 244 250 1</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_uart\user_uart.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 331</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 91</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 79</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 246 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 288 220</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_component\user_uart\user_uart.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 331</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 91</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 79</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 50 87 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 190 265 278 220 92 262 102 193 62 178 149 142 85 288</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_util\user_util.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 49</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 58</file>
-                </tool>
-                <tool>
-                    <name>__cstat</name>
-                    <file> 112</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 183 100 97 72</file>
+                    <file> 220 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 152 120 125 275 225 162 43 298 277 224 60 134 309 268</file>
                 </tool>
             </inputs>
         </file>
@@ -1824,40 +1146,21 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 307</file>
+                    <file> 322</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 153</file>
+                    <file> 150</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 131</file>
+                    <file> 219</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 92 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 50 87 190 220 102 193 62 178 149 142 85 288 262</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\user_app\user_app_at_serial\user_app_at_serial.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 225</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 154</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 181 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220</file>
+                    <file> 225 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 152 120 125 275 43 220 298 277 224 60 134 309 162</file>
                 </tool>
             </inputs>
         </file>
@@ -1866,21 +1169,699 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 180</file>
+                    <file> 259</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 52</file>
+                    <file> 135</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 109</file>
+                    <file> 215</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 178 265 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 135 278 220</file>
+                    <file> 277 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_at_serial\user_at_serial\user_at_serial.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 295</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 103</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 198 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 266 108 85</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 55</file>
+                </tool>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 329</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 283 294 271 149 306 84 289 165 81 138 182 317 281 96 157 137 307 173 321 111 325 197 296 263 181 63 164 303 145 327 203 208 222 331 52 328 40 292 166 80 322 259 91 73 295 146 177 338 260 218 340 187 178 41 199 301 87</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_adc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 312</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 318</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 276</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 130 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 60</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vib_sensor\user_app_vib_sensor.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 73</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 131</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 94</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 134 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_event_driven\event_driver.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 68</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 202</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 278</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 286 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 168</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_component\user_uart\user_uart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 187</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 75</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 209</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 152 120 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 125 168 282 275 225 162 43 220 298 277 224 60 134 309</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_ctrl_motor\user_app_ctrl_motor.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 292</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 302</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 62</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 125 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_ir_sensor\user_app_ir_sensor.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 315</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 211</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 139</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 298 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_obis.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 116</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 316</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 171</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 162</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_at_serial\user_app_at_serial.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 264</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 142</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 196 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_door_sensor\user_app_door_sensor.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 166</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 58</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 92</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 43 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_temperature\user_app_temperature.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 91</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 221</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 274</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 224 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282 60 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_irq_input\user_irq_input.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 260</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 115</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 83</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 227 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 228 9 244 250 232 230 257 238 256 60 193 163 253</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_at_serial\user_at_serial.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 295</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 103</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 212</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 233 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 266 108 85 257 228 9 244 250 232 230 238 256 60 193 163 253 235 243 269 247 239</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 73</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 131</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 94</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 253 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 257 238 230</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\user_external_flash.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 177</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 93</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 45</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 235 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 243 269 244 247 239</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_component\user_mem\user_internal_mem\user_internal_mem.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 338</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 69</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 78</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 237 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 280 244 247 239</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_relay\user_app_relay.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 259</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 135</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 215</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 238 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 257 230 235 243 269 247 239 232</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_uart\user_uart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 187</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 75</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 209</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 254 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 309 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_eventdriven\event_driven.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 149</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 106</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 305</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 286 275 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 244 282 254 309</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 80</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 100</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 291</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 232 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 268 257 230 235 243 269 247 239 238 256 60 193 163</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_queue\queue_p.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 165</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 118</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 37</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 247 188 311 140 337 61 51 282 112 50 258 59 121 71 126 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 180 193 163</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 81</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 49</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 324</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 243 188 311 140 337 61 51 269 275 112 50 258 59 121 71 126 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 286</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\onchipflash.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 289</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 297</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 261</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 280 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 322</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 150</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 219</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 230 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 257 228 9 250 232 238 256 60 193 163 253 235 243 269 247 239</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 146</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 54</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 133</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 257 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 91</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 221</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 274</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 256 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 60 193 163 257 235 243 269 247 239 238 230 232</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_string.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 340</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 77</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 148</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 266 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 108 85</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_modbus_rtu.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 218</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 72</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 217</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 268 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_util.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 178</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 154</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 184</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 193 163 141 172</file>
                 </tool>
             </inputs>
         </file>
@@ -1889,21 +1870,40 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 328</file>
+                    <file> 315</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 104</file>
+                    <file> 211</file>
                 </tool>
                 <tool>
                     <name>__cstat</name>
-                    <file> 151</file>
+                    <file> 139</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 56 234 278 263 90 213 226 71 280 53 227 302 185 334 216 199 218 319 143 295 317 96 70 48 145 188 270 57 125 174 170 293 111 54 203 219 136 177 41 61 148 135 246 288 220 245</file>
+                    <file> 186 244 282 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 82 191 254 309 275 257</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_app\user_app_fridge_lamp\user_app_fridge_lamp.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 67</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 161</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 159 168 112 50 258 59 121 71 126 188 311 140 337 61 51 42 319 167 335 304 158 284 174 189 39 129 333 95 127 155 114 70 320 216 38 44 66 185 299 191 282</file>
                 </tool>
             </inputs>
         </file>

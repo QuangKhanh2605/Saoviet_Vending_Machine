@@ -130,12 +130,12 @@ static uint8_t fevent_pcbox_receive_handle(uint8_t event)
 
 static uint8_t fevent_pcbox_complete_receive(uint8_t event)
 {
-    uint16_t pos = 0;
+    uint16_t pos        = 0;
     uint8_t Length_Data = 0;
     uint8_t UsingCrc    = 0;
-    uint16_t Crc_Check = 0;
-    uint16_t Crc_Recv  = 0;
-    uint8_t Respond = false;
+    uint16_t Crc_Check  = 0;
+    uint16_t Crc_Recv   = 0;
+    uint8_t Respond     = false;
     
     AppPcBox_Debug(sUartPcBox.Data_a8, sUartPcBox.Length_u16 , _RECV_PCBOX);
 

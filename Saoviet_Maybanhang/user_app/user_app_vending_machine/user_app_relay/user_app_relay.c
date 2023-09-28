@@ -217,7 +217,7 @@ void Write_Flash_Time_Relay_Warm(void)
     write[length++]= DEFAULT_READ_EXFLASH;
     write[length++]= sTimeCycleWarm.Run;
     write[length++]= sTimeCycleWarm.Wait;
-   
+    
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TIME_RELAY_WARM);
     eFlash_S25FL_BufferWrite(write, EX_FLASH_ADDR_TIME_RELAY_WARM, length);
 }

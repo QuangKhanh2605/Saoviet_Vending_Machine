@@ -308,9 +308,18 @@ void AppTemperature_Debug(void)
     length = Convert_Int_To_String_Scale(cData, (int)sTemperature.Value, sTemperature.Scale);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_temperature: Temp: ", sizeof("app_temperature: Temp: "));
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C"));
+    
     UTIL_Printf(DBLEVEL_M, (uint8_t*)" Setup: ", sizeof(" Setup: "));
     length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.TempSetup , sTemp_Crtl_Fridge.Scale);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C"));
+    
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Thresh: ", sizeof(" Thresh: "));
+    length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.Threshold , sTemp_Crtl_Fridge.Scale);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C"));
+    
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
     
     if(sStatusRelay.FridgeHeat == ON_RELAY)
