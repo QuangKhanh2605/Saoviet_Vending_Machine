@@ -43,7 +43,7 @@ extern sEvent_struct    sEventAppDoorSensor[];
 
 /*=============== Function Hanlde ================*/
 uint8_t     AppDoorSensor_Task(void);
-uint8_t     Log_Data_Door(uint8_t *aData);
+void        Log_Data_Door_Respond_PcBox(void);
 void        AppDoorSensor_Debug(void);
 
 

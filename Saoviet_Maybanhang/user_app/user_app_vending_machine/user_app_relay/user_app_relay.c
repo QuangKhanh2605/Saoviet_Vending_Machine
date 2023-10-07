@@ -90,14 +90,14 @@ static uint8_t fevent_relay_warm_on(uint8_t event)
 /*---------------ON relay warm--------------*/
     fevent_disable(sEventAppRelay,_EVENT_RELAY_WARM_REFRESH);
     fevent_enable(sEventAppRelay,_EVENT_RELAY_WARM_OFF);
-    ControlRelay(RELAY_WARM, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+    ControlRelay(RELAY_WARM, ON_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_UNCTRL);
     return 1;
 }
 
 static uint8_t fevent_relay_warm_off(uint8_t event)
 {
 /*--------------OFF relay warm--------------*/
-    ControlRelay(RELAY_WARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+    ControlRelay(RELAY_WARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_UNCTRL);
     sStatusApp.RL_Warm = FREE;
     fevent_enable(sEventAppRelay, _EVENT_RELAY_WARM_REFRESH);
     return 1;
@@ -166,19 +166,12 @@ void PcBox_Setup_Time_Warm_Run(uint8_t TimeRunWarm)
     else if(TimeRunWarm >30) TimeRunWarm=30;
     Setup_TimeCycle_Relay_Warm(TimeRunWarm, sTimeCycleWarm.Wait);
     
-    uint8_t aData[5];
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
-    aData[length++] = OBIS_TIME_WARM_RUN;
-    aData[length++] = 0x01;
-    aData[length++] = sTimeCycleWarm.Run ;
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_TIME_WARM_RUN;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x01;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sTimeCycleWarm.Run ;
 
-    Calculator_Crc_U16(&TempCrc, aData, length);
-
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-
-    Write_Queue_Repond_PcBox(aData, length);
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
 }
 
 void PcBox_Setup_Time_Warm_Wait(uint8_t TimeWaitWarm)
@@ -187,19 +180,12 @@ void PcBox_Setup_Time_Warm_Wait(uint8_t TimeWaitWarm)
     else if(TimeWaitWarm < 5) TimeWaitWarm=5;
     Setup_TimeCycle_Relay_Warm(sTimeCycleWarm.Run, TimeWaitWarm);
     
-    uint8_t aData[5];
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
-    aData[length++] = OBIS_TIME_WARM_WAIT;
-    aData[length++] = 0x01;
-    aData[length++] = sTimeCycleWarm.Wait ;
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_TIME_WARM_WAIT;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x01;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sTimeCycleWarm.Wait ;
 
-    Calculator_Crc_U16(&TempCrc, aData, length);
-
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-
-    Write_Queue_Repond_PcBox(aData, length);
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
 }
 
 
@@ -240,8 +226,9 @@ void Init_Time_Relay_Warm(void)
     @param  State: Trang thai dong hoac mo
     @param  StateRespond: Co phan hoi ve PcBox hay k
     @param  RelayDebug: Co hien thi Debug hay k 
+    @param  RelayCtrl: Co dieu khien relay qua tap lenh k 
 */
-void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug)
+void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug, uint8_t RelayCtrl)
 {
   if(State == OFF_RELAY || State == ON_RELAY)
   {
@@ -250,38 +237,45 @@ void ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t Re
           case RELAY_ELEVATOR: 
             OnOff_Relay(RELAY_ELEVATOR, State);
             sStatusRelay.Elevator = State;
+            if(RelayCtrl == _RL_CTRL) sStatusRelay.Elevator_Ctrl = State;
             break;
             
           case RELAY_SCREEN: 
             OnOff_Relay(RELAY_SCREEN, State);
             sStatusRelay.Screen = State;
+            if(RelayCtrl == _RL_CTRL) sStatusRelay.Screen_Ctrl = State;
             Write_Status_Relay_ExFlash();
             break;
             
           case RELAY_FRIDGE_COOL: 
             OnOff_Relay(RELAY_FRIDGE_COOL, State);
             sStatusRelay.FridgeCool = State;
+            if(RelayCtrl == _RL_CTRL) sStatusRelay.FridgeCool_Ctrl = State;
             break;
             
           case RELAY_ALARM: 
             OnOff_Relay(RELAY_ALARM, State);
             sStatusRelay.Alarm = State;
+            if(RelayCtrl == _RL_CTRL) sStatusRelay.Alarm_Ctrl = State;
             break;
             
           case RELAY_FRIDGE_HEAT: 
             OnOff_Relay(RELAY_FRIDGE_HEAT, State);
             sStatusRelay.FridgeHeat = State;
+            if(RelayCtrl == _RL_CTRL) sStatusRelay.FridgeHeat_Ctrl = State;
             break;
             
           case RELAY_LAMP: 
             OnOff_Relay(RELAY_LAMP, State);
             sStatusRelay.Lamp = State;
+            if(RelayCtrl == _RL_CTRL) sStatusRelay.Lamp_Ctrl = State;
             Write_Status_Relay_ExFlash();
             break;
             
           case RELAY_WARM: 
             OnOff_Relay(RELAY_WARM, State);
             sStatusRelay.Warm = State;
+            if(RelayCtrl == _RL_CTRL) sStatusRelay.Warm_Ctrl = State;
             break;
         
          default:
@@ -322,19 +316,29 @@ void Init_AppRelay(void)
 */
 void Write_Status_Relay_ExFlash(void)
 {
-    uint8_t aWrite[9]={0};
-    aWrite[0] = DEFAULT_READ_EXFLASH;
-    aWrite[1] = NUMBER_RELAY;
-    aWrite[2] = sStatusRelay.Elevator;
-    aWrite[3] = sStatusRelay.Screen;
-    aWrite[4] = sStatusRelay.FridgeCool;
-    aWrite[5] = sStatusRelay.Alarm;
-    aWrite[6] = sStatusRelay.FridgeHeat;
-    aWrite[7] = sStatusRelay.Lamp;
-    aWrite[8] = sStatusRelay.Warm;
+    uint8_t aWrite[16]={0};
+    uint8_t length = 0;
+    aWrite[length++] = DEFAULT_READ_EXFLASH;
+    aWrite[length++] = NUMBER_RELAY;
+    aWrite[length++] = sStatusRelay.Elevator;
+    aWrite[length++] = sStatusRelay.Screen;
+    aWrite[length++] = sStatusRelay.FridgeCool;
+    aWrite[length++] = sStatusRelay.Alarm;
+    aWrite[length++] = sStatusRelay.FridgeHeat;
+    aWrite[length++] = sStatusRelay.Lamp;
+    aWrite[length++] = sStatusRelay.Warm;
+    
+    aWrite[length++] = sStatusRelay.Elevator_Ctrl;
+    aWrite[length++] = sStatusRelay.Screen_Ctrl;
+    aWrite[length++] = sStatusRelay.FridgeCool_Ctrl;
+    aWrite[length++] = sStatusRelay.Alarm_Ctrl;
+    aWrite[length++] = sStatusRelay.FridgeHeat_Ctrl;
+    aWrite[length++] = sStatusRelay.Lamp_Ctrl;
+    aWrite[length++] = sStatusRelay.Warm_Ctrl;
+    
     eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_STATUS_RELAY);
     HAL_Delay(1);
-    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_STATUS_RELAY, 9);
+    eFlash_S25FL_BufferWrite(aWrite, EX_FLASH_ADDR_STATUS_RELAY, length);
 }
 
 /*
@@ -342,8 +346,8 @@ void Write_Status_Relay_ExFlash(void)
 */
 void Read_Status_Relay_ExFlash(void)
 {
-    uint8_t aRead[9] = {0};
-    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_RELAY, 9);
+    uint8_t aRead[16] = {0};
+    eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_RELAY, 16);
     if( aRead[0] == DEFAULT_READ_EXFLASH && aRead[1] == NUMBER_RELAY)
     {
         //if(aRead[2] <= 0x01) sStatusRelay.Elevator  = aRead[2];
@@ -353,6 +357,15 @@ void Read_Status_Relay_ExFlash(void)
         //if(aRead[6] <= 0x01) sStatusRelay.FridgeHeat= aRead[6];
         if(aRead[7] <= 0x01) sStatusRelay.Lamp      = aRead[7];
         //if(aRead[8] <= 0x01) sStatusRelay.Warm      = aRead[8];
+        
+        //if(aRead[9] <= 0x01) sStatusRelay.Elevator_Ctrl  = aRead[9];
+        //if(aRead[10] <= 0x01) sStatusRelay.Screen_Ctrl    = aRead[10];
+        //if(aRead[11] <= 0x01) sStatusRelay.FridgeCool_Ctrl= aRead[11];
+        //if(aRead[12] <= 0x01) sStatusRelay.Alarm_Ctrl     = aRead[12];
+        //if(aRead[13] <= 0x01) sStatusRelay.FridgeHeat_Ctrl= aRead[13];
+        if(aRead[14] <= 0x01) sStatusRelay.Lamp_Ctrl      = aRead[14];
+        //if(aRead[15] <= 0x01) sStatusRelay.Warm_Ctrl      = aRead[15];
+        
     }
 }
 
@@ -401,23 +414,13 @@ void Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Status)
 {
   if(State == _RL_RESPOND)
   {
-    uint8_t aData[5];
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_RESPOND_HANDLE_RELAY;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x02;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = KindRelay ;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = Status;
     
-/*=============== Log ===============*/
-    
-    aData[length++] = OBIS_RESPOND_HANDLE_RELAY;
-    aData[length++] = 0x02;
-    aData[length++] = KindRelay ;
-    aData[length++] = Status;
-    
-    Calculator_Crc_U16(&TempCrc, aData, length);
-    
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-    
-    Write_Queue_Repond_PcBox(aData, length);
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
   }
 }
 
@@ -451,48 +454,48 @@ void Relay_Debug(uint8_t State_Debug, uint8_t KindRelay, uint8_t Status)
 #ifdef USING_APP_RELAY_DEBUG
     if(Status == ON_RELAY)
     {
-      UTIL_Printf(DBLEVEL_M, (uint8_t*)"user_app_relay: ON Relay: ", sizeof("user_app_relay: ON Relay: "));
+      UTIL_Printf(DBLEVEL_M, (uint8_t*)"user_app_relay: ON Relay: ", sizeof("user_app_relay: ON Relay: ")-1);
     }
     else
     {
-      UTIL_Printf(DBLEVEL_M, (uint8_t*)"user_app_relay: OFF Relay: ", sizeof("user_app_relay: OFF Relay: "));
+      UTIL_Printf(DBLEVEL_M, (uint8_t*)"user_app_relay: OFF Relay: ", sizeof("user_app_relay: OFF Relay: ")-1);
     }
     
     switch(KindRelay)
     {
         case RELAY_ELEVATOR:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"ELEVATOR ", sizeof("ELEVATOR ")); 
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"ELEVATOR ", sizeof("ELEVATOR ")-1); 
            break;
            
         case RELAY_SCREEN:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"SCREEN ", sizeof("SCREEN ")); 
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"SCREEN ", sizeof("SCREEN ")-1); 
            break;
            
         case RELAY_FRIDGE_COOL:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"FRIDGE COOL ", sizeof("FRIDGE COOL ")); 
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"FRIDGE COOL ", sizeof("FRIDGE COOL ")-1); 
            break;
            
         case RELAY_ALARM:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"ALARM ", sizeof("ALARM ")); 
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"ALARM ", sizeof("ALARM ")-1); 
            break;
            
         case RELAY_FRIDGE_HEAT:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"FRIDGE HEAT ", sizeof("FRIDGE HEAT ")); 
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"FRIDGE HEAT ", sizeof("FRIDGE HEAT ")-1); 
            break;
            
         case RELAY_LAMP:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"LAMP ", sizeof("LAMP ")); 
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"LAMP ", sizeof("LAMP ")-1); 
            break;
            
         case RELAY_WARM:
-           UTIL_Printf(DBLEVEL_M, (uint8_t*)"WARM ", sizeof("WARM ")); 
+           UTIL_Printf(DBLEVEL_M, (uint8_t*)"WARM ", sizeof("WARM ")-1); 
            break;
            
         default:
            break;
     }
     
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")); 
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")-1); 
 #endif
     }
 }

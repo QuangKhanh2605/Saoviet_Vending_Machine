@@ -19,7 +19,6 @@ static uint8_t fevent_temp_entry(uint8_t event);
 static uint8_t fevent_temp_get_adc(uint8_t event);
 static uint8_t fevent_temp_calculator(uint8_t event);
 static uint8_t fevent_temp_set_setuptemp(uint8_t event);
-static uint8_t fevent_temp_read_setuptemp(uint8_t event);
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event);
 static uint8_t fevent_temp_time_get(uint8_t event);
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event);
@@ -32,7 +31,6 @@ sEvent_struct                   sEventAppTemperature[] =
   {_EVENT_TEMP_CALCULATOR,      0, 0, 0,                    fevent_temp_calculator},
     
   {_EVENT_TEMP_SET_SETUPTEMP,   0, 0, 0,                    fevent_temp_set_setuptemp},
-  {_EVENT_TEMP_READ_SETUPTEMP,  1, 0, 0,                    fevent_temp_read_setuptemp},
   
   {_EVENT_TEMP_CTRL_FRIDGE,     0, 0, 0,                    fevent_temp_ctrl_fridge},
   
@@ -155,7 +153,7 @@ static uint8_t fevent_temp_set_setuptemp(uint8_t event)
     return 1;
 }
 
-static uint8_t fevent_temp_read_setuptemp(uint8_t event)
+void Init_Temp_Ctrl_Fridge(void)
 {
 /*-----------------Doc nhiet do duoc cai dat tu Flash---------------*/
     uint8_t read[4] = {0};
@@ -166,7 +164,6 @@ static uint8_t fevent_temp_read_setuptemp(uint8_t event)
         sTemp_Crtl_Fridge.TempSetup |= read[2];
         sTemp_Crtl_Fridge.Threshold  = read[3];
     }
-    return 1;
 }
 
 static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
@@ -177,10 +174,10 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
         if(sTemperature.Value >= sTemp_Crtl_Fridge.TempSetup + sTemp_Crtl_Fridge.Threshold)
         {
             if(sStatusRelay.FridgeHeat == OFF_RELAY)
-            ControlRelay(RELAY_FRIDGE_HEAT, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+            ControlRelay(RELAY_FRIDGE_HEAT, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG, _RL_UNCTRL);
             
             if(sStatusRelay.FridgeCool == OFF_RELAY)
-            ControlRelay(RELAY_FRIDGE_COOL, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+            ControlRelay(RELAY_FRIDGE_COOL, ON_RELAY, _RL_RESPOND, _RL_UNDEBUG, _RL_UNCTRL);
             
             fevent_disable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
             
@@ -190,7 +187,7 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event)
         {
             if(sStatusRelay.FridgeHeat == ON_RELAY)
             {
-                ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+                ControlRelay(RELAY_FRIDGE_HEAT, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG, _RL_UNCTRL);
             }
 
             fevent_enable(sEventAppTemperature, _EVENT_TEMP_OFF_FRIGE_FROZEN);
@@ -211,7 +208,7 @@ static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 {
 /*---------------------Tat relay cuc nong---------------------*/
     if(sStatusRelay.FridgeCool == ON_RELAY)
-    ControlRelay(RELAY_FRIDGE_COOL, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG);
+    ControlRelay(RELAY_FRIDGE_COOL, OFF_RELAY, _RL_RESPOND, _RL_UNDEBUG, _RL_UNCTRL);
     
     sStatusApp.Temperature = FREE;
     return 1;
@@ -219,11 +216,7 @@ static uint8_t fevent_temp_off_fridge_frozen(uint8_t event)
 
 static uint8_t fevent_temp_respond_error(uint8_t event)
 {
-    uint8_t aData[5];
-    uint8_t length = 0;
-    
-    length = Respond_Error_Temp(aData);
-    Write_Queue_Repond_PcBox(aData, length); 
+    Respond_Error_Temp();
       
     fevent_enable(sEventAppTemperature, event);
     return 1;
@@ -232,23 +225,14 @@ static uint8_t fevent_temp_respond_error(uint8_t event)
 /*
     @brief  Phan hoi canh bao rung len PcBox
 */
-uint8_t Respond_Error_Temp(uint8_t *aData)
-{
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
-    
+void Respond_Error_Temp(void)
+{ 
 /*=============== Log ===============*/
-    
-    aData[length++] = OBIS_WARNING_ERROR_TEMP;
-    aData[length++] = 0x01;
-    aData[length++] = 0x01;
-    
-    Calculator_Crc_U16(&TempCrc, aData, length);
-    
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-
-    return length;
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_WARNING_ERROR_TEMP;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x01;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x01;
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
 }
 
 /*=============== Function Handle ============== */
@@ -276,24 +260,14 @@ void Set_Threshold_Temperature(int16_t temp, uint8_t scale)
 */
 void SetupTemp_Respond_Pc_Box_Setup(void)
 {
-    uint8_t aData[5];
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_SETUP_TEMP;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x03;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sTemp_Crtl_Fridge.TempSetup >> 8;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sTemp_Crtl_Fridge.TempSetup;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sTemp_Crtl_Fridge.Scale;
     
-/*=============== Log ===============*/
-    
-    aData[length++] = OBIS_SETUP_TEMP;
-    aData[length++] = 0x03;
-    aData[length++] = sTemp_Crtl_Fridge.TempSetup >> 8;
-    aData[length++] = sTemp_Crtl_Fridge.TempSetup;
-    aData[length++] = sTemp_Crtl_Fridge.Scale;
-    
-    Calculator_Crc_U16(&TempCrc, aData, length);
-    
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-    
-    Write_Queue_Repond_PcBox(aData, length);
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
 }
 
 /*
@@ -306,41 +280,41 @@ void AppTemperature_Debug(void)
     uint8_t length = 0;
 //    sprintf(c, "%d \r\n", sTemperature.Value);
     length = Convert_Int_To_String_Scale(cData, (int)sTemperature.Value, sTemperature.Scale);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_temperature: Temp: ", sizeof("app_temperature: Temp: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_temperature: Temp: ", sizeof("app_temperature: Temp: ")-1);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C")-1);
     
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Setup: ", sizeof(" Setup: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Setup: ", sizeof(" Setup: ")-1);
     length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.TempSetup , sTemp_Crtl_Fridge.Scale);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C")-1);
     
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Thresh: ", sizeof(" Thresh: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Thresh: ", sizeof(" Thresh: ")-1);
     length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.Threshold , sTemp_Crtl_Fridge.Scale);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"°C", sizeof("°C")-1);
     
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")-1);
     
     if(sStatusRelay.FridgeHeat == ON_RELAY)
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Heat: ON ", sizeof("Relay Heat: ON "));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Heat: ON ", sizeof("Relay Heat: ON ")-1);
     }
     else
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Heat: OFF ", sizeof("Relay Heat: OFF "));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Heat: OFF ", sizeof("Relay Heat: OFF ")-1);
     }
     
     if(sStatusRelay.FridgeCool == ON_RELAY)
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Cool: ON ", sizeof("Relay Cool: ON "));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Cool: ON ", sizeof("Relay Cool: ON ")-1);
     }
     else
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Cool: OFF ", sizeof("Relay Cool: OFF "));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"Relay Cool: OFF ", sizeof("Relay Cool: OFF ")-1);
     }
     
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 #endif
 }
 
@@ -366,6 +340,12 @@ uint8_t AppTemperature_Task(void)
     }
     
     return Result;
+}
+
+void Init_AppTemperature(void)
+{
+    Init_Temp_Ctrl_Fridge();
+    ADC_Init();
 }
 
 /*

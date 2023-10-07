@@ -9,6 +9,7 @@ void SysApp_Init (void)
     Init_AppRelay();
     Pc_Box_Init();
     Init_AppElectric();
+    Init_AppTemperature();
 }
 
 void SysApp_Setting (void)
@@ -70,7 +71,6 @@ void Main_Task (void)
 void AppComm_Init (void)
 {
     Init_Uart_Module(); 
-    ADC_Init();
 }
 
 

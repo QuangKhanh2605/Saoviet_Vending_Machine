@@ -104,7 +104,7 @@ uint8_t Convert_Int_To_String(char cData[], int var)
         stamp = var;
     }
     
-    while( stamp/division>0 )
+    while( stamp/division > 0 )
     {
         division *= 10;
     }

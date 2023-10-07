@@ -10,13 +10,14 @@
 #include "user_uart.h"
 #include "user_comm_vending_machine.h"
 
+
+
 typedef enum
 {
     _EVENT_PC_BOX_ENTRY = 0,
     _EVENT_PC_BOX_RECEIVE_HANDLE,
     _EVENT_PC_BOX_COMPLETE_RECEIVE,
     _EVENT_PC_BOX_LOG_TSVH,
-    _EVENT_PC_BOX_PING_DCU,
     _EVENT_PC_BOX_SET_DCU_ID,
     _EVENT_PC_BOX_GET_DCU_ID,
     _EVENT_WDG_STM32F4,
@@ -82,16 +83,17 @@ typedef struct
     uint8_t Length;
 }sDataQueueRespondPcBox;
 
-extern sEvent_struct  sEventAppPcBox[];
-extern sData   sDCU_ID;
+extern sEvent_struct    sEventAppPcBox[];
+extern sData            sDCU_ID;
 extern StructStatusApp  sStatusApp;
-extern StructParamPcBox  sParamPcBox;
+extern StructParamPcBox sParamPcBox;
+extern sData            sRespPcBox;
 /*================ Function ===================*/
 
 uint8_t     AppPcBox_Task(void);
 void        Init_DCU_ID(void);
 void        Pc_Box_Init(void);
-uint8_t     Log_TSVH(uint8_t *aData);
+void        Log_TSVH(void);
 void        AppPcBox_Debug(uint8_t aData[], uint8_t length, uint8_t TransRecv);
 void        Write_Queue_Repond_PcBox(uint8_t aData[], uint8_t Length);
 void        Transmit_PCBOX(uint8_t aData[],uint8_t length);
@@ -102,4 +104,6 @@ void        Init_PcBox(void);
 
 void        Write_Flash_Using_Crc(void);
 void        Init_Using_Crc();
+
+void        Packing_Respond_PcBox(uint8_t aData[], uint16_t Length);
 #endif

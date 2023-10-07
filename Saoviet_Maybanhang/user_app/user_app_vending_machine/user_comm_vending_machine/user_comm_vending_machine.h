@@ -78,6 +78,8 @@
 
 #define BEFORE_RESET_DCU            0
 #define AFTER_RESET_DCU             1
+
+#define NUMBER_MAX_PING_PCBOX       10
 /*=========== Define App Motor =================*/
 
 #define TIME_MOTOR_PUSH_EARLY           1000

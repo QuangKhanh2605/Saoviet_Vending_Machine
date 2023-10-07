@@ -24,7 +24,6 @@ typedef enum
     _EVENT_ELECTRIC_HANDLE_485,
     _EVENT_ELECTRIC_SEND_METER,
     _EVENT_ELECTRIC_CHANGE_STATUS_POWER,
-    _EVENT_ELECTRIC_HANDLE_POWER,
     _EVENT_ELECTRIC_INIT_UART,
     
     _EVENT_ELECTRIC_END,
@@ -58,7 +57,7 @@ extern Struct_Electric_Current      sElectric;
 uint8_t     AppElectric_Task(void);
 void        Send_Command_IVT (uint8_t SlaveID, uint8_t Func_Code, uint16_t Addr_Register, uint16_t Infor_Register, void (*pFuncResetRecvData) (void));
 void        AppIVT_Clear_Before_Recv (void);
-uint8_t     Status_Power_Respond_PcBox(uint8_t aData[]);
+void        Status_Power_Respond_PcBox(void);
 
 void        Write_Status_Electric_ExFlash(void);
 void        Read_Status_Electric_ExFlash(void);
@@ -68,5 +67,6 @@ void        Write_IdSlave_Electric_ExFlash(void);
 void        Read_IdSlave_Electric_ExFlash(void);
 
 void        AppElectric_Debug(void);
+void        Handle_State_Power(void);
 #endif
 

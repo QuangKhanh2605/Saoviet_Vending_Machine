@@ -139,10 +139,10 @@ void        _fGET_TIME_TSVH (sData *strRecei, uint16_t Pos)
     uint8_t length = 0;
  
     length = Convert_Int_To_String_Scale(cData, (int)sParamPcBox.TimeTSVH , 0x00);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time TSVH: ", sizeof("Time TSVH: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time TSVH: ", sizeof("Time TSVH: ")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min")-1);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
 
 /*
@@ -180,10 +180,10 @@ void        _fGET_TIME_PCBOX_RESET (sData *strRecei, uint16_t Pos)
     uint8_t length = 0;
  
     length = Convert_Int_To_String_Scale(cData, (int)sParamPcBox.TimeResetPcBox , 0x00);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time TSVH: ", sizeof("Time TSVH: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time TSVH: ", sizeof("Time TSVH: ")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min")-1);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
 
 /*
@@ -218,7 +218,7 @@ void        _fSET_TIME_PCBOX_RESET (sData *strRecei, uint16_t Pos)
 void        _fGET_SERI_DCU (sData *strRecei, uint16_t Pos)
 {
     UTIL_Printf(DBLEVEL_L, sDCU_ID.Data_a8, sDCU_ID.Length_u16);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
 
 /*
@@ -258,10 +258,10 @@ void        _fGET_SETUP_TEMP (sData *strRecei, uint16_t Pos)
     uint8_t length = 0;
  
     length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.TempSetup , sTemp_Crtl_Fridge.Scale);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"SetupTemp: ", sizeof("SetupTemp: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"SetupTemp: ", sizeof("SetupTemp: ")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"°C", sizeof("°C"));
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"°C", sizeof("°C")-1);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
     
 /*
@@ -318,10 +318,10 @@ void        _fGET_THRESH_TEMP (sData *strRecei, uint16_t Pos)
     uint8_t length = 0;
  
     length = Convert_Int_To_String_Scale(cData, (int)sTemp_Crtl_Fridge.Threshold , sTemp_Crtl_Fridge.Scale);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"ThreshTemp: ", sizeof("ThreshTemp: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"ThreshTemp: ", sizeof("ThreshTemp: ")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"°C", sizeof("°C"));
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"°C", sizeof("°C")-1);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
 
 /*
@@ -360,9 +360,9 @@ void        _fGET_ID_SLAVE (sData *strRecei, uint16_t Pos)
     uint8_t length = 0;
  
     length = Convert_Int_To_String(cData, (int)sElectric.ID);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Slave ID: ", sizeof("Slave ID: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Slave ID: ", sizeof("Slave ID: ")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
 
 /*
@@ -405,13 +405,18 @@ void        _fSET_ID_SLAVE (sData *strRecei, uint16_t Pos)
 */
 void        _fCTRL_RELAY_SCREEN (sData *strRecei, uint16_t Pos)
 {
+    if(strRecei->Data_a8[Pos] == '0' || strRecei->Data_a8[Pos] == '1')
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
     if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
     {
-        ControlRelay(RELAY_SCREEN, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+        ControlRelay(RELAY_SCREEN, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
     }
     else if(strRecei->Data_a8[Pos] - 0x30 == ON_RELAY)
     {
-        ControlRelay(RELAY_SCREEN, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+        ControlRelay(RELAY_SCREEN, ON_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
     }
 }
 
@@ -420,13 +425,26 @@ void        _fCTRL_RELAY_SCREEN (sData *strRecei, uint16_t Pos)
 */
 void        _fCTRL_RELAY_LAMP (sData *strRecei, uint16_t Pos)
 {
+    if(strRecei->Data_a8[Pos] == '0' || strRecei->Data_a8[Pos] == '1')
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
     if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
     {
-        ControlRelay(RELAY_LAMP, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+        ControlRelay(RELAY_LAMP, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
     }
     else if(strRecei->Data_a8[Pos] - 0x30 == ON_RELAY)
     {
-        ControlRelay(RELAY_LAMP, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+        if(sElectric.PowerPresent != POWER_OFF)
+        {
+            ControlRelay(RELAY_LAMP, ON_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
+        }
+        else
+        {
+            sStatusRelay.Lamp_Ctrl = ON_RELAY;
+            ControlRelay(RELAY_LAMP, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_UNCTRL);
+        }
     }
 }
 
@@ -435,6 +453,11 @@ void        _fCTRL_RELAY_LAMP (sData *strRecei, uint16_t Pos)
 */
 void        _fCTRL_RELAY_WARM (sData *strRecei, uint16_t Pos)
 {
+    if(strRecei->Data_a8[Pos] == '0' || strRecei->Data_a8[Pos] == '1')
+    {
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OK", 2);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
+    }
     if(strRecei->Data_a8[Pos] - 0x30 == OFF_RELAY)
     {
         fevent_active(sEventAppRelay, _EVENT_RELAY_WARM_OFF);
@@ -456,10 +479,10 @@ void        _fGET_TIME_WARM_RUN (sData *strRecei, uint16_t Pos)
     uint8_t length = 0;
  
     length = Convert_Int_To_String_Scale(cData, (int)sTimeCycleWarm.Run , 0x00);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time Warm Run: ", sizeof("Time Warm Run: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time Warm Run: ", sizeof("Time Warm Run: ")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min")-1);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
 
 void        _fSET_TIME_WARM_RUN (sData *strRecei, uint16_t Pos)
@@ -491,10 +514,10 @@ void        _fGET_TIME_WARM_WAIT (sData *strRecei, uint16_t Pos)
     uint8_t length = 0;
  
     length = Convert_Int_To_String_Scale(cData, (int)sTimeCycleWarm.Wait , 0x00);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time Warm Wait: ", sizeof("Time Warm Wait: "));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"Time Warm Wait: ", sizeof("Time Warm Wait: ")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)cData, length);
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min"));
-    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)" Min", sizeof(" Min")-1);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 }
 
 void        _fSET_TIME_WARM_WAIT (sData *strRecei, uint16_t Pos)
@@ -524,13 +547,13 @@ void        _fGET_USING_CRC (sData *strRecei, uint16_t Pos)
 {
     if(sParamPcBox.UsingCrc == _USING_CRC)
     {
-        UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox Using CRC", sizeof("PcBox Using CRC"));
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox Using CRC", sizeof("PcBox Using CRC")-1);
         UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
     }
     else
     {
-        UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox NO CRC", sizeof("PcBox NO CRC"));
-        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n"));
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox NO CRC", sizeof("PcBox NO CRC")-1);
+        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
     }
 }
 

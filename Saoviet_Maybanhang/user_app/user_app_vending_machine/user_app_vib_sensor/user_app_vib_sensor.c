@@ -83,11 +83,7 @@ static uint8_t fevent_vib_sensor(uint8_t event)
     
     if(sStatusVib.LevelWarning != 0)
     {
-        uint8_t aData[5];
-        uint8_t length = 0;
-        
-        length = Log_Data_Vib(aData);
-        Write_Queue_Repond_PcBox(aData, length);
+        Log_Data_Vib_Respond_PcBox();
         
         AppVibSensor_Debug();
 
@@ -97,7 +93,7 @@ static uint8_t fevent_vib_sensor(uint8_t event)
             
             if(sStatusVib.LevelWarning == 3)
             {
-              ControlRelay(RELAY_ALARM, ON_RELAY, _RL_RESPOND, _RL_DEBUG);
+              ControlRelay(RELAY_ALARM, ON_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_UNCTRL);
                 
                 if((HAL_GetTick() - GetTickLevelAlarm < TIME_LEVEL_ALARM) && (GetTickLevelAlarm != 0))
                 {
@@ -123,7 +119,7 @@ static uint8_t fevent_vib_sensor(uint8_t event)
 static uint8_t fevent_vib_off_alarm(uint8_t event)
 {
 /*------------------Tat relay canh bao--------------*/
-    ControlRelay(RELAY_ALARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG);
+    ControlRelay(RELAY_ALARM, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_UNCTRL);
     return 1;
 }
 
@@ -184,24 +180,14 @@ static uint8_t fevent_vib_led_warning(uint8_t event)
 /*
     @brief  Phan hoi canh bao rung len PcBox
 */
-uint8_t Log_Data_Vib(uint8_t *aData)
+void Log_Data_Vib_Respond_PcBox(void)
 {
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_WARNING_VIB_SENSOR;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x01;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sStatusVib.LevelWarning;
     
-/*=============== Log ===============*/
-    
-    aData[length++] = OBIS_WARNING_VIB_SENSOR;
-    aData[length++] = 0x01;
-    aData[length++] = sStatusVib.LevelWarning;
-    
-    Calculator_Crc_U16(&TempCrc, aData, length);
-    
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-
-      
-    return length;
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
 }
 
 /*
@@ -212,9 +198,9 @@ void AppVibSensor_Debug(void)
 #ifdef USING_APP_VIB_SENSOR_DEBUG
     char cData[1];
     Convert_Int_To_String(cData, sStatusVib.LevelWarning);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_vib_sensor: Level ", sizeof("app_vib_sensor: Level"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_vib_sensor: Level ", sizeof("app_vib_sensor: Level")-1);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 1);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 #endif
 }
 

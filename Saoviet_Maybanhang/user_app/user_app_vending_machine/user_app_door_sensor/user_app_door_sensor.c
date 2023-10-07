@@ -110,12 +110,7 @@ static uint8_t fevent_door_respond_pc_box(uint8_t event)
     if(sStatusDoor.Sensor1 == DOOR_OPEN || sStatusDoor.Sensor2 == DOOR_OPEN || sStatusDoor.Handle_Respond == 1)
     {
         sStatusDoor.Handle_Respond = 0;
-        uint8_t aData[5];
-        uint8_t length = 0;
-        length = Log_Data_Door(aData);
-        
-        Write_Queue_Repond_PcBox(aData, length);
-        
+        Log_Data_Door_Respond_PcBox();
         AppDoorSensor_Debug();
     }
     
@@ -127,25 +122,16 @@ static uint8_t fevent_door_respond_pc_box(uint8_t event)
 /*
     @brief  Log trang thai canh bao mo cua
 */
-uint8_t Log_Data_Door(uint8_t *aData)
+void Log_Data_Door_Respond_PcBox(void)
 {
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
-    
 /*=============== Log ===============*/
     
-    aData[length++] = OBIS_WARNING_DOOR_SENSOR;
-    aData[length++] = 0x02;
-    aData[length++] = sStatusDoor.Sensor1;
-    aData[length++] = sStatusDoor.Sensor2;
-    
-    Calculator_Crc_U16(&TempCrc, aData, length);
-    
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-    
-      
-    return length;
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_WARNING_DOOR_SENSOR;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x02;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sStatusDoor.Sensor1;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sStatusDoor.Sensor2;
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
 }
 
 /*============== Function Handle ==============*/
@@ -156,28 +142,28 @@ uint8_t Log_Data_Door(uint8_t *aData)
 void AppDoorSensor_Debug(void)
 {
 #ifdef USING_APP_DOOR_SENSOR_DEBUG
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_door_sensor: Door1: ", sizeof("app_door_sensor: Door1: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_door_sensor: Door1: ", sizeof("app_door_sensor: Door1: ")-1);
     
     if(sStatusDoor.Sensor1 == 1)
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"OPEN", sizeof("OPEN"));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"OPEN", sizeof("OPEN")-1);
     }
     else
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"CLOSE", sizeof("CLOSE"));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"CLOSE", sizeof("CLOSE")-1);
     }
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Door2: ", sizeof(" Door2: "));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Door2: ", sizeof(" Door2: ")-1);
     
     if(sStatusDoor.Sensor2 == 1)
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"OPEN", sizeof("OPEN"));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"OPEN", sizeof("OPEN")-1);
     }
     else
     {
-        UTIL_Printf(DBLEVEL_M, (uint8_t*)"CLOSE", sizeof("CLOSE"));
+        UTIL_Printf(DBLEVEL_M, (uint8_t*)"CLOSE", sizeof("CLOSE")-1);
     }
     
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 #endif
 }
 

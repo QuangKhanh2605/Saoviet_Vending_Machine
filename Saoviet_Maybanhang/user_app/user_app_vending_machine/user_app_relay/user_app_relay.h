@@ -52,9 +52,14 @@ typedef enum
     _RL_DEBUG,
 }eNumStateDebug;
 
+typedef enum
+{
+    _RL_CTRL,
+    _RL_UNCTRL,
+}eNumStateCtrlRelay;
+
 typedef struct
 {
-    uint8_t Respond_PcBox;
     uint8_t Elevator;
     uint8_t Screen;
     uint8_t FridgeCool;
@@ -62,6 +67,14 @@ typedef struct
     uint8_t FridgeHeat;
     uint8_t Lamp;
     uint8_t Warm;
+    
+    uint8_t Elevator_Ctrl;      //Trang thai relay dieu khien qua pcbox hoac lenh at+
+    uint8_t Screen_Ctrl;        //Trang thai relay dieu khien qua pcbox hoac lenh at+
+    uint8_t FridgeCool_Ctrl;    //Trang thai relay dieu khien qua pcbox hoac lenh at+
+    uint8_t Alarm_Ctrl;         //Trang thai relay dieu khien qua pcbox hoac lenh at+
+    uint8_t FridgeHeat_Ctrl;    //Trang thai relay dieu khien qua pcbox hoac lenh at+
+    uint8_t Lamp_Ctrl;          //Trang thai relay dieu khien qua pcbox hoac lenh at+
+    uint8_t Warm_Ctrl;          //Trang thai relay dieu khien qua pcbox hoac lenh at+
 }Struct_StatusRelay;
 
 typedef enum
@@ -108,7 +121,7 @@ void        LED_Off (Led_TypeDef Led);
 void        OnOff_Relay(Relay_TypeDef Relay, uint8_t State);
 void        Relay_Respond_Pc_Box(uint8_t State, uint8_t KindRelay, uint8_t Status);
 void        Relay_Debug(uint8_t State_Debug, uint8_t KindRelay, uint8_t Status);
-void        ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug);
+void        ControlRelay(uint8_t Relay, uint8_t State, uint8_t StateRespond, uint8_t RelayDebug, uint8_t RelayCtrl);
 
 void        OnRelay_Warm(uint32_t time_min);
 void        Init_Time_Relay_Warm(void);

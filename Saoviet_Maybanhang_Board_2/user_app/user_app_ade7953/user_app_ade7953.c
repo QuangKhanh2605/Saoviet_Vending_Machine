@@ -134,9 +134,9 @@ static uint8_t fevent_ade_handle(uint8_t event)
           
           StampPower = (int32_t)sADE.instan_ActPw_u32;
             
-          Voltage = (((uint64_t)sADE.vRMS_u32 * 38424)/100000000);
-          Current = (((uint64_t)sADE.i1RMS_u32 * 9088)/1000000);
-          Power   = (((int64_t)StampPower * 5085)/1000000);
+          Voltage = (((uint64_t)sADE.vRMS_u32 * 38314)/100000000);
+          Current = (((uint64_t)sADE.i1RMS_u32 * 9497)/1000000);
+          Power   = (((int64_t)StampPower * 5096)/1000000);
           
           if(Voltage < 5) Voltage = 0;
           

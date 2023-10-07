@@ -36,7 +36,7 @@ extern StructStatusVib     sStatusVib_Scan;
 /*================= Function Handle ================*/
 uint8_t     AppVibSensor_Task(void);
 
-uint8_t     Log_Data_Vib(uint8_t *aData);
+void        Log_Data_Vib_Respond_PcBox(void);
 void        AppVibSensor_Debug(void);
 
 

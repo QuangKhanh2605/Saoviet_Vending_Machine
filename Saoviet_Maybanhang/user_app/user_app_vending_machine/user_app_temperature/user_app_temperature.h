@@ -26,7 +26,6 @@ typedef enum
     _EVENT_TEMP_CALCULATOR,
     
     _EVENT_TEMP_SET_SETUPTEMP,
-    _EVENT_TEMP_READ_SETUPTEMP,
     
     _EVENT_TEMP_CTRL_FRIDGE,
     _EVENT_TEMP_TIME_GET,
@@ -55,10 +54,12 @@ extern  Struct_Temperature      sTemperature;
 extern  Struct_Control_Fridge   sTemp_Crtl_Fridge;
 /*=============== Function ================*/
 uint8_t     AppTemperature_Task(void);
+void        Init_AppTemperature(void);
 void        ADC_Init(void);
 void        AppTemperature_Debug(void);
 void        SetupTemp_Respond_Pc_Box_Setup(void);
 void        Set_Threshold_Temperature(int16_t temp, uint8_t scale);
-uint8_t     Respond_Error_Temp(uint8_t *aData);
+void        Respond_Error_Temp(void);
+void        Init_Temp_Ctrl_Fridge(void);
 #endif
 

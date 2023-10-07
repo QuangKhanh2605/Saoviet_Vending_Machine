@@ -102,35 +102,31 @@ static uint8_t fevent_motor_push_off_error(uint8_t event)
 static uint8_t fevent_respond_pcbox(uint8_t event)
 {
 /*-------------------Respond PcBox------------------*/
-    uint8_t aData[10];
-    uint8_t length = 0;
-    uint16_t TempCrc = 0;
-    
+    sRespPcBox.Length_u16 = 0;
     if(sPushMotor.State == PUSH_MOTOR)  //Xac nhan trang thai push hoac fix motor
     {
         sInforPush.IrSensor += sPushMotor.IrSensor;
 
-        
         /*=============== Log ===============*/
         if(sPushMotor.NumHandle < sPushMotor.SumHandle) //Xac nhan dang push hoac da hoan thanh
         {
-            aData[length++] = OBIS_ON_GOING_PUSH;
-            aData[length++] = 0x04;
-            aData[length++] = sPushMotor.Pos;
-            aData[length++] = sPushMotor.IrSensor;
-            aData[length++] = sPushMotor.NumHandle;
-            aData[length++] = sPushMotor.SumHandle;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_ON_GOING_PUSH;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x04;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sPushMotor.Pos;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sPushMotor.IrSensor;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sPushMotor.NumHandle;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sPushMotor.SumHandle;
             fevent_active(sEventAppMotor, _EVENT_CONTROL_MOTOR_PUSH);
         }
         else
         {
             sPushMotor.StatePush = COMPLETE_PUSH;
-            aData[length++] = OBIS_COMPLETE_PUSH;
-            aData[length++] = 0x04;
-            aData[length++] = sPushMotor.Pos;
-            aData[length++] = sInforPush.IrSensor;
-            aData[length++] = sInforPush.NumEarly;
-            aData[length++] = sInforPush.NumLate;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_COMPLETE_PUSH;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x04;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sPushMotor.Pos;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sInforPush.IrSensor;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sInforPush.NumEarly;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sInforPush.NumLate;
             AppMotor_Debug();
             sStatusApp.Motor = FREE;
         }
@@ -138,17 +134,13 @@ static uint8_t fevent_respond_pcbox(uint8_t event)
     else
     {
             sPushMotor.StatePush = COMPLETE_PUSH;
-            aData[length++] = OBIS_PC_BOX_FIX_MOTOR;
-            aData[length++] = 0x01;
-            aData[length++] = sPushMotor.Pos;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_PC_BOX_FIX_MOTOR;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x01;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sPushMotor.Pos;
             sStatusApp.Motor = FREE;
     }
     
-    Calculator_Crc_U16(&TempCrc, aData, length);
-        
-    aData[length++] = TempCrc;
-    aData[length++] = TempCrc >> 8;
-    Write_Queue_Repond_PcBox(aData, length);
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
     return 1;
 }
 
@@ -239,25 +231,25 @@ void AppMotor_Debug(void)
 #ifdef USING_APP_CTRL_MOTOR_DEBUG
     char cData[2];
     Convert_Int_To_String(cData, sPushMotor.Pos);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_ctrl_motor: Pos:", sizeof("app_ctrl_motor: Pos:"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_ctrl_motor: Pos:", sizeof("app_ctrl_motor: Pos:")-1);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
     
     cData[1]=0x00;
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" IR:", sizeof(" IR:"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" IR:", sizeof(" IR:")-1);
     Convert_Int_To_String(cData, sInforPush.IrSensor);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
     
     cData[1]=0x00;
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Early:", sizeof(" Early:"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Early:", sizeof(" Early:")-1);
     Convert_Int_To_String(cData, sInforPush.NumEarly);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
     
     cData[1]=0x00;
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Late:", sizeof(" Late:"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)" Late:", sizeof(" Late:")-1);
     Convert_Int_To_String(cData, sInforPush.NumLate);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 2);
     
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n"));
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 #endif
 }
 
