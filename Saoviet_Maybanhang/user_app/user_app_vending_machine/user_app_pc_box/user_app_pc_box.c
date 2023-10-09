@@ -195,10 +195,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   {              
                         if(sUartPcBox.Data_a8[pos] == 0x01)
                         {
-                            fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
-                            fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_COMPLETE_RECEIVE);
-                            fevent_active(sEventAppPcBox, _EVENT_RESET_DCU);
-                            pos +=Length_Data;
+                            ResetDCU();
                         }
                   }
                   break; 
@@ -364,7 +361,6 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
     }
     else
     {
-        Init_Uart_PcBox_Rx_IT();
         Write_Queue_Repond_PcBox((uint8_t*)"ERROR",5);
     }
     
@@ -427,21 +423,7 @@ static uint8_t fevent_reset_dcu(uint8_t event)
 /*-----------------Kiem tra dieu kien va reset DCU---------------*/
     if(qGet_Number_Items(&qRespondPcBox) == 0)
     {
-        HAL_Delay(1000);
-        uint8_t aData[5]={0};
-        uint8_t length = 0;
-        uint16_t TempCrc = 0;
-        aData[length++] = OBIS_RESET_DCU;
-        aData[length++] = 0x01;
-        aData[length++] = BEFORE_RESET_DCU;
-        
-        Calculator_Crc_U16(&TempCrc, aData, length);
-        aData[length++] = TempCrc;
-        aData[length++] = TempCrc << 8;
-        Transmit_PCBOX(aData, length);
-        UTIL_Printf(DBLEVEL_L, (uint8_t*)"OFF_MCU\r\n", sizeof("OFF_MCU\r\n")-1); 
-        
-        Reset_Chip();
+        ResetDCU();
     }
     fevent_active(sEventAppPcBox, event);
     return 1;
@@ -524,6 +506,9 @@ static uint8_t fevent_reset_pc_box(uint8_t event)
         fevent_disable(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
         UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_pc_box: Reset Pc Box", sizeof("app_pc_box: Reset Pc Box")-1);
         UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
+        
+        MX_USART6_UART_Init();
+        Init_Uart_PcBox_Rx_IT();
     }
     else
     {   
@@ -541,6 +526,7 @@ static uint8_t fevent_wait_reset_pc_box(uint8_t event)
     sParamPcBox.ConnectPcBox = _CONNECT_PCBOX;
     fevent_active(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
     sStatusApp.Pcbox = FREE;
+
     return 1;
 }
 
@@ -572,7 +558,8 @@ void Packing_Respond_PcBox(uint8_t aData[], uint16_t Length)
     Calculator_Crc_U16(&TempCrc, aData, Length);
     aData[Length++] = TempCrc;
     aData[Length++] = TempCrc << 8;
-    if(aData[0] == OBIS_DCU_PING_PC_BOX)    Transmit_PCBOX(aData, Length);
+    if(aData[0] == OBIS_DCU_PING_PC_BOX || aData[0] == OBIS_RESET_DCU)    
+    Transmit_PCBOX(aData, Length);
     else    Write_Queue_Repond_PcBox(aData, Length);
 }
 
@@ -755,6 +742,25 @@ void Init_PcBox(void)
         sParamPcBox.TimeResetPcBox  = read[1];
     }
     sEventAppPcBox[_EVENT_WAIT_RESET_PC_BOX].e_period = sParamPcBox.TimeResetPcBox * TIME_ONE_MINUTES;
+}
+
+void ResetDCU(void)
+{
+    HAL_Delay(1000);
+    uint8_t aData[5]={0};
+    uint8_t length = 0;
+    uint16_t TempCrc = 0;
+    aData[length++] = OBIS_RESET_DCU;
+    aData[length++] = 0x01;
+    aData[length++] = BEFORE_RESET_DCU;
+    
+    Calculator_Crc_U16(&TempCrc, aData, length);
+    aData[length++] = TempCrc;
+    aData[length++] = TempCrc << 8;
+    Transmit_PCBOX(aData, length);
+    UTIL_Printf(DBLEVEL_L, (uint8_t*)"OFF_MCU\r\n", sizeof("OFF_MCU\r\n")-1); 
+    
+    Reset_Chip();
 }
 
 /*

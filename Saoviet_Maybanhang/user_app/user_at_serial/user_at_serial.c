@@ -60,9 +60,10 @@ void        _fRESET_DCU (sData *strRecei, uint16_t Pos)
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", 2);
 //    Reset_Chip();
     
-    fevent_enable(sEventAppPcBox, _EVENT_RESET_DCU);
-    fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
-    fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_COMPLETE_RECEIVE);
+//    fevent_enable(sEventAppPcBox, _EVENT_RESET_DCU);
+//    fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
+//    fevent_disable(sEventAppPcBox, _EVENT_PC_BOX_COMPLETE_RECEIVE);
+    ResetDCU();
 }
 
 /*

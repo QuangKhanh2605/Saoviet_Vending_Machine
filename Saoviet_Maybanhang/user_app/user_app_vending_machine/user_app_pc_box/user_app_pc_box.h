@@ -106,4 +106,5 @@ void        Write_Flash_Using_Crc(void);
 void        Init_Using_Crc();
 
 void        Packing_Respond_PcBox(uint8_t aData[], uint16_t Length);
+void        ResetDCU(void);
 #endif
