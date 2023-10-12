@@ -1,73 +1,73 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.2.214/W32 for ARM                  09/Oct/2023  15:43:21
+# IAR ELF Linker V8.40.2.214/W32 for ARM                  11/Oct/2023  18:10:58
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
 #    Map file     =
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
 #    Command line =
-#        -f C:\Users\PC\AppData\Local\Temp\EWE146.tmp
-#        (D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\adc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\dma.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\event_driven.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\gpio.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\main.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\onchipflash.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\queue_p.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\S25FL216K.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\spi.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\startup_stm32f405xx.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_it.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\system_stm32f4xx.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\usart.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_at_debug.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_comm.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_door_sensor.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_electric.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_pc_box.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_relay.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_temperature.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_vib_sensor.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_at_serial.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_comm_vending_machine.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_external_flash.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_internal_mem.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_irq_input.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_modbus_rtu.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_string.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_uart.o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_util.o
+#        -f C:\Users\PC\AppData\Local\Temp\EWA7CC.tmp
+#        (D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\adc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\dma.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\event_driven.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\gpio.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\main.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\onchipflash.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\queue_p.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\S25FL216K.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\spi.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\startup_stm32f405xx.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_adc_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_cortex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_dma_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_exti.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_flash_ramfunc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_gpio.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_msp.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_pwr_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_rcc_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_spi.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_tim_ex.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_hal_uart.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_it.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\stm32f4xx_ll_adc.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\system_stm32f4xx.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\usart.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_at_debug.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_comm.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_ctrl_motor.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_door_sensor.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_electric.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_pc_box.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_relay.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_temperature.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_app_vib_sensor.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_at_serial.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_comm_vending_machine.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_external_flash.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_internal_mem.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_irq_input.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_modbus_rtu.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_string.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_uart.o
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\user_util.o
 #        --no_out_extension -o
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Exe\Saoviet_Maybanhang.out
 #        --redirect _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb
 #        --map
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
 #        --config
-#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM/stm32f405xx_flash.icf
+#        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM/stm32f405xx_flash.icf
 #        --semihosting --entry __iar_program_start --vfe --text_out locale)
 #
 ###############################################################################
@@ -370,7 +370,7 @@ command line/config:
     ------------------------------------------------------
     Total:
 
-D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj: [1]
+D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj: [1]
     S25FL216K.o                       64
     adc.o                            312               168
     dma.o                             52
@@ -913,7 +913,7 @@ uwTickFreq              0x2000'0000    0x1  Data  Gb  stm32f4xx_hal.o [1]
 uwTickPrio              0x2000'0008    0x4  Data  Gb  stm32f4xx_hal.o [1]
 
 
-[1] = D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj
+[1] = D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj
 [2] = dl7M_tlf.a
 [3] = m7M_tls.a
 [4] = rt7M_tl.a

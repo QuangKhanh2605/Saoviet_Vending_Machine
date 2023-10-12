@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.2.214/W32 for ARM                  28/Sep/2023  16:39:42
+# IAR ELF Linker V8.40.2.214/W32 for ARM                  25/Sep/2023  15:36:01
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =
@@ -8,7 +8,7 @@
 #    Map file     =
 #        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\List\Saoviet_Maybanhang_Board_2.map
 #    Command line =
-#        -f C:\Users\PC\AppData\Local\Temp\EWA05B.tmp
+#        -f C:\Users\PC\AppData\Local\Temp\EWAEAB.tmp
 #        (D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\Obj\ade7953.o
 #        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\Obj\event_driven.o
 #        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Board_2\EWARM\Saoviet_Maybanhang_Board_2\Obj\gpio.o
@@ -333,7 +333,7 @@ ADEReadoutReg            0x800'3524   0x44  Data  Gb  ade7953.o [1]
 AHBPrescTable            0x800'35f0   0x10  Data  Gb  system_stm32l0xx.o [1]
 APBPrescTable            0x800'3674    0x8  Data  Gb  system_stm32l0xx.o [1]
 AT_Command_IF            0x800'2559   0xd2  Code  Gb  user_app_slave.o [1]
-AppAde7953_Task          0x800'2d2d   0x42  Code  Gb  user_app_ade7953.o [1]
+AppAde7953_Task          0x800'2d31   0x42  Code  Gb  user_app_ade7953.o [1]
 AppSlave_Task            0x800'2241   0x42  Code  Gb  user_app_slave.o [1]
 CSTACK$$Base            0x2000'0740          --   Gb  - Linker created -
 CSTACK$$Limit           0x2000'0b40          --   Gb  - Linker created -
@@ -392,9 +392,9 @@ HAL_UART_RxCpltCallback
                          0x800'1591   0x2c  Code  Gb  user_uart.o [1]
 HAL_UART_Transmit        0x800'012d   0xda  Code  Gb  stm32l0xx_hal_uart.o [1]
 HardFault_Handler        0x800'34cb    0x2  Code  Gb  stm32l0xx_it.o [1]
-Init_Ade7953             0x800'2ce7   0x1a  Code  Gb  user_app_ade7953.o [1]
+Init_Ade7953             0x800'2ce9   0x1a  Code  Gb  user_app_ade7953.o [1]
 Init_AppSlave            0x800'221f   0x22  Code  Gb  user_app_slave.o [1]
-Init_Energy              0x800'2d09   0x20  Code  Gb  user_app_ade7953.o [1]
+Init_Energy              0x800'2d0d   0x20  Code  Gb  user_app_ade7953.o [1]
 Init_Uart_485_Rx_IT      0x800'1581    0x4  Code  Gb  user_uart.o [1]
 MX_GPIO_Init             0x800'1999   0xec  Code  Gb  gpio.o [1]
 MX_IWDG_Init             0x800'1b1d   0x2c  Code  Gb  iwdg.o [1]
@@ -476,11 +476,11 @@ fevent_ade_check_source
 fevent_ade_check_source::once_handle
                         0x2000'06e8    0x1  Data  Lc  user_app_ade7953.o [1]
 fevent_ade_entry         0x800'2a75    0xe  Code  Lc  user_app_ade7953.o [1]
-fevent_ade_handle        0x800'2ad1  0x19e  Code  Lc  user_app_ade7953.o [1]
+fevent_ade_handle        0x800'2ad1  0x1a0  Code  Lc  user_app_ade7953.o [1]
 fevent_ade_handle::CountPowerOff
                         0x2000'0710    0x4  Data  Lc  user_app_ade7953.o [1]
-fevent_ade_save_energy   0x800'2c6f   0x42  Code  Lc  user_app_ade7953.o [1]
-fevent_ctrl_led_status   0x800'2cb1   0x36  Code  Lc  user_app_ade7953.o [1]
+fevent_ade_save_energy   0x800'2c71   0x42  Code  Lc  user_app_ade7953.o [1]
+fevent_ctrl_led_status   0x800'2cb3   0x36  Code  Lc  user_app_ade7953.o [1]
 fevent_enable            0x800'2df1   0x14  Code  Gb  event_driven.o [1]
 fevent_init_uart         0x800'2215    0xa  Code  Lc  user_app_slave.o [1]
 fevent_slave_complete_receive
