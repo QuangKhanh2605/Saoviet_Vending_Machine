@@ -759,6 +759,7 @@ void ResetDCU(void)
     aData[length++] = TempCrc << 8;
     Transmit_PCBOX(aData, length);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"OFF_MCU\r\n", sizeof("OFF_MCU\r\n")-1); 
+    HAL_Delay(500);
     
     Reset_Chip();
 }

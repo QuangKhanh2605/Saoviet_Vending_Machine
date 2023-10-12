@@ -198,7 +198,7 @@ void AppVibSensor_Debug(void)
 #ifdef USING_APP_VIB_SENSOR_DEBUG
     char cData[1];
     Convert_Int_To_String(cData, sStatusVib.LevelWarning);
-    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_vib_sensor: Level ", sizeof("app_vib_sensor: Level")-1);
+    UTIL_Printf(DBLEVEL_M, (uint8_t*)"app_vib_sensor: Level ", sizeof("app_vib_sensor: Level ")-1);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)cData, 1);
     UTIL_Printf(DBLEVEL_M, (uint8_t*)"\r\n", sizeof("\r\n")-1);
 #endif
