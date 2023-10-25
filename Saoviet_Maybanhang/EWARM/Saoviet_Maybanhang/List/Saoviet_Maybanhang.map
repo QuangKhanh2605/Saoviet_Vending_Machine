@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.2.214/W32 for ARM                  11/Oct/2023  18:10:58
+# IAR ELF Linker V8.40.2.214/W32 for ARM                  25/Oct/2023  14:27:57
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =
@@ -8,7 +8,7 @@
 #    Map file     =
 #        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
 #    Command line =
-#        -f C:\Users\PC\AppData\Local\Temp\EWA7CC.tmp
+#        -f C:\Users\PC\AppData\Local\Temp\EW608D.tmp
 #        (D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\adc.o
 #        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\dma.o
 #        D:\Project_STM32\Saoviet_Maybanhang_Std\Saoviet_Maybanhang\EWARM\Saoviet_Maybanhang\Obj\event_driven.o
@@ -557,7 +557,7 @@ HAL_UART_Receive_IT      0x800'2447   0x30  Code  Gb  stm32f4xx_hal_uart.o [1]
 HAL_UART_RxCpltCallback
                          0x800'224b   0x78  Code  Gb  user_uart.o [1]
 HAL_UART_Transmit        0x800'2397   0xb0  Code  Gb  stm32f4xx_hal_uart.o [1]
-Handle_State_Power       0x800'469d   0x7a  Code  Gb  user_app_electric.o [1]
+Handle_State_Power       0x800'4693   0x7a  Code  Gb  user_app_electric.o [1]
 HardFault_Handler        0x800'5e4f    0x2  Code  Gb  stm32f4xx_it.o [1]
 Init_AppElectric         0x800'4821    0xc  Code  Gb  user_app_electric.o [1]
 Init_AppRelay            0x800'193f   0x10  Code  Gb  user_app_relay.o [1]
@@ -784,7 +784,7 @@ fevent_door_respond_pc_box
                          0x800'50a3   0x2e  Code  Lc  user_app_door_sensor.o [1]
 fevent_door_sensor       0x800'4ff3   0x42  Code  Lc  user_app_door_sensor.o [1]
 fevent_electric_change_status_power
-                         0x800'4643   0x5a  Code  Lc  user_app_electric.o [1]
+                         0x800'4639   0x5a  Code  Lc  user_app_electric.o [1]
 fevent_electric_entry    0x800'4451   0x14  Code  Lc  user_app_electric.o [1]
 fevent_electric_handle_485
                          0x800'4515  0x11a  Code  Lc  user_app_electric.o [1]
@@ -793,13 +793,13 @@ fevent_electric_handle_485::CountStateConnect
 fevent_electric_handle_485::CountStatePower
                         0x2000'019c    0x1  Data  Lc  user_app_electric.o [1]
 fevent_electric_init_uart
-                         0x800'4717    0xe  Code  Lc  user_app_electric.o [1]
+                         0x800'470d    0xc  Code  Lc  user_app_electric.o [1]
 fevent_electric_receive_485
                          0x800'44e5   0x30  Code  Lc  user_app_electric.o [1]
 fevent_electric_receive_485::countBuffer_uart
                         0x2000'16c0    0x2  Data  Lc  user_app_electric.o [1]
 fevent_electric_send_meter
-                         0x800'462f    0xc  Code  Lc  user_app_electric.o [1]
+                         0x800'462f    0xa  Code  Lc  user_app_electric.o [1]
 fevent_electric_transmit_485
                          0x800'4465   0x80  Code  Lc  user_app_electric.o [1]
 fevent_enable            0x800'10e1   0x14  Code  Gb  event_driven.o [1]

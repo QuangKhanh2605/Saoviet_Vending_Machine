@@ -257,6 +257,7 @@ static uint8_t fevent_electric_init_uart(uint8_t event)
 {
     MX_UART4_Init();
     Init_Uart_485_Rx_IT();
+    fevent_enable(sEventAppElectric, event);
     return 1;
 }
 
