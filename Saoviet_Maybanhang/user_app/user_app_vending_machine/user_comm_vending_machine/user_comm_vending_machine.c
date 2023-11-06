@@ -168,9 +168,12 @@ uint8_t Convert_Int_To_String_Scale(char cData[], int var, uint8_t Scale)
             division = division/10;
             cData[size_cData] = cData[size_cData-1];
             size_cData--;
-            if(division == 0) cData[size_cData]='.';
+            if(division == 0) 
+            {
+              cData[size_cData]='.';
+              length++;
+            }
         }
-        length++;
     }
     return length;
 }
