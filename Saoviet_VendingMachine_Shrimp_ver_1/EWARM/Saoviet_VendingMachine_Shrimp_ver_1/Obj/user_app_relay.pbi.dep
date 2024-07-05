@@ -1,0 +1,71 @@
+user_app_relay.pbi: \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\user_app\user_app_vending_machine\user_app_relay\user_app_relay.c \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\user_app\user_app_vending_machine\user_app_relay/user_app_relay.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_eventdriven\event_driven.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_util\user_util.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\stm32f4xx_hal_conf.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_rcc.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Device/ST/STM32F4xx/Include\stm32f4xx.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Include\core_cm4.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\stdint.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\ycheck.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\yvals.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\DLib_Defaults.h \
+  C:\\Program\ Files\ (x86)\\IAR\ Systems\\Embedded\ Workbench\ 8.3\\arm\\inc\\c\\DLib_Config_Full.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\DLib_Product.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Include/cmsis_version.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Include/cmsis_compiler.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Include\cmsis_iccarm.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\iccarm_builtin.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Include/mpu_armv7.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\stddef.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\ysizet.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_gpio.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_exti.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_dma.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_cortex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_adc.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_flash.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_iwdg.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_pwr.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_rtc.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_spi.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_tim.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Drivers/STM32F4xx_HAL_Driver/Inc\stm32f4xx_hal_uart.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_uart\user_uart.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\usart.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc/main.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_component\user_mem\user_external_flash\user_external_flash.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_component\user_mem\user_external_flash\external_flash_S25FL216K\S25FL216K.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\spi.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_queue\queue_p.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_component\user_mem\user_mem_comm.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_inc_vending_machine.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_app_delivery\user_app_delivery.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_app_electric\user_app_electric.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_app_door_sensor\user_app_door_sensor.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_app_pc_box\user_app_pc_box.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_comm_vending_machine\user_comm_vending_machine.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\user_app\user_app_vending_machine\user_app_relay\user_app_relay.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_app_temperature\user_app_temperature.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\adc.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\string.h \
+  C:\Program\ Files\ (x86)\IAR\ Systems\Embedded\ Workbench\ 8.3\arm\inc\c\DLib_Product_string.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_app_vib_sensor\user_app_vib_sensor.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_component\user_convert_variable\user_convert_variable.h \
+  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM\..\user_app\user_app_vending_machine\user_app_rs485\user_app_rs485.h

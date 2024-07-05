@@ -1,0 +1,30 @@
+*Chu trình bật tắt tự động cho PcBox
+- Tắt PcBox: Nhấn giữ 5s
+- Bật PcBox: Nhấn giữ 0.5s
+- Nếu cần Reset: Nhấn giữ tắt 5s->Đợi 10s->Nhấn giữ 0.5s
+
+*4 Trạng thái PcBox
++ Disconnect
++ Connect
++ Sleep
++ Reset 
+
+*Điều khiển theo tập lệnh (AT+) từ Debug
+- "at+resetpcbox" reset PcBox -> PcBox Disconnect (Reset PcBox)
+- "at+onpcbox"	bật PcBox -> PcBox Disconnect (Bật PcBox)
+- "at+offpcbox" tắt PcBox -> PcBox Disconnect (Tắt PcBox)
+- "at+statepcbox" check trạng thái hiện tại của pc Box
+- "at+cyclepcbox" check chu chu trình điều khiển bật tắt tự động PcBox
+- "at+cyclepcbox=" bật tắt và cài đặt thời gian cho chu trình bật tắt tự động 
+Ex: at+cyclepcbox=1,19:00,7:00 (bật chu trình ON/OFF PcBox, OFF 19:00, ON 7:00)
+    at+cyclepcbox=1,19:00,7:00 (tắt chu trình ON/OFF PcBox, OFF 19:00, ON 7:00)
+
+*Ở trạng thái PcBox Disconnect
+- Nếu nhận lệnh bất kì từ PcBox-> Connect PcBox
+*Ở trạng thái Sleep
+- Chỉ tắt máy tính khi PcBox Connect
+- Sau khi tắt máy tính:Tắt Ping và đợi cho đến chu kì bật PcBox
+- Sau khi bật PcBox chuyển về trạng thái Disconnect và đợi lệnh để chuyển sang Connect PcBox
+*Ở trạng thái reset
+- Trong chu trình reset sẽ giữ ở trạng thái reset Pc Box
+- Sau khi reset PcBox chuyển về trạng thái Disconnect và đợi lệnh để chuyển sang Connect PcBox

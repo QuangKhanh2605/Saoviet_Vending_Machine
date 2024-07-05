@@ -1,0 +1,60 @@
+Những nội dung cần test máy bán hàng tự động
+
+I. Test không dùng mạch điều khiển
+1. Test dàn nóng, lạnh 
+2. Test hệ thống sấy kính
+
+II. Test dùng mạch điều khiển
+1. Test Motor 
+-Lệnh AT: "at+testmotor=1" test motor tại vị trí số 1
+-Xoay Motor một vòng tại vị trí được trọn
+-Nếu có xung tại chân feedback_motor: Lệnh push thành công
+-Nếu không xuất hiện xung sau 15 giây: báo lỗi lệnh fix motor
+-Cuối lệnh trả ra thời gian thực hiện quay motor
+
+2. Test khóa từ
+-Lệnh AT: "at+lockmagnetis" 
+-Thực hiện test bằng phương pháp cấp nguồn điều khiển và đợi chân feedback_lock trả về
+-Nếu sau 2s kể từ khi cấp nguồn chân feedback_lock không trả về mức logic như yêu cầu thì xác nhận lỗi khóa từ
+
+3. Test thang nâng
+-Lệnh AT: "at+elevator"
+-Thực hiện test motor bằng phương pháp cho motor di chuyển lên tầng trên cùng và di chuyển xuống dưới cùng.
+-Nếu sau 15s không thấy motor gặp điểm Top hoặc điểm Bot: Báo lỗi thang nâng
+
+3. Test bán hàng 
+-Lệnh AT: "at+purchase=2 1" mua hàng tại vị trí 2, mua 1 sản phẩm 
+-Gồm các bước cần thực hiện:
++ Check đóng cửa và thực hiện đóng khóa từ
++ Di chuyển thang nâng xuống cuối cùng để xác nhận tầng số 0
++ Thực hiện tính toán xác nhận tầng cần trả và vị trí cần trả 
++ Di chuyển motor lên tầng cần trả hàng 
++ Push motor
++ Di chuyển thang nâng xuống vị trí cuối cùng
++ Thực hiện mở khóa từ 
+-Tại các bước nếu sau 20s mà không thực hiện thành công thì sẽ báo lỗi tại bước đó và kết thúc việc bán hàng 
+
+4. Test cân
+-Lệnh AT: "at+weight?"
+-Giá trị có được bằng việc đọc 485 tại thanh ghi "current weight" 
+
+5. Test thang nâng và motor push sử dụng biến 
+-Biến "test_elevator" (điều khiển thang nâng)
++ =0: Giá trị khởi tạo (không chạy vào chương trình điều khiển sử dụng biến)
++ =1: Thang nâng chạy xuống dưới
++ =2: Thang nâng chạy lên trên
++ =3: Dừng thang nâng
+
+-Biến "test_motor" (điều khiển động cơ)
++ =0: Giá trị khởi tạo (không chạy vào chương trình điều khiển sử dụng biến)
++ =1: Quay motor tại vị trí 1
++ =2: Quay motor tại vị trí 2
++ =3: Quay motor tại vị trí 3
++ =4: Quay motor tại vị trí 4
++ =5: Quay motor tại vị trí 5
++ =6: Quay motor tại vị trí 6
++ =7: Quay motor tại vị trí 7
++ =8: Quay motor tại vị trí 8
++ =9: Quay motor tại vị trí 9
++ =10: Quay motor tại vị trí 10
++ =100: Dừng toàn bộ motor
