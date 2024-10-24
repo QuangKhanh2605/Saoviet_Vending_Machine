@@ -401,8 +401,8 @@ static uint32_t RTC_GetCalendarValue(RTC_DateTypeDef *RTC_DateStruct,
 	uint32_t correction;
 
 	/* Get Time and Date*/
-	HAL_RTC_GetDate(&hrtc, RTC_DateStruct, RTC_FORMAT_BIN);
 	HAL_RTC_GetTime(&hrtc, RTC_TimeStruct, RTC_FORMAT_BIN);
+    HAL_RTC_GetDate(&hrtc, RTC_DateStruct, RTC_FORMAT_BIN);
 	/* calculte amount of elapsed days since 01/01/2000 */
 	calendarValue = DIVC((DAYS_IN_YEAR * 3 + DAYS_IN_LEAP_YEAR) * RTC_DateStruct->Year, 4);
 

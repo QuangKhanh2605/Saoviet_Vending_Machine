@@ -49,7 +49,6 @@ main.pbi: \
   D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc/main.h \
   D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\dma.h \
   D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\iwdg.h \
-  D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\rtc.h \
   D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\spi.h \
   D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\tim.h \
   D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1\EWARM/../Core/Inc\usart.h \

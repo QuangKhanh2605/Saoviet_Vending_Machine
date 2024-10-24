@@ -58,7 +58,7 @@ StructStatusApp                 sStatusApp = {_APP_FREE};
 StructOnOffCyclePcBox           sCycleOnOffPcBox;
 StructParamPcBox                sParamPcBox=
 {
-    .CountResetPcBox = 0,
+    .CountPingPcBox = 0,
     .TimeTSVH        = TIME_SEND_TSVH/TIME_ONE_MINUTES,
     .StatePcBox      = _STT_PCBOX_DISCONNECT,
     .UsingCrc        = _UNUSING_CRC,
@@ -182,8 +182,17 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                         {
                             Pos_Motor = sUartPcBox.Data_a8[pos+i];
                             Number = sUartPcBox.Data_a8[pos+i+1];
-                            if(Pos_Motor <= NUMBER_MOTOR && Number <= NUMBER_PUSH_MOTOR)
-                                sParamDelivery.aDataPush[Pos_Motor - 1] = Number;
+                            if(Pos_Motor <= NUMBER_MOTOR )
+                            {
+                                if((sParamDelivery.aDataPush[Pos_Motor - 1] + Number) <= NUMBER_PUSH_MOTOR)
+                                {
+                                    sParamDelivery.aDataPush[Pos_Motor - 1] += Number;
+                                }
+                                else
+                                {
+                                    sParamDelivery.aDataPush[Pos_Motor - 1] = NUMBER_PUSH_MOTOR;
+                                }
+                            }
                         }
                         Delivery_Entry();
                         pos +=Length_Data;
@@ -328,7 +337,10 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
                   {
                       if(sUartPcBox.Data_a8[pos] <= 0x01)
+                      {
+                          sParamPcBox.CountPingPcBox = 0;
                           sParamPcBox.CountResetPcBox = 0;
+                      }
 
                       pos +=Length_Data;
                       Recv_Result=1;
@@ -339,6 +351,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   Length_Data = sUartPcBox.Data_a8[pos++];
                   RTC_TimeTypeDef sTime;
                   RTC_DateTypeDef sDate;
+                  ST_TIME_FORMAT sTimeRTC;
                   if(Length_Data == 0x06 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
                   {
                       sDate.Year = sUartPcBox.Data_a8[pos];
@@ -348,16 +361,32 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                       sTime.Hours = sUartPcBox.Data_a8[pos+3];
                       sTime.Minutes = sUartPcBox.Data_a8[pos+4];
                       sTime.Seconds = sUartPcBox.Data_a8[pos+5];
+                      
+                      sTimeRTC.year   = sDate.Year % 100;
+                      sTimeRTC.month  = sDate.Month;
+                      sTimeRTC.date   = sDate.Date;
+                      sTimeRTC.hour   = sTime.Hours; 
+                      sTimeRTC.min    = sTime.Minutes;
+                      sTimeRTC.sec    = sTime.Seconds;
+                      
                       Recv_Result=1;
+                      sDate.WeekDay = ((HW_RTC_GetCalendarValue_Second (sTimeRTC, 1) / SECONDS_IN_1DAY) + 6) % 7 + 1;
                   }
                     if(sDate.Year >= 20 && sDate.Month >= 1 && sDate.Month <= 12 && sDate.Date >=1 && sDate.Date <=31)
                     {
                         if(sTime.Hours < 24 && sTime.Minutes < 60 && sTime.Seconds <60)
                         {
-                            HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-                            HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-                            RespondPcBox_String(sUartPcBox.Data_a8 + pos -2, Length_Data +2);
-                            pos +=Length_Data;
+                            if(sDate.WeekDay >=2 && sDate.WeekDay <=8)
+                            {
+                                HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+                                HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+                                RespondPcBox_String(sUartPcBox.Data_a8 + pos -2, Length_Data +2);
+                                pos +=Length_Data;
+                            }
+                            else
+                            {
+                                Packing_Respond_PcBox((uint8_t*)"FAIL", 4);
+                            }
                         }
                         else
                             Packing_Respond_PcBox((uint8_t*)"FAIL", 4);
@@ -433,7 +462,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   }
                   break;
                   
-                case OBIS_ACCEPT_OFF_PCBOX:   //Obis cai dat nhiet do
+                case OBIS_ACCEPT_OFF_PCBOX:   
                   Length_Data = sUartPcBox.Data_a8[pos++];
                   if(Length_Data == 0x02 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
                   {
@@ -472,6 +501,12 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
             UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox: SLEEP", sizeof("PcBox: SLEEP")-1);
             UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
         }
+        
+        if(UsingCrc == 0)
+        {
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"PcBox: CRC FAIL", sizeof("PcBox: CRC FAIL")-1);
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
+        }
     }
     
     if(Recv_Result == 1)
@@ -482,6 +517,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
             fevent_active(sEventAppPcBox, _EVENT_WAIT_RESET_PC_BOX);
         }
         
+        sParamPcBox.CountPingPcBox = 0;
         sParamPcBox.CountResetPcBox = 0;
     }
     
@@ -598,17 +634,17 @@ static uint8_t fevent_handle_respond_error(uint8_t event)
 static uint8_t fevent_dcu_ping_pc_box(uint8_t event)
 {
 /*--------------------DCU Ping PcBox---------------------*/
-  if(sParamPcBox.CountResetPcBox >= NUMBER_MAX_PING_PCBOX)  //Sau n lan khong ping thanh cong reset pc box
+  if(sParamPcBox.CountPingPcBox >= NUMBER_MAX_PING_PCBOX)  //Sau n lan khong ping thanh cong reset pc box
   {
     fevent_active(sEventAppPcBox, _EVENT_RESET_PC_BOX);
   }
   else
   {
-    sParamPcBox.CountResetPcBox++;
+    sParamPcBox.CountPingPcBox++;
     sRespPcBox.Length_u16 = 0;
     sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_DCU_PING_PC_BOX;
     sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x01;
-    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamPcBox.CountResetPcBox;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamPcBox.CountPingPcBox;
     
     Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
     
@@ -621,28 +657,46 @@ static uint8_t fevent_reset_pc_box(uint8_t event)
 {
 /*-----------------Reset PcBox------------------*/
     static uint8_t state_reset = 0;
-    if(state_reset == 0)
+    
+    if(sParamPcBox.CountResetPcBox <= 1)    //Neu sau 2 lan reset pcbox khong co ket noi thi se ON pcbox o lan thu 3
     {
-        sParamPcBox.CountResetPcBox = 0;
-        sStatusApp.Pcbox = _APP_BUSY;
-        state_reset = 1;
-        HAL_GPIO_WritePin(RESET_SW_PC_GPIO_Port, RESET_SW_PC_Pin, GPIO_PIN_SET);
-        ControlRelay(RELAY_SCREEN, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_UNCTRL);
-        
-        fevent_enable(sEventAppPcBox, event);
-        fevent_disable(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
-        UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_pc_box: Reset Pc Box", sizeof("app_pc_box: Reset Pc Box")-1);
-        UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
-        
-        MX_USART2_UART_Init();
-        Init_RX_Mode_Uart_PcBox();
+        if(state_reset == 0)
+        {
+            sStatusApp.Pcbox = _APP_BUSY;
+            state_reset = 1;
+            
+            Save_StatePcBox(_STT_PCBOX_RESET);
+            HAL_GPIO_WritePin(RESET_SW_PC_GPIO_Port, RESET_SW_PC_Pin, GPIO_PIN_SET);
+            ControlRelay(RELAY_SCREEN, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_UNCTRL);
+            
+            fevent_enable(sEventAppPcBox, event);
+            fevent_disable(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_pc_box: Reset Pc Box", sizeof("app_pc_box: Reset Pc Box")-1);
+            UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
+            
+            MX_USART2_UART_Init();
+            Init_RX_Mode_Uart_PcBox();
+        }
+        else
+        {   
+            sParamPcBox.CountPingPcBox = 0;
+            sParamPcBox.CountResetPcBox++;
+            Save_StatePcBox(_STT_PCBOX_DISCONNECT);
+            state_reset = 0;
+            HAL_GPIO_WritePin(RESET_SW_PC_GPIO_Port, RESET_SW_PC_Pin, GPIO_PIN_RESET);
+            fevent_enable(sEventAppPcBox, _EVENT_WAIT_RESET_PC_BOX);
+        }
     }
     else
-    {   
-        Save_StatePcBox(_STT_PCBOX_DISCONNECT);
-        state_reset = 0;
-        HAL_GPIO_WritePin(RESET_SW_PC_GPIO_Port, RESET_SW_PC_Pin, GPIO_PIN_RESET);
-        fevent_enable(sEventAppPcBox, _EVENT_WAIT_RESET_PC_BOX);
+    {
+            sParamPcBox.CountPingPcBox =0;
+            sParamPcBox.CountResetPcBox=0;
+            Save_StatePcBox(_STT_PCBOX_DISCONNECT);
+            state_reset = 0;
+            HAL_GPIO_WritePin(RESET_SW_PC_GPIO_Port, RESET_SW_PC_Pin, GPIO_PIN_RESET);
+            ON_PcBox(3000);
+            
+            fevent_enable(sEventAppPcBox, _EVENT_WAIT_RESET_PC_BOX);
     }
     return 1;
 }
@@ -652,7 +706,7 @@ static uint8_t fevent_wait_reset_pc_box(uint8_t event)
 /*-----------------Wait Reset PcBox----------------*/
     fevent_active(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
     sStatusApp.Pcbox = _APP_FREE;
-    sParamPcBox.CountResetPcBox = 0;
+    sParamPcBox.CountPingPcBox = 0;
     return 1;
 }
 
@@ -666,7 +720,7 @@ static uint8_t fevent_on_off_cycle_pc_box(uint8_t event)
             if(Check_RealTime_OFF_PcBox(sRTC.hour, sRTC.min) == 1)
             {
 //                OFF_PcBox(2000);
-                if(sParamPcBox.CountResetPcBox <= NUMBER_MAX_PING_PCBOX/2 && sParamPcBox.StatePcBox == _STT_PCBOX_CONNECT)
+                if(sParamPcBox.CountPingPcBox <= NUMBER_MAX_PING_PCBOX/2 && sParamPcBox.StatePcBox == _STT_PCBOX_CONNECT)
                 {
                     sRespPcBox.Length_u16 = 0;
                     sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_QUESTION_OFF_PCBOX;
@@ -699,7 +753,7 @@ static uint8_t fevent_on_off_cycle_pc_box(uint8_t event)
         fevent_enable(sEventAppPcBox, _EVENT_HANDLE_RESPOND_ERROR);
         if(sCycleOnOffPcBox.State == _OFF_CYCLE)
         {
-            ON_PcBox(1000);
+//            ON_PcBox(1000);
         }
     }
     
@@ -763,8 +817,8 @@ static uint8_t fevent_get_real_time_dcu(uint8_t event)
 /*====================== Handle PcBox =====================*/
 void  OFF_PcBox(uint32_t TimeOnRelay_ms)
 {
+    sParamPcBox.CountPingPcBox = 0;
     sParamPcBox.CountResetPcBox = 0;
-    fevent_disable(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
     
     sStatusApp.Pcbox = _APP_BUSY;
     ControlRelay(RELAY_SCREEN, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
@@ -775,7 +829,11 @@ void  OFF_PcBox(uint32_t TimeOnRelay_ms)
     OnOffPcBox(TimeOnRelay_ms);
     Save_StatePcBox(_STT_PCBOX_SLEEP);
     
-    HAL_GPIO_WritePin(GLASS_GPIO_Port, GLASS_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(RESET_SW_PC_GPIO_Port, RESET_SW_PC_Pin, GPIO_PIN_RESET);
+    
+    fevent_disable(sEventAppPcBox, _EVENT_DCU_PING_PC_BOX);
+    fevent_disable(sEventAppPcBox, _EVENT_RESET_PC_BOX);
+    fevent_disable(sEventAppPcBox, _EVENT_WAIT_RESET_PC_BOX);
     
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_pc_box: Sleep PcBox", sizeof("app_pc_box: Sleep PcBox")-1);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"\r\n", sizeof("\r\n")-1);
@@ -789,7 +847,7 @@ void ON_PcBox(uint32_t TimeOnRelay_ms)
     
     Save_StatePcBox(_STT_PCBOX_DISCONNECT);
     
-    HAL_GPIO_WritePin(GLASS_GPIO_Port, GLASS_Pin, GPIO_PIN_SET);
+//    ControlRelay(RELAY_SCREEN, ON_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
     
     fevent_enable(sEventAppPcBox, _EVENT_WAIT_RESET_PC_BOX);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"app_pc_box: On PcBox", sizeof("app_pc_box: On PcBox")-1);
@@ -884,10 +942,10 @@ uint8_t  Check_RealTime_OFF_PcBox(uint8_t Hours, uint8_t Minutes)
     countTimeOn = sCycleOnOffPcBox.HoursON*MINUTES_OF_HOURS + sCycleOnOffPcBox.MinutesON;
     countTimeRTC = Hours*MINUTES_OF_HOURS + Minutes;
     
-    if(countTimeOn >= 10) 
-        countTimeOn -=10;
+    if(countTimeOn >= 1) 
+        countTimeOn -=1;
     else 
-        countTimeOn = MINUTES_OF_DAY - (10 - countTimeOn);
+        countTimeOn = MINUTES_OF_DAY - (1 - countTimeOn);
     
     if(countTimeOff >= countTimeOn)
     {
@@ -990,7 +1048,6 @@ void Log_TSVH(void)
 
 void ResetDCU(void)
 {
-    HAL_Delay(1000);
     uint8_t aData[5]={0};
     uint8_t length = 0;
     uint16_t TempCrc = 0;
@@ -1003,7 +1060,7 @@ void ResetDCU(void)
     aData[length++] = TempCrc << 8;
     Transmit_PCBOX(aData, length);
     UTIL_Printf(DBLEVEL_L, (uint8_t*)"OFF_MCU\r\n", sizeof("OFF_MCU\r\n")-1); 
-    HAL_Delay(500);
+//    HAL_Delay(500);
     Reset_Chip();
 }
 
@@ -1125,12 +1182,12 @@ uint8_t Save_CycleOnOffPcBox(uint8_t State, uint8_t HoursOFF, uint8_t MinutesOFF
     {
         if(countTimeOff > countTimeOn)
         {
-            if(countTimeOff - countTimeOn >= 30 && (MINUTES_OF_DAY - countTimeOff) + countTimeOn >= 30) 
+            if(countTimeOff - countTimeOn >= 3 && (MINUTES_OF_DAY - countTimeOff) + countTimeOn >= 3) 
               ResultCal = 1;
         }
         else
         {
-            if(countTimeOn - countTimeOff >= 30 && (MINUTES_OF_DAY - countTimeOn) + countTimeOff >= 30) 
+            if(countTimeOn - countTimeOff >= 3 && (MINUTES_OF_DAY - countTimeOn) + countTimeOff >= 3) 
               ResultCal = 1;
         }
       
@@ -1216,14 +1273,14 @@ void Init_StatePcBox()
             sParamPcBox.StatePcBox = read[1];
     }
     
-    if(sParamPcBox.StatePcBox == _STT_PCBOX_SLEEP)
-    {
-        HAL_GPIO_WritePin(GLASS_GPIO_Port, GLASS_Pin, GPIO_PIN_RESET);
-    }
-    else
-    {
-        HAL_GPIO_WritePin(GLASS_GPIO_Port, GLASS_Pin, GPIO_PIN_SET);
-    }
+//    if(sParamPcBox.StatePcBox == _STT_PCBOX_CONNECT)
+//    {
+//        ControlRelay(RELAY_SCREEN, ON_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
+//    }
+//    else
+//    {
+//        ControlRelay(RELAY_SCREEN, OFF_RELAY, _RL_RESPOND, _RL_DEBUG, _RL_CTRL);
+//    }
 }
 
 /*---------------------------Handle Queue---------------------------*/
@@ -1242,7 +1299,7 @@ void Init_Timer(void)
 static void Cb_Timer_Event_OnOffPcBox(void *context)
 {
     HAL_GPIO_WritePin(ON_OFF_SW_PC_GPIO_Port, ON_OFF_SW_PC_Pin, GPIO_PIN_RESET);
-    UTIL_TIMER_Start (&TimerOnOffPcBox);
+//    UTIL_TIMER_Start (&TimerOnOffPcBox);
 }
 
 void OnOffPcBox(uint16_t time)

@@ -81,6 +81,7 @@ typedef enum
     _STT_PCBOX_DISCONNECT = 0,
     _STT_PCBOX_CONNECT,
     _STT_PCBOX_SLEEP,
+    _STT_PCBOX_RESET,
     _STT_PCBOX_END,
 }eKindStatusPcBox;
 
@@ -108,7 +109,8 @@ typedef struct
 
 typedef struct
 {
-    uint8_t CountResetPcBox;    //Dem so lan mat ket noi reset PcBox
+    uint8_t CountPingPcBox;     //Dem so lan Ping PcBox khong thanh cong
+    uint8_t CountResetPcBox;    //Dem so lan Reset nhung khong ket noi duoc voi PcBox
     uint8_t TimeTSVH;           //Thoi gian gui thong so van hanh (Phut)
     uint8_t StatePcBox;
     uint8_t UsingCrc;

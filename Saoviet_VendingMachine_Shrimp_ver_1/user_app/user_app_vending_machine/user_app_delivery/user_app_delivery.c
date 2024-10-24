@@ -21,10 +21,9 @@ static uint8_t fevent_free_elevator_lower(uint8_t event);
 static uint8_t fevent_fix_motor(uint8_t event);
 
 static uint8_t fevent_control_pwm_elevator(uint8_t event);
+static uint8_t fevent_alter_pwm_elevator(uint8_t event);
 static uint8_t fevent_ctrl_elevator_upper(uint8_t event);
 static uint8_t fevent_ctrl_elevator_lower(uint8_t event);
-static uint8_t fevent_alter_pwm_elevator(uint8_t event);
-
 
 static uint8_t fevent_test_elevator(uint8_t event);
 static uint8_t fevent_elevator_floor(uint8_t event);
@@ -57,6 +56,7 @@ sEvent_struct         sEventAppDelivery[] =
   
   { _EVENT_TEST_ELEVATOR,             0, 5, 0,                          fevent_test_elevator},
   { _EVENT_ELEVATOR_FLOOR,            0, 5, 0,                          fevent_elevator_floor},
+  
 };
 
 static GPIO_TypeDef*  CTRL_MOTOR_PORT[NUMBER_MOTOR] = {CTRL_MOTOR_1_PORT, CTRL_MOTOR_2_PORT, CTRL_MOTOR_3_PORT,
@@ -76,10 +76,15 @@ uint8_t                     DetectErrorDelivery = 0;
 
 uint8_t                     StateDebugDelivery = 0;
 //uint8_t                     Count_Error = 0;
+uint8_t Level_PWM_Elevator_Up = 100;
 /*================ Function Handler =================*/
 static uint8_t fevent_motor_entry(uint8_t event)
 {   
     HAL_GPIO_WritePin(PW_LOCK_PORT, PW_LOCK_PIN, GPIO_PIN_SET); //Cap nguon cho Lock Magnetis
+    
+    //Luon mo khoa tu
+    Control_LockMagnetis(GPIO_PIN_SET);     // UnLock LockMagnetis
+    
     HAL_GPIO_WritePin(ON_OFF_Pos_Elevator_GPIO_Port, ON_OFF_Pos_Elevator_Pin, GPIO_PIN_SET);
     return 1;
 }
@@ -97,6 +102,9 @@ static uint8_t fevent_wait_free_motor(uint8_t event)
 /*
     Kiem tra khoa tu da dong chua de thuc hien lenh tiep theo
 */
+
+uint32_t Count_Delivery = 0;
+
 static uint8_t fevent_lock_magnetis_begin(uint8_t event)
 {
 //    Count_Error++;
@@ -139,6 +147,19 @@ static uint8_t fevent_elevator_lower_begin(uint8_t event)
     StateDebugDelivery = 2;
     uint8_t Pos_Elevator = 0;
     
+    if(Count_Delivery%2 == 0)
+    {
+            fevent_active(sEventAppDelivery, _EVENT_DELIVERY_ENTRY);    //Chuyen sang event xu ly tiep theo
+
+            Enable_Handle_Idle_Delivery(_EVENT_DELIVERY_ENTRY, 20000);         //Enable handle error
+            return 1;
+    }
+    else
+    {
+        Count_Delivery++;
+        return 1;
+    }
+    
 //            fevent_active(sEventAppDelivery, _EVENT_DELIVERY_ENTRY);    //Chuyen sang event xu ly tiep theo
 //
 //            Enable_Handle_Idle_Delivery(_EVENT_DELIVERY_ENTRY, 20000);         //Enable handle error
@@ -146,7 +167,7 @@ static uint8_t fevent_elevator_lower_begin(uint8_t event)
 //            return 1;
     
     Pos_Elevator = Check_Top_Bot_Elevator();
-    
+
     switch(Pos_Elevator)
     {
         case _ELEVATOR_FLOOR:
@@ -182,10 +203,12 @@ static uint8_t fevent_delivery_entry(uint8_t event)
   
     if(sParamDelivery.SumHandle > 0)    // Kiem tra tong so vi tri can tra hang
     {
-        sParamDelivery.PosHandle = NUMBER_MOTOR;
-        while(sParamDelivery.PosHandle >0)
+//        sParamDelivery.PosHandle = NUMBER_MOTOR;
+        sParamDelivery.PosHandle = 0;
+//        while(sParamDelivery.PosHandle >0)
+        for(;sParamDelivery.PosHandle < NUMBER_MOTOR; sParamDelivery.PosHandle++)
         {
-            sParamDelivery.PosHandle--;
+//            sParamDelivery.PosHandle--;
             if(sParamDelivery.aDataPush[sParamDelivery.PosHandle] > 0)  //Neu gap aDataPush > 0 (co hang can tra)
             {
                 sMotorPush.aPulse[sParamDelivery.PosHandle] = 0;    //Cai xung da tra hang = 0
@@ -236,6 +259,15 @@ static uint8_t fevent_calculator_coordinates(uint8_t event)
     StateDebugDelivery = 4;
     uint8_t Pos_Elevator = 0;
     
+    if(Count_Delivery%2 == 0)
+    {
+        Control_Elevator(ELEVATOR_STOP, LEVEL_PWM_ELEVATOR_OFF); //Stop elevator
+        fevent_enable(sEventAppDelivery,_EVENT_PUSH_MOTOR); //Chuyen sang event su ly tiep theo 
+        
+        Enable_Handle_Idle_Delivery(_EVENT_PUSH_MOTOR, 60000); //Enable handle error
+            return 1;
+    }
+    
 //            Control_Elevator(ELEVATOR_STOP, LEVEL_PWM_ELEVATOR_OFF); //Stop elevator
 //            fevent_enable(sEventAppDelivery,_EVENT_PUSH_MOTOR); //Chuyen sang event su ly tiep theo 
 //            
@@ -250,12 +282,12 @@ static uint8_t fevent_calculator_coordinates(uint8_t event)
         switch(Pos_Elevator)
         {
             case _ELEVATOR_BOT:
-              Control_Elevator(ELEVATOR_UP, LEVEL_PWM_ELEVATOR_UP);
+              Control_Elevator(ELEVATOR_UP, Level_PWM_Elevator_Up);
               break;
               
             case _ELEVATOR_FLOOR:
                 if(sElevator.FloorCurrent < sElevator.FloorHandle)
-                    Control_Elevator(ELEVATOR_UP, LEVEL_PWM_ELEVATOR_UP);
+                    Control_Elevator(ELEVATOR_UP, Level_PWM_Elevator_Up);
                 else
                     Control_Elevator(ELEVATOR_DOWN, LEVEL_PWM_ELEVATOR_DOWN);
                 
@@ -319,7 +351,7 @@ static uint8_t fevent_push_motor(uint8_t event)
         {  
             On_Motor_Push(sParamDelivery.PosHandle);    //On motor push
         }
-        else if(HAL_GetTick() - sMotorPush.TimeOnMotor > TIME_MOTOR_PUSH_LATE)
+        else if(HAL_GetTick() - sMotorPush.TimeOnMotor >= TIME_MOTOR_PUSH_LATE)
         {
             Off_Motor_Push();
             sMotorPush.aPulse[sParamDelivery.PosHandle - 1]++;
@@ -358,6 +390,12 @@ static uint8_t fevent_elevator_lower_end(uint8_t event)
     StateDebugDelivery = 6;
     uint8_t Pos_Elevator = 0;
     
+    if(Count_Delivery%2 == 0)
+    {
+            fevent_active(sEventAppDelivery, _EVENT_LOCK_MAGNETIS_END); //Chuyen sang event xu ly tiep theo 
+            Enable_Handle_Idle_Delivery(_EVENT_LOCK_MAGNETIS_END, 20000);      //Enable handle error
+            return 1;
+    }
 //            fevent_active(sEventAppDelivery, _EVENT_LOCK_MAGNETIS_END); //Chuyen sang event xu ly tiep theo 
 //            Enable_Handle_Idle_Delivery(_EVENT_LOCK_MAGNETIS_END, 20000);      //Enable handle error
 //            
@@ -425,6 +463,8 @@ static uint8_t fevent_lock_magnetis_end(uint8_t event)
 */
 static uint8_t fevent_finish_delivery(uint8_t event)
 {
+    Count_Delivery++;
+
     StateDebugDelivery = 8;
     Respond_Delivery_PcBox(RESPOND_COMPLETE_DELIVERY);  //Phan hoi lai PcBox
     Delivery_Handle_State(DELIVERY_FREE);
@@ -515,6 +555,24 @@ static uint8_t fevent_free_elevator_lower(uint8_t event)
                 break;
                 
             case _ELEVATOR_BOT:
+                if(sElevator.State == ELEVATOR_STOP)
+                {
+                    __HAL_TIM_SetCompare (&htim3, TIM_CHANNEL_2, 0);
+                    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+                  
+                    __HAL_TIM_SetCompare (&htim4, TIM_CHANNEL_4, 0);
+                    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
+                    
+                    sElevator.Status = ELEVATOR_OFF;
+                    
+    //                Debug_Encoder();
+                    sElevator.Encoder_C1 = 0;
+                    sElevator.Encoder_C2 = 0;
+                    sElevator.RunLevel_PWM = 0;
+                    
+                    GPIO_Init_Pos_Elevator(ELEVATOR_STOP);
+                    sElevator.TimeOnMotor = 0;
+                }
                 break; 
                 
             case _ELEVATOR_ERROR:
@@ -557,7 +615,7 @@ static uint8_t fevent_fix_motor(uint8_t event)
         return 1;
     }
     
-    if(HAL_GetTick() - gettick_ms_error > TIME_MOTOR_PUSH_LATE)
+    if(HAL_GetTick() - gettick_ms_error >= TIME_MOTOR_PUSH_LATE)
     {
         Respond_Delivery_PcBox(RESPOND_FIX_MOTOR);
         Off_Motor_Push();
@@ -581,9 +639,9 @@ static uint8_t fevent_control_pwm_elevator(uint8_t event)
           
         case ELEVATOR_UP:
           if(sElevator.FloorCurrent + 1 == sElevator.FloorHandle)
-            sElevator.Level_PWM = LEVEL_PWM_ELEVATOR_UP_REDUCE;
+            sElevator.Level_PWM = Level_PWM_Elevator_Up - 5;
           else
-            sElevator.Level_PWM = LEVEL_PWM_ELEVATOR_UP;
+            sElevator.Level_PWM = Level_PWM_Elevator_Up;
           break;
           
         case ELEVATOR_DOWN:
@@ -698,7 +756,7 @@ static uint8_t fevent_test_elevator(uint8_t event)
         {
             case _ELEVATOR_BOT:
             case _ELEVATOR_FLOOR:
-                    Control_Elevator(ELEVATOR_UP, LEVEL_PWM_ELEVATOR_UP);
+                    Control_Elevator(ELEVATOR_UP, Level_PWM_Elevator_Up);
                     
                 break;
                 
@@ -775,13 +833,13 @@ static uint8_t fevent_elevator_floor(uint8_t event)
         switch(Pos_Elevator)
         {
             case _ELEVATOR_BOT:
-              Control_Elevator(ELEVATOR_UP, LEVEL_PWM_ELEVATOR_UP);
+              Control_Elevator(ELEVATOR_UP, Level_PWM_Elevator_Up);
               break;
               
             case _ELEVATOR_FLOOR:
                 if(sElevator.FloorCurrent < sElevator.FloorHandle)
                 {
-                    Control_Elevator(ELEVATOR_UP, LEVEL_PWM_ELEVATOR_UP);
+                    Control_Elevator(ELEVATOR_UP, Level_PWM_Elevator_Up);
                 }
                 else
                 {
@@ -854,13 +912,17 @@ void Delivery_Entry(void)
 {
     //Tinh tong so vi tri can tra hang
     sParamDelivery.SumHandle = 0;
+    sParamDelivery.SumDelivery = 0;
     for(uint8_t i = 0; i<NUMBER_MOTOR; i++)
     {
         if(sParamDelivery.aDataPush[i] != 0)
+        {
             sParamDelivery.SumHandle++;
+            sParamDelivery.SumDelivery++;
+        }
     }
     
-    if(sParamDelivery.SumHandle > 0)
+    if(sParamDelivery.SumDelivery > 0)
     {
         //Xac nhan vao che do tra hang va rest xung tra hang
         Delivery_Handle_State(DELIVERY_PURCHASE);
@@ -948,15 +1010,15 @@ void Respond_Delivery_PcBox(eStateRespondPcBox StateRes)
         case RESPOND_PUSH_MOTOR:
             for(uint8_t i = 0; i<NUMBER_MOTOR; i++)
             {
-                if(sParamDelivery.aDataPush[i] != 0)
+                if((sParamDelivery.aDataPush[i] != 0) && (i != (sParamDelivery.PosHandle-1)))
                     countHandle++;
             }
             sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_ON_GOING_PUSH;
             sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x02;
             sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamDelivery.PosHandle;
             sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamDelivery.aDataPush[sParamDelivery.PosHandle-1];
-            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamDelivery.SumHandle - countHandle;
-            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamDelivery.SumHandle; 
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamDelivery.SumDelivery - countHandle;
+            sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sParamDelivery.SumDelivery; 
           break;
           
         case RESPOND_COMPLETE_DELIVERY:
@@ -1002,7 +1064,7 @@ void AppDelivery_Debug(uint8_t KindDelivery)
           length = Convert_Int_To_String(aData, sParamDelivery.PosHandle);
           UTIL_Printf(DBLEVEL_M, (uint8_t*)aData, length);
           
-          UTIL_Printf(DBLEVEL_M, (uint8_t*)"Number", sizeof("Number")-1);
+          UTIL_Printf(DBLEVEL_M, (uint8_t*)" Number:", sizeof(" Number:")-1);
           length = Convert_Int_To_String(aData, sParamDelivery.aDataPush[sParamDelivery.PosHandle-1]);
           UTIL_Printf(DBLEVEL_M, (uint8_t*)aData, length);
           break;
@@ -1069,10 +1131,10 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
         case ELEVATOR_STOP:
             if(sElevator.State != ELEVATOR_STOP)
             {
-                __HAL_TIM_SetCompare (&htim3, TIM_CHANNEL_2, 0);
+                __HAL_TIM_SetCompare (&htim3, TIM_CHANNEL_2, 100);
                 HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
               
-                __HAL_TIM_SetCompare (&htim4, TIM_CHANNEL_4, 0);
+                __HAL_TIM_SetCompare (&htim4, TIM_CHANNEL_4, 100);
                 HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
                 
                 sElevator.Status = ELEVATOR_OFF;
@@ -1083,6 +1145,7 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
                 sElevator.RunLevel_PWM = 0;
                 
                 GPIO_Init_Pos_Elevator(ELEVATOR_STOP);
+                sElevator.TimeOnMotor = 0;
             }
           break;
           
@@ -1096,7 +1159,7 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
 //                Debug_Encoder();
                 sElevator.Encoder_C1 = 0;
                 sElevator.Encoder_C2 = 0;
-                sElevator.RunLevel_PWM = LEVEL_PWM_ELEVATOR_UP;
+                sElevator.RunLevel_PWM = Level_PWM_Elevator_Up;
                 
                 GPIO_Init_Pos_Elevator(ELEVATOR_UP);
                 sElevator.TimeOnMotor = HAL_GetTick();
@@ -1255,6 +1318,7 @@ void Reset_StateDelivery(void)
     UTIL_MEM_set(sMotorPush.aPulse, 0x00, NUMBER_MOTOR);
     UTIL_MEM_set(sParamDelivery.aDataPush, 0x00, NUMBER_MOTOR);
     sParamDelivery.SumHandle = 0;
+    sParamDelivery.SumDelivery = 0;
     sParamDelivery.PosHandle = 0;
     sElevator.FloorHandle = 0;
 }

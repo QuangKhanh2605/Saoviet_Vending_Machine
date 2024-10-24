@@ -1,0 +1,30 @@
+*Chu trình bật tắt tự động cho PcBox
+- Tắt PcBox: Nhấn giữ x giây (x là thời gian nhận được từ bản tin xác nhận tắt pcbox).
+- Bật PcBox: Nhấn giữ 1 giây
+- Nếu mất kết nối sử dụng chân "Reset" riêng để reset pcbox.
+
+*4 Trạng thái PcBox (Trạng thái mạch hiểu trạng thái hiện tại pcBox)
++ Disconnect
++ Connect
++ Sleep
++ Reset 
+
+*Điều khiển theo tập lệnh (AT+) từ Debug
+- "at+resetpcbox" reset PcBox -> PcBox Disconnect (Reset PcBox)
+- "at+statepcbox?" check trạng thái hiện tại của pc Box
+- "at+cyclepcbox?" check chu chu trình điều khiển bật tắt tự động PcBox
+- "at+cyclepcbox=" bật tắt và cài đặt thời gian cho chu trình bật tắt tự động 
+Ex: at+cyclepcbox=1,19:00,7:00 (bật chu trình ON/OFF PcBox, OFF 19:00, ON 7:00)
+    at+cyclepcbox=0,19:00,7:00 (tắt chu trình ON/OFF PcBox, OFF 19:00, ON 7:00)
+
+*Ở trạng thái PcBox Disconnect
+- Nếu nhận lệnh bất kì từ PcBox-> Connect PcBox
+*Ở trạng thái Sleep
+- Chỉ tắt máy tính khi PcBox Connect (trước khi tắt gửi lệnh yêu cầu tắt máy tính nếu có bản tin bản hồi chấp nhận thì thực hiện tắt máy tính).
+- Sau khi tắt máy tính:Tắt Ping và đợi cho đến chu kì bật PcBox
+- Sau khi bật PcBox chuyển về trạng thái Disconnect và tiếp tục ping sau thời gian chờ để xác nhận đã kết nối với PcBox. 
+
+*Lưu ý: 
+-Thời gian bật máy cách thời gian tắt máy ít nhất là 30 phút.
+-Trước thời gian tắt 10 phút thì sẽ không cho tắt máy nếu nhận được lệnh chấp nhận tắt máy từ PC.
+-Nếu sau 3 lần reset PC mà mạch không kết nối được với PC thì kéo chân ON/OFF PC trong 3 giây.

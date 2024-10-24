@@ -66,45 +66,49 @@ void (*pModemProcessIRQTimer) (void);
 /*======================== Function ======================*/
 static void User_RTC_Init(void)
 {
-
-	RTC_AlarmTypeDef sAlarm = { 0 };
+//	RTC_AlarmTypeDef sAlarm = { 0 };
 
 	hrtc.Instance = RTC;
 	hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
 	hrtc.Init.AsynchPrediv = RTC_PREDIV_A;
 	hrtc.Init.SynchPrediv = RTC_PREDIV_S;
 	hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
-#if defined (STM32L072xx) 
+#if defined (STM32L072xx) || defined (STM32L433xx) || defined (STM32L452xx) 
 	hrtc.Init.OutPutRemap = RTC_OUTPUT_REMAP_NONE;
 #endif
 	hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
 	hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-	if (HAL_RTC_Init(&hrtc) != HAL_OK)
-	{
-		Error_Handler();
-	}
+    
+    HAL_RTC_MspInit(&hrtc);
+    
+    if(HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR1) != 0xBEBE)
+    {
+        if (HAL_RTC_Init(&hrtc) != HAL_OK)
+        {
+            Error_Handler();
+        }
 
-	/** Enable the Alarm A
-	 */
-	sAlarm.AlarmTime.Hours = 0;
-	sAlarm.AlarmTime.Minutes = 0;
-	sAlarm.AlarmTime.Seconds = 0;
-	sAlarm.AlarmTime.SubSeconds = 0;
-	sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-	sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-#if defined (STM32F405xx) 
-	sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
-#else
-	sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY;
-#endif
-	sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
-	sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
-	sAlarm.AlarmDateWeekDay = 1;
-	sAlarm.Alarm = RTC_ALARM_A;
-	if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN) != HAL_OK)
-	{
-		Error_Handler();
-	}
+        HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, 0xBEBE);
+    }
+    
+//
+//	/** Enable the Alarm A
+//	 */
+//	sAlarm.AlarmTime.Hours = 0;
+//	sAlarm.AlarmTime.Minutes = 0;
+//	sAlarm.AlarmTime.Seconds = 0;
+//	sAlarm.AlarmTime.SubSeconds = 0;
+//	sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+//	sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
+//	sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY;
+//	sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
+//	sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
+//	sAlarm.AlarmDateWeekDay = 1;
+//	sAlarm.Alarm = RTC_ALARM_A;
+//	if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN) != HAL_OK)
+//	{
+//		Error_Handler();
+//	}
 }
 
 UTIL_TIMER_Status_t RTC_IF_Init(void)
@@ -286,8 +290,12 @@ uint32_t RTC_IF_BkUp_Read_SubSeconds(void)
  * @param timeoutValue in ticks
  * @retval none
  */
+extern void Modem_Packet_Alarm_String (const char *str);
+
 static void RTC_StartWakeUpAlarm(uint32_t timeoutValue)
 {
+//    char aData[64] = {0};
+    
 	uint16_t rtcAlarmSubSeconds = 0;
 	uint16_t rtcAlarmSeconds = 0;
 	uint16_t rtcAlarmMinutes = 0;
@@ -372,7 +380,7 @@ static void RTC_StartWakeUpAlarm(uint32_t timeoutValue)
 
 	/* Set RTC_AlarmStructure with calculated values*/
 	RTC_AlarmStructure.AlarmTime.SubSeconds = RTC_PREDIV_S - rtcAlarmSubSeconds;
-	RTC_AlarmStructure.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK;
+	RTC_AlarmStructure.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK; 
 	RTC_AlarmStructure.AlarmTime.Seconds = rtcAlarmSeconds;
 	RTC_AlarmStructure.AlarmTime.Minutes = rtcAlarmMinutes;
 	RTC_AlarmStructure.AlarmTime.Hours = rtcAlarmHours;
@@ -385,7 +393,16 @@ static void RTC_StartWakeUpAlarm(uint32_t timeoutValue)
 	RTC_AlarmStructure.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
 
 	/* Set RTC_Alarm */
-	HAL_RTC_SetAlarm_IT(&hrtc, &RTC_AlarmStructure, RTC_FORMAT_BIN);
+	if (HAL_RTC_SetAlarm_IT(&hrtc, &RTC_AlarmStructure, RTC_FORMAT_BIN) != HAL_OK)
+    {
+//        sprintf(aData, "alarm fail: %d-%d:%d:%d:%d\r\n", RTC_AlarmStructure.AlarmDateWeekDay,
+//                                                          RTC_AlarmStructure.AlarmTime.Hours,
+//                                                          RTC_AlarmStructure.AlarmTime.Minutes,
+//                                                          RTC_AlarmStructure.AlarmTime.Seconds,
+//                                                          RTC_AlarmStructure.AlarmTime.SubSeconds);
+////        UTIL_Log_Str(DBLEVEL_M, aData); 
+//        Modem_Packet_Alarm_String(aData); 
+    }
 }
 
 /*!
@@ -406,12 +423,9 @@ static uint32_t RTC_GetCalendarValue(RTC_DateTypeDef *RTC_DateStruct,
 	/* calculte amount of elapsed days since 01/01/2000 */
 	calendarValue = DIVC((DAYS_IN_YEAR * 3 + DAYS_IN_LEAP_YEAR) * RTC_DateStruct->Year, 4);
 
-	correction = ((RTC_DateStruct->Year % 4) == 0) ?
-	DAYS_IN_MONTH_CORRECTION_LEAP :
-														DAYS_IN_MONTH_CORRECTION_NORM;
+	correction = ((RTC_DateStruct->Year % 4) == 0) ? DAYS_IN_MONTH_CORRECTION_LEAP : DAYS_IN_MONTH_CORRECTION_NORM;
 
-	calendarValue += (DIVC((RTC_DateStruct->Month - 1) * (30 + 31),
-			2) - (((correction >> ((RTC_DateStruct->Month - 1) * 2)) & 0x3)));
+	calendarValue += (DIVC((RTC_DateStruct->Month - 1) * (30 + 31),	2) - (((correction >> ((RTC_DateStruct->Month - 1) * 2)) & 0x3)));
 
 	calendarValue += (RTC_DateStruct->Date - 1);
 

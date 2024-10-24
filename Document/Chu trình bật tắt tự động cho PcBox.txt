@@ -3,7 +3,7 @@
 - Bật PcBox: Nhấn giữ 0.5s
 - Nếu cần Reset: Nhấn giữ tắt 5s->Đợi 10s->Nhấn giữ 0.5s
 
-*4 Trạng thái PcBox
+*4 Trạng thái PcBox (Trạng thái mạch hiểu trạng thái hiện tại pcBox)
 + Disconnect
 + Connect
 + Sleep

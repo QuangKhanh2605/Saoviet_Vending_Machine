@@ -144,6 +144,9 @@ const struct_CheckList_AT CheckList_AT_CONFIG[] =
         
         {_CTRL_ELEVATOR_FLOOR,  _fELEVATOR_FLOOR,           {(uint8_t*)"at+floor=",9}},
         
+        {_GET_ELEVATOR_PWM_UP,  _fGET_ELEVATOR_PWM_UP,       {(uint8_t*)"at+levelpwm?",12}},
+        {_SET_ELEVATOR_PWM_UP,  _fSET_ELEVATOR_PWM_UP,       {(uint8_t*)"at+levelpwm=",12}},
+        
         {_END_AT_CMD,	        NULL,	                    {(uint8_t*)"at+end",6}},
 };
 
@@ -1660,6 +1663,7 @@ void        _fRESET_DCU (sData *strRecei, uint16_t Pos)
 void        _fRESET_PCBOX (sData *strRecei, uint16_t Pos)
 {
     fevent_active(sEventAppPcBox, _EVENT_RESET_PC_BOX);
+    sParamPcBox.CountResetPcBox=0;
 }
 
 /*
@@ -1678,7 +1682,7 @@ void        _fON_PCBOX (sData *strRecei, uint16_t Pos)
             else length++;
         }
         temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
-        if(temp >=500)
+        if(temp >=1)
         {
             if(sParamPcBox.StatePcBox == _STT_PCBOX_SLEEP)
             {
@@ -1728,7 +1732,7 @@ void        _fOFF_PCBOX (sData *strRecei, uint16_t Pos)
             else length++;
         }
         temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
-        if(temp >=500)
+        if(temp >=1)
         {
             if(sParamPcBox.StatePcBox == _STT_PCBOX_CONNECT || sParamPcBox.StatePcBox == _STT_PCBOX_DISCONNECT)
             {
@@ -2393,6 +2397,40 @@ void        _fELEVATOR_FLOOR (sData *strRecei, uint16_t Pos)
             sElevator.FloorHandle = temp;
             fevent_enable(sEventAppDelivery, _EVENT_ELEVATOR_FLOOR);
             sParamDelivery.StateHanlde = DELIVERY_PURCHASE;
+        }
+    }
+    else
+        DCU_Respond(PortConfig, (uint8_t*)"ERROR\r\n", 7, 0);
+}
+
+void        _fGET_ELEVATOR_PWM_UP (sData *strRecei, uint16_t Pos)
+{
+    uint8_t aDataRespond[50]={0};
+    uint16_t lengthRespond = 0;
+    
+    Insert_String_To_String(aDataRespond, &lengthRespond, (uint8_t*)"Level_PWM: ",0 , 11);
+    Convert_Point_Int_To_String_Scale (aDataRespond, &lengthRespond, (int)(Level_PWM_Elevator_Up), 0x00);
+    Insert_String_To_String(aDataRespond, &lengthRespond, (uint8_t*) "\r\n",0 , 2);
+    
+    DCU_Respond(PortConfig, aDataRespond, lengthRespond, 0);
+}
+
+
+void        _fSET_ELEVATOR_PWM_UP (sData *strRecei, uint16_t Pos)
+{
+    int16_t temp = 0;
+    if( strRecei->Data_a8[0] >= '0' && strRecei->Data_a8[0] <= '9')
+    {
+        uint8_t length = 0;
+        for(uint8_t i = 0; i < strRecei->Length_u16; i++)
+        {
+            if( strRecei->Data_a8[i] < '0' || strRecei->Data_a8[i]>'9') break;
+            else length++;
+        }
+        temp = Convert_String_To_Dec(strRecei->Data_a8 , length);
+        if(temp <= 100)
+        {
+            Level_PWM_Elevator_Up = temp;
         }
     }
     else

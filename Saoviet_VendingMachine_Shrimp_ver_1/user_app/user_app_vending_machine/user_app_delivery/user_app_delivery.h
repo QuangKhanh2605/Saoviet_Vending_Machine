@@ -20,12 +20,12 @@
 
 #define NUMBER_MAX_FLOOR                5
 
-#define LEVEL_PWM_ELEVATOR_UP           100
-#define LEVEL_PWM_ELEVATOR_DOWN         65
+//#define LEVEL_PWM_ELEVATOR_UP           100
+#define LEVEL_PWM_ELEVATOR_DOWN         75
 #define LEVEL_PWM_ELEVATOR_OFF          0
 
-#define LEVEL_PWM_ELEVATOR_UP_REDUCE    100
-#define LEVEL_PWM_ELEVATOR_DOWN_REDUCE  60
+//#define LEVEL_PWM_ELEVATOR_UP_REDUCE    100
+#define LEVEL_PWM_ELEVATOR_DOWN_REDUCE  70
 
 #define STATE_GPIO_ON                   GPIO_PIN_SET
 #define STATE_GPIO_OFF                  GPIO_PIN_RESET
@@ -90,7 +90,7 @@ typedef enum
     _EVENT_ALTER_PWM_ELEVATOR,
     _EVENT_CTRL_ELEVATOR_UPPER,
     _EVENT_CTRL_ELEVATOR_LOWER,
-    
+
     _EVENT_TEST_ELEVATOR,
     _EVENT_ELEVATOR_FLOOR,
 
@@ -155,7 +155,8 @@ typedef struct
 {
     uint8_t StateHanlde;                //Trang thai Delivery (Free, On_Going, Test_Elevator)
     uint8_t aDataPush[NUMBER_MOTOR];    //Data tra hang
-    uint8_t SumHandle;                  //Tong so luong phai xu ly
+    uint8_t SumDelivery;                //Tong so luong phai xy ly trong mot lan tra hang
+    uint8_t SumHandle;                  //Tong so luong phai xu ly tiep theo
     uint8_t PosHandle;                  //Vi tri dang xu ly
     uint8_t StateConnectWeight;         //Trang thai ket noi slave weight 485
     uint16_t Weighing;                  //Can nang
@@ -164,12 +165,13 @@ typedef struct
 
 typedef struct
 {
-    uint8_t State;                      //Trang thai
-    uint8_t Status;
+    uint8_t State;                      //Trang thai STOP/UP/DOWN
+    uint8_t Status;                     //Trang thai ON/OFF
     uint8_t FloorCurrent;               //Vi tri tang hien tai
     uint8_t FloorHandle;                //Tang tra hang
-    uint8_t Level_PWM;
-    uint8_t RunLevel_PWM;
+    uint8_t Level_PWM;                  //Level can xu ly 
+    uint8_t RunLevel_PWM;               //Level dang xu ly
+    
     uint32_t Encoder_C1;
     uint32_t Encoder_C2;
     uint32_t TimeOnMotor;
@@ -193,6 +195,7 @@ typedef enum
 extern sEvent_struct            sEventAppDelivery[];
 extern Struct_ParamDelivery     sParamDelivery;
 extern Struct_Elevator          sElevator;
+extern uint8_t Level_PWM_Elevator_Up;
 /*============= Function =============*/
 uint8_t     AppDelivery_Task(void);
 void        Init_AppDelivery(void);

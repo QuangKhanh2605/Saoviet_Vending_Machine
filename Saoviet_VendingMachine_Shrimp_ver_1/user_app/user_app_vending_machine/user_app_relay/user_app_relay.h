@@ -21,7 +21,7 @@
 
 #define  TIME_RL_WARM_REFRESH   15  //Min
 
-#define  RELAY_SCREEN_PORT          ON_OFF_SCREEN_GPIO_Port
+#define  RELAY_SCREEN_PORT          GLASS_GPIO_Port
 //#define  RELAY_FRIDGE_COOL_PORT     ON_OFF_FRIDGE_COOL_GPIO_Port
 #define  RELAY_ALARM_PORT           ON_OFF_ALARM_GPIO_Port
 //#define  RELAY_FRIDGE_HEAT_PORT     ON_OFF_FRIDGE_HOT_GPIO_Port
@@ -31,7 +31,7 @@
 #define  RELAY_V1_PORT              ON_OFF_V1_GPIO_Port
 #define  RELAY_V2_PORT              ON_OFF_V2_GPIO_Port
 
-#define  RELAY_SCREEN_PIN           ON_OFF_SCREEN_Pin 
+#define  RELAY_SCREEN_PIN           GLASS_Pin 
 //#define  RELAY_FRIDGE_COOL_PIN      ON_OFF_FRIDGE_COOL_Pin
 #define  RELAY_ALARM_PIN            ON_OFF_ALARM_Pin
 //#define  RELAY_FRIDGE_HEAT_PIN      ON_OFF_FRIDGE_HOT_Pin

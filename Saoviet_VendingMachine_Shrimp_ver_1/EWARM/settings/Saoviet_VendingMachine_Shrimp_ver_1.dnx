@@ -12,7 +12,7 @@
         <ByteLimit>50</ByteLimit>
     </Stack>
     <StLinkDriver>
-        <stlinkserialNo>31531457</stlinkserialNo>
+        <stlinkserialNo>8</stlinkserialNo>
         <stlinkfoundProbes />
         <stlinkResetStyle>0</stlinkResetStyle>
         <stlinkResetStrategy>2</stlinkResetStrategy>
@@ -20,7 +20,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>731413144</Checksum>
+        <Checksum>917959822</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -57,18 +57,29 @@
         <ITMlogFile>$PROJ_DIR$\ITM.log</ITMlogFile>
     </SWOTraceHWSettings>
     <struct_types>
-        <Fmt0>StructParamPcBox-CountResetPcBox	3	0</Fmt0>
-        <Fmt1>StructParamPcBox-StatePcBox	3	0</Fmt1>
-        <Fmt2>StructStatusDoor-SensorDelivery	3	0</Fmt2>
-        <Fmt3>StructStatusDoor-SensorMachine	3	0</Fmt3>
-        <Fmt4>Struct_Elevator-FloorCurrent	3	0</Fmt4>
-        <Fmt5>Struct_Elevator-FloorHandle	3	0</Fmt5>
-        <Fmt6>Struct_Elevator-Level_PWM	3	0</Fmt6>
-        <Fmt7>Struct_Elevator-RunLevel_PWM	3	0</Fmt7>
+        <Fmt0>RTC_DateTypeDef-Date	3	0</Fmt0>
+        <Fmt1>RTC_DateTypeDef-Month	3	0</Fmt1>
+        <Fmt2>RTC_DateTypeDef-WeekDay	3	0</Fmt2>
+        <Fmt3>RTC_DateTypeDef-Year	3	0</Fmt3>
+        <Fmt4>ST_TIME_FORMAT-date	3	0</Fmt4>
+        <Fmt5>ST_TIME_FORMAT-day	3	0</Fmt5>
+        <Fmt6>ST_TIME_FORMAT-hour	3	0</Fmt6>
+        <Fmt7>ST_TIME_FORMAT-min	3	0</Fmt7>
+        <Fmt8>ST_TIME_FORMAT-month	3	0</Fmt8>
+        <Fmt9>ST_TIME_FORMAT-sec	3	0</Fmt9>
+        <Fmt10>ST_TIME_FORMAT-year	3	0</Fmt10>
+        <Fmt11>StructParamPcBox-CountPingPcBox	3	0</Fmt11>
+        <Fmt12>StructParamPcBox-CountResetPcBox	3	0</Fmt12>
+        <Fmt13>StructParamPcBox-StatePcBox	3	0</Fmt13>
+        <Fmt14>Struct_Elevator-FloorCurrent	3	0</Fmt14>
+        <Fmt15>Struct_Elevator-FloorHandle	3	0</Fmt15>
+        <Fmt16>Struct_Elevator-Level_PWM	3	0</Fmt16>
+        <Fmt17>Struct_Elevator-RunLevel_PWM	3	0</Fmt17>
     </struct_types>
     <watch_formats>
-        <Fmt0>{W}42:test_elevator	3	0</Fmt0>
-        <Fmt1>{W}42:test_motor	3	0</Fmt1>
+        <Fmt0>{W}42:Level_PWM_Elevator_Up	3	0</Fmt0>
+        <Fmt1>{W}42:test_elevator	3	0</Fmt1>
+        <Fmt2>{W}42:test_motor	3	0</Fmt2>
     </watch_formats>
     <Trace2>
         <Enabled>0</Enabled>

@@ -231,11 +231,11 @@ void Init_StatusRelay(void)
     eFlash_S25FL_BufferRead(aRead, EX_FLASH_ADDR_STATUS_RELAY, 16);
     if( aRead[0] == BYTE_TEMP_FIRST_EXFLASH && aRead[1] == NUMBER_RELAY)
     {
-        if(aRead[3] <= 0x01) sStatusRelay.Screen    = aRead[2];
+        if(aRead[2] <= 0x01) sStatusRelay.Screen    = aRead[2];
         //if(aRead[4] <= 0x01) sStatusRelay.FridgeCool= aRead[3];
         //if(aRead[5] <= 0x01) sStatusRelay.Alarm     = aRead[4];
         //if(aRead[6] <= 0x01) sStatusRelay.FridgeHeat= aRead[5];
-        if(aRead[7] <= 0x01) sStatusRelay.Lamp      = aRead[4];
+        if(aRead[4] <= 0x01) sStatusRelay.Lamp      = aRead[4];
         //if(aRead[8] <= 0x01) sStatusRelay.Warm      = aRead[7];
         //if(aRead[8] <= 0x01) sStatusRelay.Pc      = aRead[8];
         
@@ -243,7 +243,7 @@ void Init_StatusRelay(void)
         //if(aRead[11] <= 0x01) sStatusRelay.FridgeCool_Ctrl= aRead[10];
         //if(aRead[12] <= 0x01) sStatusRelay.Alarm_Ctrl     = aRead[11];
         //if(aRead[13] <= 0x01) sStatusRelay.FridgeHeat_Ctrl= aRead[12];
-        if(aRead[14] <= 0x01) sStatusRelay.Lamp_Ctrl      = aRead[8];
+        if(aRead[8] <= 0x01) sStatusRelay.Lamp_Ctrl      = aRead[8];
         //if(aRead[15] <= 0x01) sStatusRelay.Warm_Ctrl      = aRead[14];
         //if(aRead[15] <= 0x01) sStatusRelay.Pc_Ctrl      = aRead[15];
     }

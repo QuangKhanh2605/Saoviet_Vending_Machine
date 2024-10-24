@@ -139,6 +139,9 @@ typedef enum
     
     _CTRL_ELEVATOR_FLOOR,
     
+    _GET_ELEVATOR_PWM_UP,
+    _SET_ELEVATOR_PWM_UP,
+    
     _END_AT_CMD,    
 }Type_Command_AT_PC;
 
@@ -287,5 +290,8 @@ void        _fCHECK_BOT_ELEVATOR (sData *strRecei, uint16_t Pos);
 void        _fCHECK_LOCK_MAGNETIS (sData *strRecei, uint16_t Pos);
 
 void        _fELEVATOR_FLOOR (sData *strRecei, uint16_t Pos);
+
+void        _fGET_ELEVATOR_PWM_UP (sData *strRecei, uint16_t Pos);
+void        _fSET_ELEVATOR_PWM_UP (sData *strRecei, uint16_t Pos);
 #endif
 
