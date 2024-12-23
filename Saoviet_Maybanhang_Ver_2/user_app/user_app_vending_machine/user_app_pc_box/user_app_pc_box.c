@@ -36,7 +36,7 @@ sEvent_struct               sEventAppPcBox[]=
   {_EVENT_ON_PC_BOX,                    0, 5, 15000,                    fevent_on_pc_box},
   
   {_EVENT_REFRESH_DCU,                  1, 5, TIME_REFRESH_DCU,         fevent_refresh_dcu},
-  {_EVENT_GET_REAL_TIME_DCU,            0, 5, 500,                      fevent_get_real_time_dcu},
+  {_EVENT_GET_REAL_TIME_DCU,            0, 5, 60000,                    fevent_get_real_time_dcu},
 };
 
 sDataQueueRespondPcBox          sQueueRespondPcBox_Prio_0[NUMBER_ITEM_QUEUE];
@@ -283,6 +283,54 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                   }
                   break;
                   
+                case OBIS_DCU_GET_REAL_TIME:  //Obis Get Real Time PcBox
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  RTC_TimeTypeDef sTime;
+                  RTC_DateTypeDef sDate;
+                  ST_TIME_FORMAT sTimeRTC;
+                  if(Length_Data == 0x06 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      sDate.Year = sUartPcBox.Data_a8[pos];
+                      sDate.Month = sUartPcBox.Data_a8[pos+1];
+                      sDate.Date   = sUartPcBox.Data_a8[pos+2];
+                      
+                      sTime.Hours = sUartPcBox.Data_a8[pos+3];
+                      sTime.Minutes = sUartPcBox.Data_a8[pos+4];
+                      sTime.Seconds = sUartPcBox.Data_a8[pos+5];
+                      
+                      sTimeRTC.year   = sDate.Year % 100;
+                      sTimeRTC.month  = sDate.Month;
+                      sTimeRTC.date   = sDate.Date;
+                      sTimeRTC.hour   = sTime.Hours; 
+                      sTimeRTC.min    = sTime.Minutes;
+                      sTimeRTC.sec    = sTime.Seconds;
+                      
+//                      Recv_Result=1;
+                      sDate.WeekDay = ((HW_RTC_GetCalendarValue_Second (sTimeRTC, 1) / SECONDS_IN_1DAY) + 6) % 7 + 1;
+                  }
+                    if(sDate.Year >= 20 && sDate.Month >= 1 && sDate.Month <= 12 && sDate.Date >=1 && sDate.Date <=31)
+                    {
+                        if(sTime.Hours < 24 && sTime.Minutes < 60 && sTime.Seconds <60)
+                        {
+                            if(sDate.WeekDay >=2 && sDate.WeekDay <=8)
+                            {
+                                HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+                                HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+                                RespondPcBox_String(sUartPcBox.Data_a8 + pos -2, Length_Data +2);
+                                pos +=Length_Data;
+                            }
+                            else
+                            {
+                                Packing_Respond_PcBox((uint8_t*)"FAIL", 4);
+                            }
+                        }
+                        else
+                            Packing_Respond_PcBox((uint8_t*)"FAIL", 4);
+                    }
+                    else
+                        Packing_Respond_PcBox((uint8_t*)"FAIL", 4);
+                  break;
+                  
                 case OBIS_GET_DCU_ID:   //Obis get seri DCU
                   Length_Data = sUartPcBox.Data_a8[pos++];
                   if((pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
@@ -318,28 +366,6 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                           sParamPcBox.CountResetPcBox = 0;
 
                       pos +=Length_Data;
-                  }
-                  break;
-                  
-                case OBIS_DCU_GET_REAL_TIME:  //Obis Set Real Time PcBox
-                  Length_Data = sUartPcBox.Data_a8[pos++];
-                  RTC_TimeTypeDef sTime;
-                  RTC_DateTypeDef sDate;
-                  if(Length_Data == 0x06 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
-                  {
-                      sDate.Year = sUartPcBox.Data_a8[pos];
-                      sDate.Month = sUartPcBox.Data_a8[pos+1];
-                      sDate.Date   = sUartPcBox.Data_a8[pos+2];
-                      
-                      sTime.Hours = sUartPcBox.Data_a8[pos+3];
-                      sTime.Minutes = sUartPcBox.Data_a8[pos+4];
-                      sTime.Seconds = sUartPcBox.Data_a8[pos+5];
-                      pos +=Length_Data;
-                  }
-                  if(sDate.Year >= 20)
-                  {
-                    HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
-                    HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
                   }
                   break;
                   
@@ -417,6 +443,20 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event)
                          Packing_Respond_PcBox((uint8_t*)"FAIL", 4);
                       
                       pos +=Length_Data;
+                  }
+                  break;
+                  
+                case OBIS_SEND_TSVH_INTAN:
+                  Length_Data = sUartPcBox.Data_a8[pos++];
+                  if(Length_Data == 0x01 && (pos + Length_Data) <= (sUartPcBox.Length_u16 - 2))
+                  {
+                      if(sUartPcBox.Data_a8[pos] == 1)
+                         fevent_active(sEventAppPcBox, _EVENT_PC_BOX_LOG_TSVH);
+                      else
+                         Packing_Respond_PcBox((uint8_t*)"FAIL", 4);
+                      
+                      pos +=Length_Data;
+//                      Recv_Result=1;
                   }
                   break;
                   
@@ -647,7 +687,7 @@ static uint8_t fevent_get_real_time_dcu(uint8_t event)
     
     if(get_time_cycle == 0)
     {
-        if(sRTC.hour == 9 || sRTC.hour == 15)
+        if(sRTC.hour == 9 || sRTC.hour == 21 || sRTC.hour == 12 || sRTC.hour == 18)
         {
             state_get_time = 0;
             get_time_cycle = 1;
@@ -655,7 +695,7 @@ static uint8_t fevent_get_real_time_dcu(uint8_t event)
     }
     else
     {
-        if(sRTC.hour == 11 || sRTC.hour == 17)
+        if(sRTC.hour == 11 || sRTC.hour == 23 || sRTC.hour == 15 || sRTC.hour == 20)
             get_time_cycle = 0;
     }
     
@@ -783,6 +823,13 @@ void Log_TSVH(void)
     sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sCycleOnOffPcBox.MinutesOFF;
     sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sCycleOnOffPcBox.HoursON;
     sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sCycleOnOffPcBox.MinutesON;
+    
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sRTC.year;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sRTC.month;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sRTC.date;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sRTC.hour;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sRTC.min;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sRTC.sec;
     
     sRespPcBox.Data_a8[1] = sRespPcBox.Length_u16 - 2;
     
@@ -1038,6 +1085,17 @@ void ResetDCU(void)
     Reset_Chip();
 }
 
+void Reset_WDG_DCU(void)
+{
+    //Reset WDG Hardware
+    HAL_GPIO_WritePin(Toggle_Reset_GPIO_Port, Toggle_Reset_Pin, GPIO_PIN_SET);
+    HAL_Delay(1);
+    HAL_GPIO_WritePin(Toggle_Reset_GPIO_Port, Toggle_Reset_Pin, GPIO_PIN_RESET);
+    
+//    //Reset WDG Firmware
+//    HAL_IWDG_Refresh(&hiwdg); 
+}
+
 /*
     @brief  Debug
 */
@@ -1144,6 +1202,7 @@ uint8_t     Check_RealTime_ON_PcBox(uint8_t Hours, uint8_t Minutes)
       
     return 0;
 }
+
 
 
 /*---------------------------Handle App---------------------------*/

@@ -356,9 +356,9 @@ void Main_Task (void)
     UTIL_Printf_Str (DBLEVEL_M,     "==== MAIN PROGRAMING ====\r\n" );
     UTIL_Printf_Str (DBLEVEL_M,     "=========================\r\n" );
     
-    UTIL_Log_Str (DBLEVEL_L, "DAY LA VERSION: ");
-	UTIL_Log(DBLEVEL_L, sFirmVersion.Data_a8, sFirmVersion.Length_u16);
-    UTIL_Log_Str (DBLEVEL_L, "\r\n");
+//    UTIL_Log_Str (DBLEVEL_L, "DAY LA VERSION: ");
+//	UTIL_Log(DBLEVEL_L, sFirmVersion.Data_a8, sFirmVersion.Length_u16);
+//    UTIL_Log_Str (DBLEVEL_L, "\r\n");
     
 #ifdef USING_APP_EMET
     Screen_Init();
@@ -380,16 +380,16 @@ void Main_Task (void)
 
 		TaskStatus_u8 |= AppComm_Task();
         
-    #ifdef USING_APP_MEM
-//        if ( sSimCommon.PowerStatus_u8 == _POWER_CONN_MQTT) 
-//        {
-//            if (Check_Time_Out(sSimVar.LandMarkSendAT_u32, 800) == true)
-//                TaskStatus_u8 |= AppMem_Task();
-//        } else
-//            TaskStatus_u8 |= AppMem_Task();
-        
-        TaskStatus_u8 |= AppMem_Task();
-    #endif
+//    #ifdef USING_APP_MEM
+////        if ( sSimCommon.PowerStatus_u8 == _POWER_CONN_MQTT) 
+////        {
+////            if (Check_Time_Out(sSimVar.LandMarkSendAT_u32, 800) == true)
+////                TaskStatus_u8 |= AppMem_Task();
+////        } else
+////            TaskStatus_u8 |= AppMem_Task();
+//        
+//        TaskStatus_u8 |= AppMem_Task();
+//    #endif
         
 //    #ifdef USING_APP_SIM
 //        TaskStatus_u8 |= AppSim_Task();

@@ -27,7 +27,7 @@
 //#define LEVEL_PWM_ELEVATOR_UP_REDUCE    100
 #define LEVEL_PWM_ELEVATOR_DOWN_REDUCE  70
 
-#define MAX_CURRENT_MOTOR_ELEVATOR      3500        //mA
+#define MAX_CURRENT_MOTOR_ELEVATOR      4500        //mA
 
 #define STATE_GPIO_ON                   GPIO_PIN_SET
 #define STATE_GPIO_OFF                  GPIO_PIN_RESET

@@ -42,6 +42,8 @@ typedef enum
     _EVENT_TEMP_OFF_FRIGE_FROZEN,
     _EVENT_TEMP_RESPOND_ERROR,
     
+    _EVENT_SEND_PCBOX_TEMPERATURE,
+    
     _EVENT_TEMPERATURE_END,
 }eKindEventTemperature;
 

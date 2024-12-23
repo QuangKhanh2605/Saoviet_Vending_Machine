@@ -36,6 +36,8 @@
 #define OBIS_DCU_PING_PC_BOX        0x1B
 #define OBIS_DCU_GET_REAL_TIME      0x1C
 
+#define OBIS_SEND_TSVH_INTAN        0x1F  
+
 #define OBIS_GET_DCU_ID             0x0C
 #define OBIS_SET_DCU_ID             0x0D
 #define OBIS_RESET_DCU              0x0E
@@ -49,6 +51,8 @@
 #define OBIS_ON_OFF_CYCLE_PC_BOX    0x63
 #define OBIS_TIME_OFF_PC_BOX        0x64
 #define OBIS_TIME_ON_PC_BOX         0x65
+
+#define OBIS_SEND_TEMPERATURE       0x2A
 /*=============== Define Using Debug ==============*/
 #define USING_APP_CTRL_MOTOR_DEBUG
 #define USING_APP_DOOR_SENSOR_DEBUG
@@ -74,6 +78,8 @@
 /*================== Function ===========================*/
 void        Init_AppVendingMachine(void);
 uint8_t     AppVendingMachine_Task(void);
+
+void Init_AppComm_Vending_Machine(void);
 
 uint8_t     Calculator_Crc_U16(uint16_t *crc, uint8_t* buf, uint16_t len);
 uint8_t     Calculator_Crc_U8(uint8_t *crc, uint8_t* buf, uint16_t len);

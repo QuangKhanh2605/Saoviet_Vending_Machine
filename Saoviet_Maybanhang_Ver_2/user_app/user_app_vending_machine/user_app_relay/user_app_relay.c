@@ -77,6 +77,7 @@ static uint8_t fevent_relay_warm_refresh(uint8_t event)
     if(sElectric.PowerPresent != POWER_OFF) 
     OnRelay_Warm(sTimeCycleWarm.Run);
 #endif
+    fevent_enable(sEventAppRelay, event);
     return 1;
 }
 

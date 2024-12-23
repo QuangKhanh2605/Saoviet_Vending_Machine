@@ -395,7 +395,7 @@ static uint8_t fevent_push_motor(uint8_t event)
         else
         {
           sElevator.FloorHandle = 0;
-          fevent_active(sEventAppDelivery, _EVENT_ELEVATOR_LOWER_END);  //Chuyen sang event xu ly tiep theo
+          fevent_enable(sEventAppDelivery, _EVENT_ELEVATOR_LOWER_END);  //Chuyen sang event xu ly tiep theo
           Enable_Handle_Idle_Delivery(_EVENT_ELEVATOR_LOWER_END, 20000);       //enable handle error
         }
         
@@ -526,6 +526,8 @@ static uint8_t fevent_free_elevator_lower(uint8_t event)
 //                    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
 //                    Control_LockMagnetis(UNLOCK_MAGNETIS);
                   
+                    sElevator.TimeOnMotor = 0;
+                    
                     HAL_GPIO_WritePin(IN_A_GPIO_Port, IN_A_Pin, GPIO_PIN_RESET);
                     HAL_GPIO_WritePin(IN_B_GPIO_Port, IN_B_Pin, GPIO_PIN_RESET);
                    
@@ -542,7 +544,6 @@ static uint8_t fevent_free_elevator_lower(uint8_t event)
                     sElevator.RunLevel_PWM = 0;
                     
                     GPIO_Init_Pos_Elevator(ELEVATOR_STOP);
-                    sElevator.TimeOnMotor = 0;
                 }
                 break; 
                 
@@ -1172,6 +1173,8 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
 //                __HAL_TIM_SetCompare (&htim3, TIM_CHANNEL_2, 100);
 //                HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
               
+                sElevator.TimeOnMotor = 0;
+                
                 HAL_GPIO_WritePin(IN_A_GPIO_Port, IN_A_Pin, GPIO_PIN_SET);
                 HAL_GPIO_WritePin(IN_B_GPIO_Port, IN_B_Pin, GPIO_PIN_SET);
                
@@ -1188,13 +1191,13 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
                 sElevator.RunLevel_PWM = 0;
                 
                 GPIO_Init_Pos_Elevator(ELEVATOR_STOP);
-                sElevator.TimeOnMotor = 0;
             }
           break;
           
         case ELEVATOR_UP:
             if(sElevator.State != ELEVATOR_UP)
             {
+                sElevator.TimeOnMotor = HAL_GetTick();
               
                 HAL_GPIO_WritePin(IN_A_GPIO_Port, IN_A_Pin, GPIO_PIN_RESET);
                 HAL_GPIO_WritePin(IN_B_GPIO_Port, IN_B_Pin, GPIO_PIN_RESET);
@@ -1211,7 +1214,6 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
                 sElevator.RunLevel_PWM = Level_PWM_Elevator_Up;
                 
                 GPIO_Init_Pos_Elevator(ELEVATOR_UP);
-                sElevator.TimeOnMotor = HAL_GetTick();
             }
           break;
           
@@ -1220,6 +1222,8 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
             {
 //                __HAL_TIM_SetCompare (&htim3, TIM_CHANNEL_2, 0);
 //                HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+              
+                sElevator.TimeOnMotor = HAL_GetTick();
               
                 HAL_GPIO_WritePin(IN_A_GPIO_Port, IN_A_Pin, GPIO_PIN_RESET);
                 HAL_GPIO_WritePin(IN_B_GPIO_Port, IN_B_Pin, GPIO_PIN_RESET);
@@ -1237,7 +1241,6 @@ void Control_Elevator(uint8_t Direction, uint8_t Level)
                 sElevator.RunLevel_PWM = LEVEL_PWM_ELEVATOR_DOWN;
                 
                 GPIO_Init_Pos_Elevator(ELEVATOR_DOWN);
-                sElevator.TimeOnMotor = HAL_GetTick();
             }
           break;
           
@@ -1259,14 +1262,14 @@ void GPIO_Init_Pos_Elevator(uint8_t Kind)
         
       case ELEVATOR_UP:
         GPIO_InitStruct.Pin = FB_Pos_Elevator_Pin;
-        GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+        GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
         GPIO_InitStruct.Pull = GPIO_NOPULL;
         HAL_GPIO_Init(FB_Pos_Elevator_GPIO_Port, &GPIO_InitStruct);
         break;
           
       case ELEVATOR_DOWN:
         GPIO_InitStruct.Pin = FB_Pos_Elevator_Pin;
-        GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+        GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
         GPIO_InitStruct.Pull = GPIO_NOPULL;
         HAL_GPIO_Init(FB_Pos_Elevator_GPIO_Port, &GPIO_InitStruct);
         break;

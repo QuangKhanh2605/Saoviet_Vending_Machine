@@ -9,8 +9,9 @@ static uint8_t fevent_relay_warm_on(uint8_t event);
 static uint8_t fevent_relay_warm_off(uint8_t event);
 
 static uint8_t fevent_control_led_status(uint8_t event);
-static uint8_t fevent_control_led_pcbox(uint8_t event);
+static uint8_t fevent_control_led_recv_pcbox(uint8_t event);
 static uint8_t fevent_control_led_slave(uint8_t event);
+static uint8_t fevent_control_led_trans_pcbox(uint8_t event);
 /*=================== struct ==================*/
 sEvent_struct               sEventAppRelay[] = 
 {
@@ -21,8 +22,9 @@ sEvent_struct               sEventAppRelay[] =
   {_EVENT_RELAY_WARM_OFF,           0, 0, 5,                    fevent_relay_warm_off},
   
   {_EVENT_CONTROL_LED_STATUS,       0, 5, TIME_LED_STATUS,      fevent_control_led_status},
-  {_EVENT_CONTROL_LED_PCBOX,        0, 5, TIME_LED_PCBOX,       fevent_control_led_pcbox},
+  {_EVENT_CONTROL_LED_RECV_PCBOX,   0, 5, TIME_LED_PCBOX,       fevent_control_led_recv_pcbox},
   {_EVENT_CONTROL_LED_SLAVE,        0, 5, TIME_LED_SLAVE,       fevent_control_led_slave},
+  {_EVENT_CONTROL_LED_TRANS_PCBOX,  0, 5, TIME_LED_PCBOX,       fevent_control_led_trans_pcbox},
 };
 
 Struct_StatusRelay          sStatusRelay={OFF_RELAY};                
@@ -57,6 +59,7 @@ static GPIO_TypeDef*  LED_PORT[3] = {Led_1_GPIO_Port, Led_2_GPIO_Port, Led_3_GPI
 static const uint16_t LED_PIN[3] = {Led_1_Pin, Led_2_Pin, Led_3_Pin};
 
 uint8_t LedRecvPcBox = 0;
+uint8_t LedTransPcBox = 0;
 Struct_TimeCycleWarm    sTimeCycleWarm=
 {
     .Run  = TIME_RL_WARM,
@@ -66,8 +69,9 @@ Struct_TimeCycleWarm    sTimeCycleWarm=
 static uint8_t fevent_relay_entry(uint8_t event)
 {
     fevent_enable(sEventAppRelay, _EVENT_CONTROL_LED_STATUS);
-    fevent_enable(sEventAppRelay, _EVENT_CONTROL_LED_PCBOX);
+    fevent_enable(sEventAppRelay, _EVENT_CONTROL_LED_RECV_PCBOX);
     fevent_enable(sEventAppRelay, _EVENT_CONTROL_LED_SLAVE);
+    fevent_enable(sEventAppRelay, _EVENT_CONTROL_LED_TRANS_PCBOX);
     return 1;
 }
 
@@ -117,20 +121,20 @@ static uint8_t fevent_control_led_status(uint8_t event)
     return 1;
 }
 
-static uint8_t fevent_control_led_pcbox(uint8_t event)
+static uint8_t fevent_control_led_recv_pcbox(uint8_t event)
 {
 /*--------------------Dieu khien led PcBox----------------*/
     if(LedRecvPcBox > 0)
     {
-        if(sEventAppRelay[_EVENT_CONTROL_LED_PCBOX].e_period == TIME_LED_PCBOX)
+        if(sEventAppRelay[_EVENT_CONTROL_LED_RECV_PCBOX].e_period == TIME_LED_PCBOX)
         {
             LED_On(_LED_PCBOX);
-            sEventAppRelay[_EVENT_CONTROL_LED_PCBOX].e_period = 40;
+            sEventAppRelay[_EVENT_CONTROL_LED_RECV_PCBOX].e_period = 30;
         }
         else
         {
             LED_Off(_LED_PCBOX);
-            sEventAppRelay[_EVENT_CONTROL_LED_PCBOX].e_period = TIME_LED_PCBOX;
+            sEventAppRelay[_EVENT_CONTROL_LED_RECV_PCBOX].e_period = TIME_LED_PCBOX;
             LedRecvPcBox--;
         }
     }
@@ -149,6 +153,28 @@ static uint8_t fevent_control_led_slave(uint8_t event)
     else
     {
         LED_Off(_LED_SLAVE);
+    }
+    
+    fevent_enable(sEventAppRelay, event);
+    return 1;
+}
+
+static uint8_t fevent_control_led_trans_pcbox(uint8_t event)
+{
+/*--------------------Dieu khien led PcBox----------------*/
+    if(LedTransPcBox > 0)
+    {
+        if(sEventAppRelay[_EVENT_CONTROL_LED_TRANS_PCBOX].e_period == TIME_LED_PCBOX)
+        {
+            LED_On(_LED_SLAVE);
+            sEventAppRelay[_EVENT_CONTROL_LED_TRANS_PCBOX].e_period = 30;
+        }
+        else
+        {
+            LED_Off(_LED_SLAVE);
+            sEventAppRelay[_EVENT_CONTROL_LED_TRANS_PCBOX].e_period = TIME_LED_PCBOX;
+            LedTransPcBox--;
+        }
     }
     
     fevent_enable(sEventAppRelay, event);

@@ -118,10 +118,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         break;
         
       case FB_Pos_Elevator_Pin:
-        if(HAL_GetTick() - gettick_floor > 1000 || gettick_floor == 0)
+        if(HAL_GetTick() - gettick_floor > 500 || gettick_floor == 0)
         {
             gettick_floor = HAL_GetTick();
-            
             if(sElevator.Status != ELEVATOR_OFF)
             {
                 switch(sElevator.State)
@@ -130,7 +129,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
                       break;
                       
                     case ELEVATOR_UP:
-                        if(((HAL_GetTick() - sElevator.TimeOnMotor > 1700) && sElevator.TimeOnMotor != 0) )
+                        if(((HAL_GetTick() - sElevator.TimeOnMotor > 2300) && sElevator.TimeOnMotor != 0) )
                         {
                             sElevator.FloorCurrent++;
     //                        Debug_Encoder();
@@ -148,7 +147,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
                     case ELEVATOR_DOWN:
                         if(sElevator.FloorCurrent > 0)
                         {
-                            if(((HAL_GetTick() - sElevator.TimeOnMotor > 1700) && sElevator.TimeOnMotor != 0) || sElevator.FloorCurrent == NUMBER_MAX_FLOOR)
+                            if(((HAL_GetTick() - sElevator.TimeOnMotor > 2300) && sElevator.TimeOnMotor != 0) || sElevator.FloorCurrent == NUMBER_MAX_FLOOR)
                             {
                                 sElevator.FloorCurrent--;
     //                            Debug_Encoder();
@@ -169,6 +168,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
                 }
             }
         }
+        gettick_floor = HAL_GetTick();
         break;
         
       case Encoder_C2_Pin:

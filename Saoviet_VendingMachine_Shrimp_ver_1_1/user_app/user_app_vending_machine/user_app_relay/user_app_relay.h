@@ -9,7 +9,7 @@
 #include "user_util.h"
 
 #define  TIME_LED_STATUS        2000
-#define  TIME_LED_PCBOX         80
+#define  TIME_LED_PCBOX         50
 #define  TIME_LED_SLAVE         1000
 
 #define GPIO_PIN_ON_RELAY       GPIO_PIN_SET
@@ -26,9 +26,9 @@
 #define  RELAY_ALARM_PORT           RELAY_4_GPIO_Port
 #define  RELAY_FRIDGE_HEAT_PORT     RELAY_3_GPIO_Port
 #define  RELAY_LAMP_PORT            ON_OFF_LED_GPIO_Port
-#define  RELAY_WARM_PORT            RELAY_1_GPIO_Port
+#define  RELAY_WARM_PORT            ON_OFF_V1_GPIO_Port
 
-#define  RELAY_V1_PORT              ON_OFF_V1_GPIO_Port
+#define  RELAY_V1_PORT              RELAY_1_GPIO_Port
 //#define  RELAY_V2_PORT              ON_OFF_V2_GPIO_Port
 
 #define  RELAY_SCREEN_PIN           GLASS_Pin 
@@ -36,9 +36,9 @@
 #define  RELAY_ALARM_PIN            RELAY_4_Pin
 #define  RELAY_FRIDGE_HEAT_PIN      RELAY_3_Pin
 #define  RELAY_LAMP_PIN             ON_OFF_LED_Pin
-#define  RELAY_WARM_PIN             RELAY_1_Pin
+#define  RELAY_WARM_PIN             ON_OFF_V1_Pin
 
-#define  RELAY_V1_PIN               ON_OFF_V1_Pin
+#define  RELAY_V1_PIN               RELAY_1_Pin
 //#define  RELAY_V2_PIN               ON_OFF_V2_Pin
 
 typedef enum
@@ -50,8 +50,9 @@ typedef enum
     _EVENT_RELAY_WARM_OFF,
     
     _EVENT_CONTROL_LED_STATUS,
-    _EVENT_CONTROL_LED_PCBOX,
+    _EVENT_CONTROL_LED_RECV_PCBOX,
     _EVENT_CONTROL_LED_SLAVE,
+    _EVENT_CONTROL_LED_TRANS_PCBOX,
     
     _EVENT_RELAY_END,
 }eKindEventRelay;
@@ -129,6 +130,7 @@ extern sEvent_struct        sEventAppRelay[];
 
 extern Struct_StatusRelay         sStatusRelay;
 extern uint8_t                    LedRecvPcBox;
+extern uint8_t                    LedTransPcBox;
 extern Struct_TimeCycleWarm       sTimeCycleWarm;
 /*=============== Function handle ================*/
 uint8_t     AppRelay_Task(void);

@@ -166,6 +166,7 @@ void        Init_CycleOnOffPcBox(void);
 void        RespondPcBox_String(uint8_t *aData, uint16_t Length);
 void        Packing_Respond_PcBox(uint8_t aData[], uint16_t Length);
 void        ResetDCU(void);
+void        Reset_WDG_DCU(void);
 
 void        Cb_Timer_Event_OnOffPcBox(void *context);
 void        OnOffPcBox(uint16_t time);

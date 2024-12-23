@@ -11,8 +11,7 @@ static uint8_t fevent_pcbox_complete_receive(uint8_t event);
 static uint8_t fevent_pcbox_log_tsvh(uint8_t event);
 static uint8_t fevent_wdg_stm32f4(uint8_t event);
 
-static uint8_t fevent_queue_respond_immediately(uint8_t event);
-static uint8_t fevent_queue_respond_time(uint8_t event);
+static uint8_t fevent_queue_respond_pcbox(uint8_t event);
 static uint8_t fevent_handle_respond_error(uint8_t event);
 
 static uint8_t fevent_dcu_ping_pc_box(uint8_t event);
@@ -35,8 +34,7 @@ sEvent_struct               sEventAppPcBox[]=
   
   {_EVENT_WDG_STM32F4,                  1, 0, TIME_RESET_WDG,           fevent_wdg_stm32f4},
   
-  {_EVENT_QUEUE_RESPOND_IMMEDIATELY,    0, 0, 5,                        fevent_queue_respond_immediately},
-  {_EVENT_QUEUE_RESPOND_TIME,           0, 0, TIME_RESPOND_PC_BOX,      fevent_queue_respond_time},
+  {_EVENT_QUEUE_RESPOND_PCBOX,          0, 0, TIME_RESPOND_PC_BOX,      fevent_queue_respond_pcbox},
   {_EVENT_HANDLE_RESPOND_ERROR,         0, 5, 30*60000,                 fevent_handle_respond_error},
   
   {_EVENT_DCU_PING_PC_BOX,              0, 5, TIME_PING_PCBOX,          fevent_dcu_ping_pc_box},
@@ -92,7 +90,7 @@ static uint8_t fevent_pcbox_entry(uint8_t event)
     
     fevent_active(sEventAppPcBox, _EVENT_PC_BOX_RECEIVE_HANDLE);
     fevent_enable(sEventAppPcBox, _EVENT_REFRESH_DCU);
-    fevent_active(sEventAppPcBox, _EVENT_QUEUE_RESPOND_IMMEDIATELY);
+    fevent_active(sEventAppPcBox, _EVENT_QUEUE_RESPOND_PCBOX);
     fevent_active(sEventAppPcBox, _EVENT_GET_REAL_TIME_DCU);
     fevent_enable(sEventAppPcBox, _EVENT_HANDLE_RESPOND_ERROR);
     
@@ -103,16 +101,10 @@ static uint8_t fevent_pcbox_entry(uint8_t event)
     return 1;
 }
 
-uint32_t count_error_rtc = 0;
 static uint8_t fevent_wdg_stm32f4(uint8_t event)
 {
 /*--------------Reset WDG-------------*/
     Reset_WDG_DCU();
-    
-    if(sRTC.hour == 0 || sRTC.hour == 1)
-    {
-        count_error_rtc++;
-    }
     
     fevent_enable(sEventAppPcBox, event);
     return 1;
@@ -559,7 +551,7 @@ static uint8_t fevent_pcbox_log_tsvh(uint8_t event)
     return 1;
 }
 
-static uint8_t fevent_queue_respond_immediately(uint8_t event)
+static uint8_t fevent_queue_respond_pcbox(uint8_t event)
 {
 /*-------------Phan hoi neu trong Queue con 1 ban tin-------------*/
     Struct_Queue_Type               *PtrQueueRespond;
@@ -583,6 +575,8 @@ static uint8_t fevent_queue_respond_immediately(uint8_t event)
         {
             qQueue_Receive(PtrQueueRespond ,&sQueueReadData, 1);
             Transmit_PCBOX(sQueueReadData.aData_u8,sQueueReadData.Length);
+            fevent_enable(sEventAppPcBox, event);
+            return 1;
         }
         else
         {
@@ -590,57 +584,12 @@ static uint8_t fevent_queue_respond_immediately(uint8_t event)
             {
                 qQueue_Receive(PtrQueueRespond ,&sQueueReadData, 1);
                 Transmit_PCBOX(sQueueReadData.aData_u8,sQueueReadData.Length);
+                fevent_enable(sEventAppPcBox, event);
+                return 1;
             }
         }
-        
-        fevent_enable(sEventAppPcBox, _EVENT_QUEUE_RESPOND_TIME);
-        return 1;
     }
-    fevent_enable(sEventAppPcBox, event);
-    return 1;
-}
-
-static uint8_t fevent_queue_respond_time(uint8_t event)
-{
-/*---------------Phan hoi neu trong Queue co nhieu ban tin---------------*/
-    Struct_Queue_Type               *PtrQueueRespond;
-    sDataQueueRespondPcBox          sQueueReadData;
-    uint8_t KindSend_Prio = 0;
-    
-    if(qGet_Number_Items(&qRespondPcBox_Prio_1) == 0)
-    {
-        PtrQueueRespond = &qRespondPcBox_Prio_0;
-        KindSend_Prio = 0;
-    }
-    else
-    {
-        PtrQueueRespond = &qRespondPcBox_Prio_1;
-        KindSend_Prio = 1;
-    }
-  
-    if(qGet_Number_Items(PtrQueueRespond) == 0)
-    {
-        fevent_active(sEventAppPcBox, _EVENT_QUEUE_RESPOND_IMMEDIATELY);
-        return 1;
-    }
-    else
-    {
-        if(KindSend_Prio == 1)   
-        {
-            qQueue_Receive(PtrQueueRespond ,&sQueueReadData, 1);
-            Transmit_PCBOX(sQueueReadData.aData_u8,sQueueReadData.Length);
-        }
-        else
-        {
-            if(sParamPcBox.StatePcBox == _STT_PCBOX_CONNECT)
-            {
-                qQueue_Receive(PtrQueueRespond ,&sQueueReadData, 1);
-                Transmit_PCBOX(sQueueReadData.aData_u8,sQueueReadData.Length);
-            }
-        }
-        
-        fevent_enable(sEventAppPcBox, _EVENT_QUEUE_RESPOND_TIME);
-    }
+    fevent_active(sEventAppPcBox, event);
     return 1;
 }
 
@@ -893,6 +842,7 @@ void Transmit_PCBOX(uint8_t aData[],uint8_t length)
     Respond_PcBox(aData, length);
     AppPcBox_Debug(aData, length , _TRANS_PCBOX);
     fevent_enable(sEventAppPcBox, _EVENT_HANDLE_RESPOND_ERROR);
+    LedTransPcBox = length;
 }
 
 void Packing_Respond_PcBox(uint8_t aData[], uint16_t Length)

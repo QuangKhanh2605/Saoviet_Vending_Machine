@@ -20,6 +20,7 @@ static uint8_t fevent_temp_ctrl_fridge(uint8_t event);
 static uint8_t fevent_temp_time_get(uint8_t event);
 static uint8_t fevent_temp_off_fridge_frozen(uint8_t event);
 static uint8_t fevent_temp_respond_error(uint8_t event);
+static uint8_t fevent_send_pcbox_temperature(uint8_t event);
 /*=================== Struct ====================*/
 sEvent_struct                   sEventAppTemperature[] =
 {
@@ -35,6 +36,8 @@ sEvent_struct                   sEventAppTemperature[] =
   {_EVENT_TEMP_OFF_FRIGE_FROZEN,0, 0, TIME_OFF_FROZEN,      fevent_temp_off_fridge_frozen},
   
   {_EVENT_TEMP_RESPOND_ERROR,   0, 0, TIME_ERROR_TEMP,      fevent_temp_respond_error},
+  
+  {_EVENT_SEND_PCBOX_TEMPERATURE, 0, 0, 60000,              fevent_send_pcbox_temperature},
 };
 
 uint32_t ADC_Temp[3]={0};
@@ -58,6 +61,7 @@ static uint8_t fevent_temp_entry(uint8_t event)
     if(once == NUM_SAMPLING_ADC)
     {
         fevent_active(sEventAppTemperature, _EVENT_TEMP_GET_ADC);
+        fevent_enable(sEventAppTemperature, _EVENT_SEND_PCBOX_TEMPERATURE);
         return 1;
     }
     fevent_enable(sEventAppTemperature, event);
@@ -210,6 +214,21 @@ static uint8_t fevent_temp_respond_error(uint8_t event)
 {
     Respond_Error_Temp();
       
+    fevent_enable(sEventAppTemperature, event);
+    return 1;
+}
+
+static uint8_t fevent_send_pcbox_temperature(uint8_t event)
+{
+    sRespPcBox.Length_u16 = 0;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = OBIS_SEND_TEMPERATURE;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = 0x03;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sTemperature.Value >> 8;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = sTemperature.Value;
+    sRespPcBox.Data_a8[sRespPcBox.Length_u16++] = DEFAULT_TEMP_SCALE;
+    
+    Packing_Respond_PcBox(sRespPcBox.Data_a8, sRespPcBox.Length_u16);
+    
     fevent_enable(sEventAppTemperature, event);
     return 1;
 }

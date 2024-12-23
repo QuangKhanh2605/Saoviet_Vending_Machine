@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.2.214/W32 for ARM                  07/May/2024  09:36:53
+# IAR ELF Linker V8.40.2.214/W32 for ARM                  04/Dec/2024  08:21:20
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =
@@ -8,7 +8,7 @@
 #    Map file     =
 #        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Test\EWARM\Saoviet_Maybanhang\List\Saoviet_Maybanhang.map
 #    Command line =
-#        -f C:\Users\PC\AppData\Local\Temp\EWF422.tmp
+#        -f C:\Users\PC\AppData\Local\Temp\EW5EEC.tmp
 #        (D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Test\EWARM\Saoviet_Maybanhang\Obj\adc.o
 #        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Test\EWARM\Saoviet_Maybanhang\Obj\dma.o
 #        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Test\EWARM\Saoviet_Maybanhang\Obj\event_driven.o

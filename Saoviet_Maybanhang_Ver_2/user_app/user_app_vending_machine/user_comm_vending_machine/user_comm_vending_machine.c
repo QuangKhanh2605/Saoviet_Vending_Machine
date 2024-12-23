@@ -2,9 +2,13 @@
 
 #include "user_comm_vending_machine.h"
 #include "user_inc_vending_machine.h"
+#include "onchipflash.h"
+#include "user_external_flash.h"
 
 void Init_AppVendingMachine(void)
 {
+    Init_AppComm_Vending_Machine();
+  
     Init_AppRelay();
     Init_AppElectric();
     Init_AppTemperature();
@@ -47,6 +51,37 @@ uint8_t AppVendingMachine_Task(void)
     #endif
         
     return 1;
+}
+
+void Init_AppComm_Vending_Machine(void)
+{
+    if(*(__IO uint8_t*)(0x080E0000) != 0xAA)
+    {
+        uint8_t aData[8] ={0};
+        uint16_t length = 0;
+        for(uint8_t i = 0; i<8; i++)
+            aData[length++] = 0xAA;
+        OnchipFlashPageErase(0x080E0000);
+        HAL_Delay(1);
+        OnchipFlashWriteData(0x080E0000, aData, length);
+        
+        Reset_WDG_DCU();
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TEMP_SET_THRESH);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_MAIN_ID);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_STATUS_RELAY);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_STATUS_ELECTRIC);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_IDSLAVE_ELECTRIC);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_FREQ_TSVH);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TIME_ON_OFF_PCBOX);
+        Reset_WDG_DCU();
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TIME_RELAY_WARM);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_PCBOX_USING_CRC);
+//        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_VALUE_TEMP_CALIB);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_ID_SLAVE_485);
+        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_STATE_PCBOX);
+//        eFlash_S25FL_Erase_Sector(EX_FLASH_ADDR_TIME_LOCK_MAGNETIS);
+        Reset_WDG_DCU();
+    }
 }
 
 /*=========== Function Crc =============*/
