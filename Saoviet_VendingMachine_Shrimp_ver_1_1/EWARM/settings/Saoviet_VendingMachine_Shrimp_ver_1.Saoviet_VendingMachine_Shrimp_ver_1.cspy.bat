@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.general.xcl" --backend -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.general.xcl" --backend -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.general.xcl" "--debug_file=%~1" --backend -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.driver.xcl" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.general.xcl" "--debug_file=%~1" --backend -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\settings\Saoviet_VendingMachine_Shrimp_ver_1.Saoviet_VendingMachine_Shrimp_ver_1.driver.xcl" 
 
 @echo off 
 :end
