@@ -1,0 +1,7 @@
+Lịch sử Firmware máy bán hàng
+
+-Saoviet_Maybanhang_Board_2: Mạch đo điện năng tiêu thụ máy bán nước
+-Saoviet_Maybanhang_Ver_2: Ver cuối máy bán nước
+
+-Saoviet_VendingMachine_Shrimp_ver_1_1: Version cuối máy bán tôm bản cũ(10 ô bán hàng)
+-Saoviet_VendingMachine_Shrimp_ver_1_2: Version cuối máy bán tôm bản mới (9 ô bán hàng)

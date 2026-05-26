@@ -177,7 +177,7 @@
                     <item>sRecTSVH</item>
                     <item>sCycleOnOffPcBox</item>
                     <item>hrtc</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

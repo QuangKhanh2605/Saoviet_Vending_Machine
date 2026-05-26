@@ -1,89 +1,89 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.40.2.214/W32 for ARM                  20/Dec/2024  08:38:39
+# IAR ELF Linker V8.40.2.214/W32 for ARM                  22/Apr/2026  13:42:42
 # Copyright 2007-2019 IAR Systems AB.
 #
 #    Output file  =
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Exe\Saoviet_VendingMachine_Shrimp_ver_1.out
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Exe\Saoviet_VendingMachine_Shrimp_ver_1.out
 #    Map file     =
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\List\Saoviet_VendingMachine_Shrimp_ver_1.map
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\List\Saoviet_VendingMachine_Shrimp_ver_1.map
 #    Command line =
-#        -f C:\Users\PC\AppData\Local\Temp\EWC2AE.tmp
-#        (D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\adc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\dma.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\event_driven.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\gpio.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\iwdg.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\main.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\onchipflash.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\queue_p.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\rtc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\S25FL216K.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\spi.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\startup_stm32f405xx.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_adc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_adc_ex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_cortex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_dma.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_dma_ex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_exti.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_flash.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_flash_ex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_flash_ramfunc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_gpio.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_iwdg.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_msp.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_pwr.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_pwr_ex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rcc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rcc_ex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rtc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rtc_ex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_spi.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_tim.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_tim_ex.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_uart.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_it.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_ll_adc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\system_stm32f4xx.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\tim.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\usart.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_comm.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_delivery.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_door_sensor.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_electric.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_mem.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_pc_box.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_relay.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_rs485.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_temperature.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_vib_sensor.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_at_serial.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_comm_vending_machine.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_convert_variable.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_external_flash.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_internal_mem.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_irq_input.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_log.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_lpm.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_modbus_rtu.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_modem.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_modem_init.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_obis.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_rtc.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_string.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_time.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_timer.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_uart.o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_util.o
+#        -f C:\Users\PC\AppData\Local\Temp\EWAAD3.tmp
+#        (D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\adc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\dma.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\event_driven.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\gpio.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\iwdg.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\main.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\onchipflash.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\queue_p.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\rtc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\S25FL216K.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\spi.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\startup_stm32f405xx.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_adc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_adc_ex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_cortex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_dma.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_dma_ex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_exti.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_flash.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_flash_ex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_flash_ramfunc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_gpio.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_iwdg.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_msp.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_pwr.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_pwr_ex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rcc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rcc_ex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rtc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_rtc_ex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_spi.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_tim.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_tim_ex.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_hal_uart.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_it.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\stm32f4xx_ll_adc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\system_stm32f4xx.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\tim.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\usart.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_comm.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_delivery.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_door_sensor.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_electric.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_mem.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_pc_box.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_relay.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_rs485.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_temperature.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_app_vib_sensor.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_at_serial.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_comm_vending_machine.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_convert_variable.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_external_flash.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_internal_mem.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_irq_input.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_log.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_lpm.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_modbus_rtu.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_modem.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_modem_init.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_obis.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_rtc.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_string.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_time.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_timer.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_uart.o
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj\user_util.o
 #        --no_out_extension -o
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Exe\Saoviet_VendingMachine_Shrimp_ver_1.out
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Exe\Saoviet_VendingMachine_Shrimp_ver_1.out
 #        --redirect _Printf=_PrintfFullNoMb --redirect _Scanf=_ScanfFullNoMb
 #        --map
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\List\Saoviet_VendingMachine_Shrimp_ver_1.map
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\List\Saoviet_VendingMachine_Shrimp_ver_1.map
 #        --config
-#        D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM/stm32f405xx_flash.icf
+#        D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM/stm32f405xx_flash.icf
 #        --semihosting --entry __iar_program_start --vfe --text_out locale)
 #
 ###############################################################################
@@ -741,7 +741,7 @@ command line/config:
     ------------------------------------------------------
     Total:
 
-D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj: [1]
+D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj: [1]
     S25FL216K.o                      150
     adc.o                            424               168
     dma.o                            120
@@ -1833,7 +1833,7 @@ uwTickFreq              0x2000'09a4    0x1  Data  Gb  stm32f4xx_hal.o [1]
 uwTickPrio              0x2000'0000    0x4  Data  Gb  stm32f4xx_hal.o [1]
 
 
-[1] = D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj
+[1] = D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_VendingMachine_Shrimp_ver_1_1\EWARM\Saoviet_VendingMachine_Shrimp_ver_1\Obj
 [2] = dl7M_tlf.a
 [3] = m7M_tls.a
 [4] = rt7M_tl.a

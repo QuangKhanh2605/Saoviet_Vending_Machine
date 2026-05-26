@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.general.xcl" --backend -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.general.xcl" --backend -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.general.xcl" --debug_file=$debugfile --backend -f "D:\Saoviet_Bitbucket\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.3\common\bin\cspybat" -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.general.xcl" --debug_file=$debugfile --backend -f "D:\Saoviet_Git\Saoviet_Vending_Machine\Saoviet_Maybanhang_Ver_2\EWARM\settings\Saoviet_Maybanhang.Saoviet_Maybanhang.driver.xcl" 
 }
