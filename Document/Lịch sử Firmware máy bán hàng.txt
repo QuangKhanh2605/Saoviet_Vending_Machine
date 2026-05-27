@@ -1,5 +1,6 @@
 Lịch sử Firmware máy bán hàng
 
+-Saoviet_Maybanhang: Ver cũ máy bán nước
 -Saoviet_Maybanhang_Board_2: Mạch đo điện năng tiêu thụ máy bán nước
 -Saoviet_Maybanhang_Ver_2: Ver cuối máy bán nước
 
