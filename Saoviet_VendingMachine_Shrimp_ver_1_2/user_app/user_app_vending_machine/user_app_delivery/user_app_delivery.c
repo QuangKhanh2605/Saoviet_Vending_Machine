@@ -66,12 +66,12 @@ sEvent_struct         sEventAppDelivery[] =
 };
 
 static GPIO_TypeDef*  CTRL_MOTOR_PORT[NUMBER_MOTOR] = {CTRL_MOTOR_1_PORT, CTRL_MOTOR_2_PORT, CTRL_MOTOR_3_PORT,
-                                                       CTRL_MOTOR_4_PORT, CTRL_MOTOR_5_PORT, CTRL_MOTOR_6_PORT,
-                                                       CTRL_MOTOR_7_PORT, CTRL_MOTOR_8_PORT, CTRL_MOTOR_9_PORT,
+                                                       CTRL_MOTOR_5_PORT, CTRL_MOTOR_6_PORT, CTRL_MOTOR_7_PORT,
+                                                       CTRL_MOTOR_8_PORT, CTRL_MOTOR_9_PORT, CTRL_MOTOR_10_PORT,
                                                        CTRL_MOTOR_10_PORT};
 static const uint16_t CTRL_MOTOR_PIN[NUMBER_MOTOR] = {CTRL_MOTOR_1_PIN, CTRL_MOTOR_2_PIN, CTRL_MOTOR_3_PIN, 
-                                                      CTRL_MOTOR_4_PIN, CTRL_MOTOR_5_PIN, CTRL_MOTOR_6_PIN, 
-                                                      CTRL_MOTOR_7_PIN, CTRL_MOTOR_8_PIN, CTRL_MOTOR_9_PIN,
+                                                      CTRL_MOTOR_5_PIN, CTRL_MOTOR_6_PIN, CTRL_MOTOR_7_PIN, 
+                                                      CTRL_MOTOR_8_PIN, CTRL_MOTOR_9_PIN, CTRL_MOTOR_10_PIN,
                                                       CTRL_MOTOR_10_PIN};
 
 Struct_ParamDelivery        sParamDelivery = {0};
@@ -1279,7 +1279,7 @@ void Control_LockMagnetis(GPIO_PinState StateCtrl)
 
 void Debug_Floor_Elevator(uint8_t Floor)
 {
-    char aData[10]={0};
+    char aData[100]={0};
     sprintf(aData, "app_ctrl_motor: Floor: %d\r\n", Floor);
     UTIL_Printf_Str(DBLEVEL_M, aData);
 }

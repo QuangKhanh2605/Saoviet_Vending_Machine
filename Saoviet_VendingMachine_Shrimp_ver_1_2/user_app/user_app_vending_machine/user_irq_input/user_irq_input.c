@@ -47,7 +47,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         if(HAL_GetTick() - gettick_motor > 500)
         {
             gettick_motor = HAL_GetTick();
-            IRQ_Pluse_OffMotorPush(5);
+            IRQ_Pluse_OffMotorPush(4);
         }
         break;
         
@@ -55,7 +55,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         if(HAL_GetTick() - gettick_motor > 500)
         {
             gettick_motor = HAL_GetTick();
-            IRQ_Pluse_OffMotorPush(6);
+            IRQ_Pluse_OffMotorPush(5);
         }
         break;
         
@@ -63,7 +63,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         if(HAL_GetTick() - gettick_motor > 500)
         {
             gettick_motor = HAL_GetTick();
-            IRQ_Pluse_OffMotorPush(7);
+            IRQ_Pluse_OffMotorPush(6);
         }
         break;
         
@@ -71,7 +71,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         if(HAL_GetTick() - gettick_motor > 500)
         {
             gettick_motor = HAL_GetTick();
-            IRQ_Pluse_OffMotorPush(8);
+            IRQ_Pluse_OffMotorPush(7);
         }
         break;
         
@@ -79,7 +79,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         if(HAL_GetTick() - gettick_motor > 500)
         {
             gettick_motor = HAL_GetTick();
-            IRQ_Pluse_OffMotorPush(9);
+            IRQ_Pluse_OffMotorPush(8);
         }
         break;
         
@@ -87,7 +87,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         if(HAL_GetTick() - gettick_motor > 500)
         {
             gettick_motor = HAL_GetTick();
-            IRQ_Pluse_OffMotorPush(10);
+            IRQ_Pluse_OffMotorPush(9);
         }
         break;
         
@@ -129,7 +129,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
                       break;
                       
                     case ELEVATOR_UP:
-                        if(((HAL_GetTick() - sElevator.TimeOnMotor > 2300) && sElevator.TimeOnMotor != 0) )
+                        if(((HAL_GetTick() - sElevator.TimeOnMotor > 1500) && sElevator.TimeOnMotor != 0) )
                         {
                             sElevator.FloorCurrent++;
     //                        Debug_Encoder();
@@ -147,7 +147,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
                     case ELEVATOR_DOWN:
                         if(sElevator.FloorCurrent > 0)
                         {
-                            if(((HAL_GetTick() - sElevator.TimeOnMotor > 2300) && sElevator.TimeOnMotor != 0) || sElevator.FloorCurrent == NUMBER_MAX_FLOOR)
+                            if(((HAL_GetTick() - sElevator.TimeOnMotor > 1500) && sElevator.TimeOnMotor != 0) || sElevator.FloorCurrent == NUMBER_MAX_FLOOR)
                             {
                                 sElevator.FloorCurrent--;
     //                            Debug_Encoder();
