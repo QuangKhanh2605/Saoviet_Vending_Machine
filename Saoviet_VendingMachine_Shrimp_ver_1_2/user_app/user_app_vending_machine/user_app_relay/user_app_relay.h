@@ -17,7 +17,7 @@
 
 #define NUMBER_RELAY            7
 
-#define  TIME_RL_WARM           5   //Min
+#define  TIME_RL_WARM           2   //Min
 
 #define  TIME_RL_WARM_REFRESH   15  //Min
 
