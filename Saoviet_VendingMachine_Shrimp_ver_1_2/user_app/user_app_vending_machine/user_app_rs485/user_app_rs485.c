@@ -115,70 +115,60 @@ static uint8_t fevent_rs485_receive_complete(uint8_t event)
 /*------------------Xu ly chuoi nhan duoc----------------*/
     static uint8_t CountStatePower   = 0;
     static uint8_t CountPowerDisconnect = 0;
+    
+    uint8_t Result = false;
   
     uint16_t Crc_Check = 0;
     uint16_t Crc_Recv  = 0;
-
-    Crc_Recv = (sUart485.Data_a8[sUart485.Length_u16-1] << 8) |
-               (sUart485.Data_a8[sUart485.Length_u16-2]);
-    Crc_Check = ModRTU_CRC(sUart485.Data_a8, sUart485.Length_u16 - 2);
-    if(Crc_Check == Crc_Recv)
+    
+    if(sUart485.Length_u16 > 5)
     {
-        fevent_enable(sEventAppRs485, _EVENT_RS485_INIT_UART);
-        switch(sKindMode485.Recv)
+        Crc_Recv = (sUart485.Data_a8[sUart485.Length_u16-1] << 8) |
+                   (sUart485.Data_a8[sUart485.Length_u16-2]);
+        Crc_Check = ModRTU_CRC(sUart485.Data_a8, sUart485.Length_u16 - 2);
+        if(Crc_Check == Crc_Recv)
         {
-            case _RS485_OPERA_ELECTRIC:
-                if(sUart485.Data_a8[0] == sElectric.ID && sUart485.Data_a8[1] == 0x03)
-                {
-                    sElectric.Voltage = sUart485.Data_a8[3]<<8 | sUart485.Data_a8[4];
-                    sElectric.Current = sUart485.Data_a8[9]<<8 | sUart485.Data_a8[10];
-                    sElectric.Current = sElectric.Current/10;
-                    
-                    if(sElectric.Current%10 >= 5)
-                        sElectric.Current = sElectric.Current/10 + 1;
-                    else 
+            fevent_enable(sEventAppRs485, _EVENT_RS485_INIT_UART);
+            switch(sKindMode485.Recv)
+            {
+                case _RS485_OPERA_ELECTRIC:
+                    if(sUart485.Data_a8[0] == sElectric.ID && sUart485.Data_a8[1] == 0x03)
+                    {
+                        sElectric.Voltage = sUart485.Data_a8[3]<<8 | sUart485.Data_a8[4];
+                        sElectric.Current = sUart485.Data_a8[9]<<8 | sUart485.Data_a8[10];
                         sElectric.Current = sElectric.Current/10;
-                    
-                    sElectric.Power   = sUart485.Data_a8[15]<<24 | sUart485.Data_a8[16]<<16 
-                                      | sUart485.Data_a8[17]<<8  | sUart485.Data_a8[18];
-                    
-                    sElectric.Energy  = sUart485.Data_a8[23]<<24 | sUart485.Data_a8[24]<<16 
-                                      | sUart485.Data_a8[25]<<8  | sUart485.Data_a8[26];
+                        
+                        if(sElectric.Current%10 >= 5)
+                            sElectric.Current = sElectric.Current/10 + 1;
+                        else 
+                            sElectric.Current = sElectric.Current/10;
+                        
+                        sElectric.Power   = sUart485.Data_a8[15]<<24 | sUart485.Data_a8[16]<<16 
+                                          | sUart485.Data_a8[17]<<8  | sUart485.Data_a8[18];
+                        
+                        sElectric.Energy  = sUart485.Data_a8[23]<<24 | sUart485.Data_a8[24]<<16 
+                                          | sUart485.Data_a8[25]<<8  | sUart485.Data_a8[26];
 
-                    sStateSlave485.Electric = CONNECT_SLAVE;
-                    if(CountPowerDisconnect > 0) CountPowerDisconnect--;
-                    else CountPowerDisconnect=0;
-                }
-                break;
-                
-            case _RS485_OPERA_WEIGHING:
-              sParamDelivery.Weighing = sUart485.Data_a8[3]<<8 | sUart485.Data_a8[4];
-              sParamDelivery.StateConnectWeight = _WEIGHT_485_CONNECT;
-              break;
+                        sStateSlave485.Electric = CONNECT_SLAVE;
+                        if(CountPowerDisconnect > 0) CountPowerDisconnect--;
+                        else CountPowerDisconnect=0;
+                    }
+                    break;
+                    
+                case _RS485_OPERA_WEIGHING:
+                  sParamDelivery.Weighing = sUart485.Data_a8[3]<<8 | sUart485.Data_a8[4];
+                  sParamDelivery.StateConnectWeight = _WEIGHT_485_CONNECT;
+                  break;
 
-            default:
-                break;
-        }
-    }
-    else
-    {
-        switch(sKindMode485.Recv)
-        {
-            case _RS485_OPERA_ELECTRIC:
-              CountPowerDisconnect++;
-              break;
-              
-            case _RS485_OPERA_WEIGHING:
-              sParamDelivery.Weighing = 0;
-              sParamDelivery.StateConnectWeight = _WEIGHT_485_DISCONNECT;
-              break;
-              
-            default:
-              break;
+                default:
+                    break;
+            }
+            
+            Result = true;
         }
     }
     
-    if(sUart485.Length_u16 == 0)
+    if(Result == false)
     {
         switch(sKindMode485.Recv)
         {

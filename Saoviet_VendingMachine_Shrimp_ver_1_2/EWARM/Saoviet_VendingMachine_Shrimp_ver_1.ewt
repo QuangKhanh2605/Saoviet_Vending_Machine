@@ -1579,6 +1579,12 @@
             <name>$PROJ_DIR$\..\user_util\user_obis.h</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\user_util\user_obis_sv.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\user_util\user_obis_sv.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\user_util\user_string.c</name>
         </file>
         <file>
